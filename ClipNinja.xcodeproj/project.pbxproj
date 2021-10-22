@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
-		2CE346582722B0F6000AAEC9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346572722B0F6000AAEC9 /* ContentView.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
 		2CE3465D2722B0F7000AAEC9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE3465C2722B0F7000AAEC9 /* Preview Assets.xcassets */; };
 		2CE346862722B170000AAEC9 /* AppStart in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE346852722B170000AAEC9 /* AppStart */; };
@@ -16,9 +15,9 @@
 
 /* Begin PBXFileReference section */
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
 		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
-		2CE346572722B0F6000AAEC9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CE3465C2722B0F7000AAEC9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipNinja.entitlements; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 		2CE346492722B0F6000AAEC9 = {
 			isa = PBXGroup;
 			children = (
+				2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */,
 				2C91E41A2722B43A00CD2418 /* README.md */,
 				2CE346832722B12E000AAEC9 /* AppStart */,
 				2CE346812722B12E000AAEC9 /* Feature */,
@@ -66,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
-				2CE346572722B0F6000AAEC9 /* ContentView.swift */,
 				2CE346592722B0F7000AAEC9 /* Assets.xcassets */,
 				2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */,
 				2CE3465B2722B0F7000AAEC9 /* Preview Content */,
@@ -162,7 +161,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CE346582722B0F6000AAEC9 /* ContentView.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,13 +295,15 @@
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ClipNinja-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ninja.libor.ClipNinja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -323,13 +323,15 @@
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ClipNinja-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ninja.libor.ClipNinja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
