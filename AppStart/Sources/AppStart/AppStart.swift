@@ -5,7 +5,6 @@ import InstanceProvider
 public struct AppStart {
 
     private var appAssemblies: [Assembly] = [
-        LoggerAssembly(),
         InstanceProviderAssembly(),
     ]
 

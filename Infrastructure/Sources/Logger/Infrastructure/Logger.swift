@@ -7,3 +7,11 @@ class PrintLogger: Logger {
         print(message)
     }
 }
+
+struct LoggerHolder {
+    static let logger: Logger = PrintLogger()
+}
+
+public func log(message: String) {
+    LoggerHolder.logger.log(message: message)
+}

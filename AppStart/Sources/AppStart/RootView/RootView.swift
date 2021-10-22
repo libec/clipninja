@@ -1,14 +1,15 @@
 import SwiftUI
 import InstanceProvider
+import Logger
 
 public struct RootView: View {
-    
+
     private let appStart: AppStart
-    
+
     public init(appStart: AppStart) {
         self.appStart = appStart
     }
-    
+
     public var body: some View {
         GeometryReader { geometry in
             HStack {
@@ -24,6 +25,8 @@ public struct RootView: View {
                 height: geometry.size.height,
                 alignment: .leading
             )
+        }.onAppear {
+            log(message: "RootView.onAppear")
         }
     }
 }
