@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AppStart"
-               BuildableName = "AppStart"
-               BlueprintName = "AppStart"
-               ReferencedContainer = "container:">
+               BlueprintIdentifier = "2CE346512722B0F6000AAEC9"
+               BuildableName = "ClipNinja.app"
+               BlueprintName = "ClipNinja"
+               ReferencedContainer = "container:ClipNinja.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +28,28 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ClipboardListTests"
+               BuildableName = "ClipboardListTests"
+               BlueprintName = "ClipboardListTests"
+               ReferencedContainer = "container:Feature">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ClipboardTests"
+               BuildableName = "ClipboardTests"
+               BlueprintName = "ClipboardTests"
+               ReferencedContainer = "container:Generic">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -40,6 +62,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "2CE346512722B0F6000AAEC9"
+            BuildableName = "ClipNinja.app"
+            BlueprintName = "ClipNinja"
+            ReferencedContainer = "container:ClipNinja.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -47,15 +79,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AppStart"
-            BuildableName = "AppStart"
-            BlueprintName = "AppStart"
-            ReferencedContainer = "container:">
+            BlueprintIdentifier = "2CE346512722B0F6000AAEC9"
+            BuildableName = "ClipNinja.app"
+            BlueprintName = "ClipNinja"
+            ReferencedContainer = "container:ClipNinja.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -1,10 +1,3 @@
-//
-//  ClipNinjaApp.swift
-//  ClipNinja
-//
-//  Created by Libor Huspenina on 22.10.2021.
-//
-
 import SwiftUI
 import AppStart
 
@@ -32,6 +25,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
 
+        NSApplication.shared.windows.forEach {
+            $0.styleMask = [.titled]
+        }
+
         let contentView = VStack {
             Text("Show Clipboard")
             Text("Preferences")
@@ -41,7 +38,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let view = NSHostingView(rootView: contentView)
 
-        // Don't forget to set the frame, otherwise it won't be shown.
         view.frame = NSRect(x: 0, y: 0, width: 200, height: 200)
 
         let menuItem = NSMenuItem()

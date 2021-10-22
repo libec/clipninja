@@ -6,7 +6,7 @@ let package = Package(
     name: "Feature",
     platforms: [.macOS(.v11)],
     products: [
-
+        .library(name: "ClipboardList", targets: ["ClipboardList"])
     ],
     dependencies: [
         .package(path: "../Infrastructure"),
@@ -15,6 +15,14 @@ let package = Package(
         .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMajor(from: "2.7.0")),
     ],
     targets: [
-        
+        .target(
+            name: "ClipboardList",
+            dependencies: [
+                "Swinject",
+                "SwinjectAutoregistration",
+                .product(name: "Clipboard", package: "Infrastructure")
+            ]
+        ),
+        .testTarget(name: "ClipboardListTests", dependencies: ["ClipboardList"])
     ]
 )

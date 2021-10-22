@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AppStart"
-               BuildableName = "AppStart"
-               BlueprintName = "AppStart"
+               BlueprintIdentifier = "ClipboardList"
+               BuildableName = "ClipboardList"
+               BlueprintName = "ClipboardList"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ClipboardListTests"
+               BuildableName = "ClipboardListTests"
+               BlueprintName = "ClipboardListTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -50,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AppStart"
-            BuildableName = "AppStart"
-            BlueprintName = "AppStart"
+            BlueprintIdentifier = "ClipboardList"
+            BuildableName = "ClipboardList"
+            BlueprintName = "ClipboardList"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

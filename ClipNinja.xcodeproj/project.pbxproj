@@ -15,7 +15,7 @@
 
 /* Begin PBXFileReference section */
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
+		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
 		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -39,10 +39,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C91E4202722EF8F00CD2418 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */,
+				2CE346592722B0F7000AAEC9 /* Assets.xcassets */,
+				2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		2CE346492722B0F6000AAEC9 = {
 			isa = PBXGroup;
 			children = (
-				2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */,
 				2C91E41A2722B43A00CD2418 /* README.md */,
 				2CE346832722B12E000AAEC9 /* AppStart */,
 				2CE346812722B12E000AAEC9 /* Feature */,
@@ -66,8 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
-				2CE346592722B0F7000AAEC9 /* Assets.xcassets */,
-				2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */,
+				2C91E4202722EF8F00CD2418 /* Assets */,
 				2CE3465B2722B0F7000AAEC9 /* Preview Content */,
 			);
 			path = App;
@@ -288,14 +296,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ClipNinja/ClipNinja.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = ClipNinja/App/Assets/ClipNinja.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ClipNinja-Info.plist";
+				INFOPLIST_FILE = "App/Assets/ClipNinja-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -306,6 +316,7 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ninja.libor.ClipNinja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -316,14 +327,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ClipNinja/ClipNinja.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = ClipNinja/App/Assets/ClipNinja.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ClipNinja-Info.plist";
+				INFOPLIST_FILE = "App/Assets/ClipNinja-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -334,6 +347,7 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ninja.libor.ClipNinja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};

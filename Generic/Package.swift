@@ -23,6 +23,10 @@ let package = Package(
                 "Swinject",
                 "SwinjectAutoregistration"
             ]
+        ),
+        .testTarget(
+            name: "ClipboardTests",
+            dependencies: ["Clipboard"]
         )
     ]
 )
