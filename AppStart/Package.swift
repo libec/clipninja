@@ -24,6 +24,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Logger", package: "Infrastructure"),
                 .product(name: "InstanceProvider", package: "Infrastructure"),
+                .product(name: "Clipboard", package: "Generic"),
                 "Swinject",
                 "SwinjectAutoregistration",
             ]

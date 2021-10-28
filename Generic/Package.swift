@@ -9,6 +9,10 @@ let package = Package(
         .library(
             name: "Clipboard",
             targets: ["Clipboard"]
+        ),
+        .library(
+            name: "Navigation",
+            targets: ["Navigation"]
         )
     ],
     dependencies: [
@@ -27,6 +31,10 @@ let package = Package(
         .testTarget(
             name: "ClipboardTests",
             dependencies: ["Clipboard"]
-        )
+        ),
+        .target(
+            name: "Navigation",
+            dependencies: [ ]
+        ),
     ]
 )

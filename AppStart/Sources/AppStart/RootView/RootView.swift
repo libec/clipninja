@@ -1,31 +1,20 @@
 import SwiftUI
 import InstanceProvider
+import Clipboard
 import Logger
 
 public struct RootView: View {
 
     private let appStart: AppStart
-
+    
     public init(appStart: AppStart) {
         self.appStart = appStart
     }
-
+    
     public var body: some View {
-        GeometryReader { geometry in
-            HStack {
-                Spacer()
-                VStack {
-                    Text("\(geometry.size.width) x \(geometry.size.height)!")
-                    Text("Stuff")
-                }
-                Spacer()
-            }
-            .frame(
-                width: geometry.size.width,
-                height: geometry.size.height,
-                alignment: .leading
-            )
-        }.onAppear {
+        let instanceProvider: InstanceProvider = appStart.startApp()
+        let clipboardView = instanceProvider.resolve(ClipboardView.self)
+        clipboardView.onAppear {
             log(message: "RootView.onAppear")
         }
     }
@@ -33,6 +22,7 @@ public struct RootView: View {
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView(appStart: AppStart())
+        RootView(appStart: AppStart(appSpecificAssemblies: []))
+            .frame(width: 400, height: 400)
     }
 }

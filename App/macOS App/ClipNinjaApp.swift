@@ -4,12 +4,16 @@ import AppStart
 @main
 struct ClipNinjaApp: App {
 
-    let appStart = AppStart()
-
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
+    let appStart = AppStart(
+        appSpecificAssemblies: [
+            NavigationAssembly()
+        ]
+    )
+
     var body: some Scene {
-        WindowGroup {
+        return WindowGroup {
             RootView(appStart: appStart)
                 .onAppear {
                     NSApp.activate(ignoringOtherApps: true)
