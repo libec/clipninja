@@ -2,6 +2,7 @@ import Navigation
 import Combine
 import Logger
 import AppKit
+import SwiftUI
 
 public final class AppKitNavigation: Navigation {
 
@@ -17,7 +18,12 @@ public final class AppKitNavigation: Navigation {
             .sink { [weak self] value in
                 log(message: "\(value)")
                 guard let unwrappedSelf = self else { return }
-                unwrappedSelf.application.windows.forEach { $0.close() }
+
+                application.windows.forEach { window in
+
+                    log(message: "\(window.contentView)")
+                }
+
             }.store(in: &cancellable)
     }
 

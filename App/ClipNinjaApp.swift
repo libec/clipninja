@@ -15,11 +15,12 @@ struct ClipNinjaApp: App {
     var body: some Scene {
         return WindowGroup {
             RootView(appStart: appStart)
+                .frame(width: 400, height: 400)
                 .onAppear {
                     NSApp.activate(ignoringOtherApps: true)
                 }
         }
-        .windowStyle(HiddenTitleBarWindowStyle())
+//        .windowStyle(HiddenTitleBarWindowStyle())
     }
 }
 
@@ -29,9 +30,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
 
-        NSApplication.shared.windows.forEach {
-            $0.styleMask = [.titled]
-        }
+//        NSApplication.shared.windows.forEach {
+//            $0.styleMask = [.titled]
+//        }
 
         let contentView = VStack {
             Text("Show Clipboard")

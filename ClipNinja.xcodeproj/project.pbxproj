@@ -10,10 +10,15 @@
 		2C781F01272AE92B00DBDD9E /* AppKitNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F00272AE92B00DBDD9E /* AppKitNavigation.swift */; };
 		2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C781F04272AE9A400DBDD9E /* Navigation */; };
 		2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */; };
+		2CB16F91272BD77A009F4663 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB16F8F272BD77A009F4663 /* RootView.swift */; };
+		2CB16F92272BD77A009F4663 /* AppStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB16F90272BD77A009F4663 /* AppStart.swift */; };
+		2CB16F94272BD7CC009F4663 /* ClipboardList in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F93272BD7CC009F4663 /* ClipboardList */; };
+		2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F95272BD7CC009F4663 /* Clipboard */; };
+		2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F97272BD7CC009F4663 /* InstanceProvider */; };
+		2CB16F9A272BD7CC009F4663 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F99272BD7CC009F4663 /* Logger */; };
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
 		2CE3465D2722B0F7000AAEC9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE3465C2722B0F7000AAEC9 /* Preview Assets.xcassets */; };
-		2CE346862722B170000AAEC9 /* AppStart in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE346852722B170000AAEC9 /* AppStart */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +26,8 @@
 		2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAssembly.swift; sourceTree = "<group>"; };
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
+		2CB16F8F272BD77A009F4663 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		2CB16F90272BD77A009F4663 /* AppStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStart.swift; sourceTree = "<group>"; };
 		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -29,7 +36,6 @@
 		2CE346802722B12E000AAEC9 /* Infrastructure */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Infrastructure; sourceTree = "<group>"; };
 		2CE346812722B12E000AAEC9 /* Feature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Feature; sourceTree = "<group>"; };
 		2CE346822722B12E000AAEC9 /* Generic */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generic; sourceTree = "<group>"; };
-		2CE346832722B12E000AAEC9 /* AppStart */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppStart; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,8 +43,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CB16F9A272BD7CC009F4663 /* Logger in Frameworks */,
+				2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */,
 				2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */,
-				2CE346862722B170000AAEC9 /* AppStart in Frameworks */,
+				2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */,
+				2CB16F94272BD7CC009F4663 /* ClipboardList in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,14 +61,6 @@
 				2C781F06272AE9EB00DBDD9E /* System */,
 			);
 			path = Navigation;
-			sourceTree = "<group>";
-		};
-		2C781F03272AE99100DBDD9E /* macOS App */ = {
-			isa = PBXGroup;
-			children = (
-				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
-			);
-			path = "macOS App";
 			sourceTree = "<group>";
 		};
 		2C781F06272AE9EB00DBDD9E /* System */ = {
@@ -92,7 +93,6 @@
 			isa = PBXGroup;
 			children = (
 				2C91E41A2722B43A00CD2418 /* README.md */,
-				2CE346832722B12E000AAEC9 /* AppStart */,
 				2CE346812722B12E000AAEC9 /* Feature */,
 				2CE346822722B12E000AAEC9 /* Generic */,
 				2CE346802722B12E000AAEC9 /* Infrastructure */,
@@ -113,8 +113,10 @@
 		2CE346542722B0F6000AAEC9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
+				2CB16F8F272BD77A009F4663 /* RootView.swift */,
+				2CB16F90272BD77A009F4663 /* AppStart.swift */,
 				2C781F02272AE98700DBDD9E /* Navigation */,
-				2C781F03272AE99100DBDD9E /* macOS App */,
 				2C91E4202722EF8F00CD2418 /* Assets */,
 				2CE3465B2722B0F7000AAEC9 /* Preview Content */,
 			);
@@ -153,8 +155,11 @@
 			);
 			name = ClipNinja;
 			packageProductDependencies = (
-				2CE346852722B170000AAEC9 /* AppStart */,
 				2C781F04272AE9A400DBDD9E /* Navigation */,
+				2CB16F93272BD7CC009F4663 /* ClipboardList */,
+				2CB16F95272BD7CC009F4663 /* Clipboard */,
+				2CB16F97272BD7CC009F4663 /* InstanceProvider */,
+				2CB16F99272BD7CC009F4663 /* Logger */,
 			);
 			productName = ClipNinja;
 			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinja.app */;
@@ -210,8 +215,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CB16F91272BD77A009F4663 /* RootView.swift in Sources */,
 				2C781F01272AE92B00DBDD9E /* AppKitNavigation.swift in Sources */,
 				2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */,
+				2CB16F92272BD77A009F4663 /* AppStart.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,9 +431,21 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
 		};
-		2CE346852722B170000AAEC9 /* AppStart */ = {
+		2CB16F93272BD7CC009F4663 /* ClipboardList */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AppStart;
+			productName = ClipboardList;
+		};
+		2CB16F95272BD7CC009F4663 /* Clipboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Clipboard;
+		};
+		2CB16F97272BD7CC009F4663 /* InstanceProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = InstanceProvider;
+		};
+		2CB16F99272BD7CC009F4663 /* Logger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logger;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
