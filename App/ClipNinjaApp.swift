@@ -1,5 +1,4 @@
 import SwiftUI
-import AppStart
 
 @main
 struct ClipNinjaApp: App {
