@@ -6,7 +6,10 @@ let package = Package(
     name: "Feature",
     platforms: [.macOS(.v11)],
     products: [
-        .library(name: "ClipboardList", targets: ["ClipboardList"])
+        .library(
+            name: "Clipboard",
+            targets: ["Clipboard"]
+        ),
     ],
     dependencies: [
         .package(path: "../Infrastructure"),
@@ -16,13 +19,15 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ClipboardList",
+            name: "Clipboard",
             dependencies: [
                 "Swinject",
-                "SwinjectAutoregistration",
-                .product(name: "Clipboard", package: "Infrastructure")
+                "SwinjectAutoregistration"
             ]
         ),
-        .testTarget(name: "ClipboardListTests", dependencies: ["ClipboardList"])
+        .testTarget(
+            name: "ClipboardTests",
+            dependencies: ["Clipboard"]
+        ),
     ]
 )

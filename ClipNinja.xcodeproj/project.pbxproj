@@ -12,7 +12,6 @@
 		2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */; };
 		2CB16F91272BD77A009F4663 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB16F8F272BD77A009F4663 /* RootView.swift */; };
 		2CB16F92272BD77A009F4663 /* AppStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB16F90272BD77A009F4663 /* AppStart.swift */; };
-		2CB16F94272BD7CC009F4663 /* ClipboardList in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F93272BD7CC009F4663 /* ClipboardList */; };
 		2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F95272BD7CC009F4663 /* Clipboard */; };
 		2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F97272BD7CC009F4663 /* InstanceProvider */; };
 		2CB16F9A272BD7CC009F4663 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F99272BD7CC009F4663 /* Logger */; };
@@ -47,7 +46,6 @@
 				2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */,
 				2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */,
 				2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */,
-				2CB16F94272BD7CC009F4663 /* ClipboardList in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +154,6 @@
 			name = ClipNinja;
 			packageProductDependencies = (
 				2C781F04272AE9A400DBDD9E /* Navigation */,
-				2CB16F93272BD7CC009F4663 /* ClipboardList */,
 				2CB16F95272BD7CC009F4663 /* Clipboard */,
 				2CB16F97272BD7CC009F4663 /* InstanceProvider */,
 				2CB16F99272BD7CC009F4663 /* Logger */,
@@ -432,10 +429,6 @@
 		2C781F04272AE9A400DBDD9E /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
-		};
-		2CB16F93272BD7CC009F4663 /* ClipboardList */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ClipboardList;
 		};
 		2CB16F95272BD7CC009F4663 /* Clipboard */ = {
 			isa = XCSwiftPackageProductDependency;
