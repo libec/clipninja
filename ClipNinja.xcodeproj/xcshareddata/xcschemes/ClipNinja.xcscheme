@@ -29,25 +29,13 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ClipboardListTests"
-               BuildableName = "ClipboardListTests"
-               BlueprintName = "ClipboardListTests"
-               ReferencedContainer = "container:Feature">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ClipboardTests"
                BuildableName = "ClipboardTests"
                BlueprintName = "ClipboardTests"
-               ReferencedContainer = "container:Generic">
+               ReferencedContainer = "container:Feature">
             </BuildableReference>
          </TestableReference>
       </Testables>

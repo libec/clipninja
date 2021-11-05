@@ -40,6 +40,8 @@ struct ClipboardRow: View {
                 .frame(width: 1)
         }
         .background(selected ? Color.gray : Color.black)
+        .cornerRadius(selected ? 5 : 0)
+        .background(Color.black)
     }
 }
 
