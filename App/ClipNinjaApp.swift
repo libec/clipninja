@@ -1,46 +1,56 @@
 import SwiftUI
+import Swinject
+import Settings
+import Clipboard
+import InstanceProvider
+
+public final class ApplicationAssembly {
+
+    private var coreAssemblies: [Assembly] {
+        [
+            InstanceProviderAssembly(),
+            SettingsAssembly(),
+            ClipboardAssembly(),
+        ]
+    }
+
+    private var appSpecificAssemblies: [Assembly] {
+        [
+            NavigationAssembly()
+        ]
+    }
+
+    public func resolveDependencyGraph<Instance>() -> Instance {
+        let assembler = Assembler()
+        assembler.apply(assemblies: coreAssemblies)
+        assembler.apply(assemblies: appSpecificAssemblies)
+        return assembler.resolver.resolve(Instance.self)!
+    }
+}
 
 @main
 struct ClipNinjaApp: App {
 
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State private var statusItem: NSStatusItem?
 
-    let appStart = AppStart(
-        appSpecificAssemblies: [
-            NavigationAssembly()
-        ]
-    )
+    let applicationAssembly = ApplicationAssembly()
 
     var body: some Scene {
-        return WindowGroup {
-            RootView(appStart: appStart)
+        WindowGroup {
+            let instanceProvider: InstanceProvider = applicationAssembly.resolveDependencyGraph()
+            let clipboardView = instanceProvider.resolve(ClipboardView.self)
+            clipboardView
                 .frame(width: 400, height: 400)
                 .onAppear {
                     NSApp.activate(ignoringOtherApps: true)
+                    setupSettings(instanceProvider: instanceProvider)
                 }
         }
-//        .windowStyle(HiddenTitleBarWindowStyle())
+        //        .windowStyle(HiddenTitleBarWindowStyle())
     }
-}
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-
-    var statusItem: NSStatusItem?
-
-    func applicationDidFinishLaunching(_ notification: Notification) {
-
-//        NSApplication.shared.windows.forEach {
-//            $0.styleMask = [.titled]
-//        }
-
-        let contentView = VStack {
-            Text("Show Clipboard")
-            Text("Preferences")
-            Text("Clear all")
-            Text("Quit")
-        }
-
-        let view = NSHostingView(rootView: contentView)
+    private func setupSettings(instanceProvider: InstanceProvider) {
+        let view = NSHostingView(rootView: instanceProvider.resolve(SettingsView.self))
 
         view.frame = NSRect(x: 0, y: 0, width: 200, height: 200)
 

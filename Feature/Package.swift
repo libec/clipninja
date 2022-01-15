@@ -10,6 +10,10 @@ let package = Package(
             name: "Clipboard",
             targets: ["Clipboard"]
         ),
+        .library(
+            name: "Settings",
+            targets: ["Settings"]
+        ),
     ],
     dependencies: [
         .package(path: "../Infrastructure"),
@@ -22,12 +26,20 @@ let package = Package(
             name: "Clipboard",
             dependencies: [
                 "Swinject",
-                "SwinjectAutoregistration"
+                "SwinjectAutoregistration",
+                .product(name: "Navigation", package: "Infrastructure")
             ]
         ),
         .testTarget(
             name: "ClipboardTests",
             dependencies: ["Clipboard"]
         ),
+        .target(
+            name: "Settings",
+            dependencies: [
+                "Swinject",
+                "SwinjectAutoregistration"
+            ]
+        )
     ]
 )

@@ -1,6 +1,13 @@
 import SwiftUI
+import Navigation
 
 public struct ClipboardView: View {
+
+    let navigation: Navigation
+
+    public init(navigation: Navigation) {
+        self.navigation = navigation
+    }
 
     public var body: some View {
         GeometryReader { geometry in
@@ -23,6 +30,10 @@ public struct ClipboardView: View {
                 height: geometry.size.height,
                 alignment: .center
             )
+        }
+        .onReceive(navigation.closeActiveWindows) { _ in
+            NSApplication.shared.windows.forEach { window in
+            }
         }
     }
 

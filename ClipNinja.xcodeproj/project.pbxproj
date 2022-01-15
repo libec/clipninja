@@ -10,8 +10,7 @@
 		2C781F01272AE92B00DBDD9E /* AppKitNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F00272AE92B00DBDD9E /* AppKitNavigation.swift */; };
 		2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C781F04272AE9A400DBDD9E /* Navigation */; };
 		2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */; };
-		2CB16F91272BD77A009F4663 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB16F8F272BD77A009F4663 /* RootView.swift */; };
-		2CB16F92272BD77A009F4663 /* AppStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB16F90272BD77A009F4663 /* AppStart.swift */; };
+		2C91E71227931E3500BEFD2F /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 2C91E71127931E3500BEFD2F /* Settings */; };
 		2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F95272BD7CC009F4663 /* Clipboard */; };
 		2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F97272BD7CC009F4663 /* InstanceProvider */; };
 		2CB16F9A272BD7CC009F4663 /* Logger in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F99272BD7CC009F4663 /* Logger */; };
@@ -25,8 +24,6 @@
 		2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAssembly.swift; sourceTree = "<group>"; };
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
-		2CB16F8F272BD77A009F4663 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		2CB16F90272BD77A009F4663 /* AppStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStart.swift; sourceTree = "<group>"; };
 		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,6 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CB16F9A272BD7CC009F4663 /* Logger in Frameworks */,
+				2C91E71227931E3500BEFD2F /* Settings in Frameworks */,
 				2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */,
 				2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */,
 				2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */,
@@ -91,10 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				2C91E41A2722B43A00CD2418 /* README.md */,
+				2CE346542722B0F6000AAEC9 /* App */,
 				2CE346812722B12E000AAEC9 /* Feature */,
 				2CE346822722B12E000AAEC9 /* Generic */,
 				2CE346802722B12E000AAEC9 /* Infrastructure */,
-				2CE346542722B0F6000AAEC9 /* App */,
 				2CE346532722B0F6000AAEC9 /* Products */,
 				2CE346842722B170000AAEC9 /* Frameworks */,
 			);
@@ -112,8 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
-				2CB16F8F272BD77A009F4663 /* RootView.swift */,
-				2CB16F90272BD77A009F4663 /* AppStart.swift */,
 				2C781F02272AE98700DBDD9E /* Navigation */,
 				2C91E4202722EF8F00CD2418 /* Assets */,
 				2CE3465B2722B0F7000AAEC9 /* Preview Content */,
@@ -157,6 +153,7 @@
 				2CB16F95272BD7CC009F4663 /* Clipboard */,
 				2CB16F97272BD7CC009F4663 /* InstanceProvider */,
 				2CB16F99272BD7CC009F4663 /* Logger */,
+				2C91E71127931E3500BEFD2F /* Settings */,
 			);
 			productName = ClipNinja;
 			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinja.app */;
@@ -212,10 +209,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB16F91272BD77A009F4663 /* RootView.swift in Sources */,
 				2C781F01272AE92B00DBDD9E /* AppKitNavigation.swift in Sources */,
 				2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */,
-				2CB16F92272BD77A009F4663 /* AppStart.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +424,10 @@
 		2C781F04272AE9A400DBDD9E /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
+		};
+		2C91E71127931E3500BEFD2F /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
 		};
 		2CB16F95272BD7CC009F4663 /* Clipboard */ = {
 			isa = XCSwiftPackageProductDependency;

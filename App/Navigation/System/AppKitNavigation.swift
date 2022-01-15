@@ -3,28 +3,20 @@ import Combine
 import Logger
 import AppKit
 import SwiftUI
+import Clipboard
 
-public final class AppKitNavigation: Navigation {
-
-    private var cancellable = Set<AnyCancellable>()
+final class AppKitNavigation: Navigation {
 
     private let application: NSApplication
 
     init(application: NSApplication) {
         self.application = application
-        
+    }
+
+    var closeActiveWindows: AnyPublisher<Void, Never> {
         NotificationCenter.default.publisher(for: NSApplication.didResignActiveNotification, object: nil)
-            .print("Navigation Stream")
-            .sink { [weak self] value in
-                log(message: "\(value)")
-                guard let unwrappedSelf = self else { return }
-
-                application.windows.forEach { window in
-
-                    log(message: "\(window.contentView)")
-                }
-
-            }.store(in: &cancellable)
+            .map { _ in }
+            .eraseToAnyPublisher()
     }
 
     deinit {

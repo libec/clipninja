@@ -48,12 +48,13 @@ struct ClipboardRow: View {
 struct ClipboardRow_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 0) {
-        ClipboardRow(text: "Lorem Ipsum", shortcut: "1", pinned: true, selected: false)
-            .frame(width: 400, height: 50)
-        ClipboardRow(text: "Dolor sit", shortcut: "↵", pinned: true, selected: true)
-            .frame(width: 400, height: 50)
-        ClipboardRow(text: "Ames tres", shortcut: "3", pinned: false, selected: false)
-            .frame(width: 400, height: 50)
+            ClipboardRow(text: "Lorem Ipsum", shortcut: "1", pinned: true, selected: false)
+                .frame(width: 400, height: 50)
+            ClipboardRow(text: "Dolor sit", shortcut: "↵", pinned: true, selected: true)
+                .frame(width: 400, height: 50)
+            ClipboardRow(text: "Ames tres", shortcut: "3", pinned: false, selected: false)
+                .frame(width: 400, height: 50)
         }
+        .preferredColorScheme(.dark)
     }
 }
