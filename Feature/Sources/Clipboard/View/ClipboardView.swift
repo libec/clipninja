@@ -4,9 +4,11 @@ import Navigation
 public struct ClipboardView: View {
 
     let navigation: Navigation
+    let superviewHidden: Binding<Bool>
 
-    public init(navigation: Navigation) {
+    public init(navigation: Navigation, hiddenBinding: Binding<Bool>) {
         self.navigation = navigation
+        self.superviewHidden = hiddenBinding
     }
 
     public var body: some View {
@@ -32,8 +34,7 @@ public struct ClipboardView: View {
             )
         }
         .onReceive(navigation.closeActiveWindows) { _ in
-            NSApplication.shared.windows.forEach { window in
-            }
+            superviewHidden.wrappedValue = true
         }
     }
 

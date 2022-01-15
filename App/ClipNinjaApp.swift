@@ -34,17 +34,20 @@ struct ClipNinjaApp: App {
     @State private var statusItem: NSStatusItem?
 
     let applicationAssembly = ApplicationAssembly()
+    @State private var hidden = false
 
     var body: some Scene {
         WindowGroup {
+            if !hidden {
             let instanceProvider: InstanceProvider = applicationAssembly.resolveDependencyGraph()
-            let clipboardView = instanceProvider.resolve(ClipboardView.self)
+                let clipboardView = instanceProvider.resolve(ClipboardView.self, argument: $hidden)
             clipboardView
                 .frame(width: 400, height: 400)
                 .onAppear {
                     NSApp.activate(ignoringOtherApps: true)
                     setupSettings(instanceProvider: instanceProvider)
                 }
+            }
         }
         //        .windowStyle(HiddenTitleBarWindowStyle())
     }
