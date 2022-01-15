@@ -3,12 +3,11 @@ import Navigation
 
 public struct ClipboardView: View {
 
-    let navigation: Navigation
-    let superviewHidden: Binding<Bool>
+    private let navigation: Navigation
+    @EnvironmentObject private var windowsState: AppWindowsState
 
-    public init(navigation: Navigation, hiddenBinding: Binding<Bool>) {
+    public init(navigation: Navigation) {
         self.navigation = navigation
-        self.superviewHidden = hiddenBinding
     }
 
     public var body: some View {
@@ -34,7 +33,7 @@ public struct ClipboardView: View {
             )
         }
         .onReceive(navigation.closeActiveWindows) { _ in
-            superviewHidden.wrappedValue = true
+            windowsState.mainViewHidden = true
         }
     }
 

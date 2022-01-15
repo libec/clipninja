@@ -38,7 +38,8 @@ let package = Package(
             name: "Settings",
             dependencies: [
                 "Swinject",
-                "SwinjectAutoregistration"
+                "SwinjectAutoregistration",
+                .product(name: "Navigation", package: "Infrastructure")
             ]
         )
     ]
