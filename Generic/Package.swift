@@ -19,7 +19,11 @@ let package = Package(
     targets: [
         .target(
             name: "Navigation",
-            dependencies: [ ]
+            dependencies: [
+                "Swinject",
+                "SwinjectAutoregistration",
+                .product(name: "Logger", package: "Infrastructure"),
+            ]
         ),
     ]
 )

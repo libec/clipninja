@@ -34,6 +34,7 @@ let package = Package(
             name: "Shortcuts",
             dependencies: [
                 "KeyboardShortcuts",
+                "Logger",
                 "Swinject",
                 "SwinjectAutoregistration"
             ]
