@@ -8,14 +8,19 @@ import Combine
 struct ClipNinjaApp: App {
 
     @State private var statusItem: NSStatusItem?
+    @ObservedObject private var windowsState: AppWindowsState
 
-    let applicationAssembly = ApplicationAssembly()
-    @ObservedObject private var windowsState = AppWindowsState()
+    private let applicationAssembly = ApplicationAssembly()
+    private let instanceProvider: InstanceProvider
+
+    init() {
+        self.instanceProvider = applicationAssembly.resolveDependencyGraph()
+        self.windowsState = AppWindowsState(navigation: instanceProvider.resolve(Navigation.self))
+    }
 
     var body: some Scene {
         WindowGroup {
-            if !windowsState.mainViewHidden {
-                let instanceProvider: InstanceProvider = applicationAssembly.resolveDependencyGraph()
+            if windowsState.showClipboard {
                 let clipboardView = instanceProvider.resolve(ClipboardView.self)
                 clipboardView
                     .frame(width: 400, height: 400)

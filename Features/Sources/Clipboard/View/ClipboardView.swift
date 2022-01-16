@@ -5,7 +5,6 @@ import Generic
 public struct ClipboardView: View {
 
     private let navigation: Navigation
-    @EnvironmentObject private var windowsState: AppWindowsState
 
     public init(navigation: Navigation) {
         self.navigation = navigation
@@ -28,9 +27,6 @@ public struct ClipboardView: View {
                 height: geometry.size.height,
                 alignment: .center
             )
-        }
-        .onReceive(navigation.closeActiveWindows) { _ in
-            windowsState.mainViewHidden = true
         }
     }
 

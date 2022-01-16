@@ -11,7 +11,7 @@ public struct SettingsView: View {
     public var body: some View {
         VStack {
             Button("Show Clipboards") {
-                windowsState.mainViewHidden = false
+                windowsState.showClipboard = true
                 NSApp.activate(ignoringOtherApps: true)
             }
             RecordShortcutView()

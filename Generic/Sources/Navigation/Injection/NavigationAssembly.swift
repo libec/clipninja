@@ -1,6 +1,7 @@
 import Swinject
 import SwinjectAutoregistration
 import AppKit
+import Infrastructure
 
 public struct NavigationAssembly: Assembly {
 
@@ -9,7 +10,8 @@ public struct NavigationAssembly: Assembly {
     public func assemble(container: Container) {
         container.register(Navigation.self) { resolver in
             AppKitNavigation(
-                application: NSApplication.shared
+                application: NSApplication.shared,
+                shortcutObserver: resolver.resolve(ShortcutObserver.self)!
             )
         }
         .inObjectScope(.container)

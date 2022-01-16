@@ -1,8 +1,20 @@
 import SwiftUI
+import Combine
 
 public class AppWindowsState: ObservableObject {
 
-    public init() { }
+    private var subscriptions = Set<AnyCancellable>()
+    private let navigation: Navigation
 
-    @Published public var mainViewHidden: Bool = false
+    public init(navigation: Navigation) {
+        self.navigation = navigation
+
+        navigation.showClipboard
+            .sink { showClipboard in
+                self.showClipboard = showClipboard
+            }
+            .store(in: &subscriptions)
+    }
+
+    @Published public var showClipboard: Bool = true
 }
