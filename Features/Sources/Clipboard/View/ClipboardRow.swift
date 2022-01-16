@@ -21,7 +21,7 @@ struct ClipboardRow: View {
                 GeometryReader { geometry in
                     VStack {
                         Spacer()
-                        Color .red
+                        (pinned ? Color.red : Color.clear)
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.4, alignment: .center)
                             .clipShape(Capsule())
                         Spacer()
@@ -31,6 +31,7 @@ struct ClipboardRow: View {
             Text(text)
                 .font(.custom("SF Mono", fixedSize: 14))
                 .fontWeight(.semibold)
+                .foregroundColor(selected ? Color.primary : Color.white)
             Spacer()
             Text(shortcut)
                 .font(.custom("Courier New", fixedSize: 25))
@@ -55,6 +56,6 @@ struct ClipboardRow_Previews: PreviewProvider {
             ClipboardRow(text: "Ames tres", shortcut: "3", pinned: false, selected: false)
                 .frame(width: 400, height: 50)
         }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(.light)
     }
 }

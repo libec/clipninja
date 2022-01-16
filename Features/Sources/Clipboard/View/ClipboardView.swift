@@ -14,17 +14,13 @@ public struct ClipboardView: View {
     public var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                ForEach(0..<10) { column in
-                    HStack(spacing: 0) {
-                        ForEach(0..<10) { row in
-                            color(for: row, column: column)
-                                .frame(
-                                    width: geometry.size.width / 10,
-                                    height: geometry.size.width / 10,
-                                    alignment: .center
-                                )
-                        }
-                    }
+                ForEach(1..<10) { row in
+                    ClipboardRow(
+                        text: randomAlphaNumericString(length: 15),
+                        shortcut: "\(row)",
+                        pinned: row < 6,
+                        selected: row == 3
+                    )
                 }
             }
             .frame(
@@ -36,6 +32,21 @@ public struct ClipboardView: View {
         .onReceive(navigation.closeActiveWindows) { _ in
             windowsState.mainViewHidden = true
         }
+    }
+
+    func randomAlphaNumericString(length: Int) -> String {
+        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let allowedCharsCount = UInt32(allowedChars.count)
+        var randomString = ""
+
+        for _ in 0 ..< length {
+            let randomNum = Int(arc4random_uniform(allowedCharsCount))
+            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
+            let newCharacter = allowedChars[randomIndex]
+            randomString += String(newCharacter)
+        }
+
+        return randomString
     }
 
     func color(for row: Int, column: Int) -> some View {
