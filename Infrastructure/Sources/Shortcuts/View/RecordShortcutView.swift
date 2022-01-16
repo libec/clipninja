@@ -1,5 +1,5 @@
-import KeyboardShortcuts
 import SwiftUI
+import KeyboardShortcuts
 
 public struct RecordShortcutView: View {
 
@@ -9,7 +9,7 @@ public struct RecordShortcutView: View {
         HStack(alignment: .firstTextBaseline) {
             Text("Shortcut to show clipboards:")
             KeyboardShortcuts.Recorder(for: .toggleClipNinja) { shortcut in
-                print(shortcut?.description)
+                print(shortcut?.description ?? "")
             }
         }
     }

@@ -1,5 +1,4 @@
 import KeyboardShortcuts
-import Logger
 
 extension KeyboardShortcuts.Name {
     static let toggleClipNinja = Self("toggle_clipninja", default: .init(.v, modifiers: [.command, .shift]))

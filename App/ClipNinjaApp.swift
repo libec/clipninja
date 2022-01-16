@@ -1,8 +1,7 @@
 import SwiftUI
-import Settings
-import Clipboard
-import Navigation
-import InstanceProvider
+import Infrastructure
+import Generic
+import Features
 import Combine
 
 @main

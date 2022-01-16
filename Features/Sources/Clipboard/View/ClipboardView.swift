@@ -1,5 +1,6 @@
 import SwiftUI
-import Navigation
+import Infrastructure
+import Generic
 
 public struct ClipboardView: View {
 

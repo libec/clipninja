@@ -1,6 +1,6 @@
 import SwiftUI
-import Navigation
-import Shortcuts
+import Generic
+import Infrastructure
 
 public struct SettingsView: View {
 
@@ -21,4 +21,3 @@ public struct SettingsView: View {
         }
     }
 }
-

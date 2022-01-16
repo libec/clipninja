@@ -1,7 +1,7 @@
 import Combine
-import Logger
 import AppKit
 import SwiftUI
+import Infrastructure
 
 final class AppKitNavigation: Navigation {
 

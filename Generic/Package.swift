@@ -7,8 +7,8 @@ let package = Package(
     platforms: [.macOS(.v11)],
     products: [
         .library(
-            name: "Navigation",
-            targets: ["Navigation"]
+            name: "Generic",
+            targets: ["Generic"]
         )
     ],
     dependencies: [
@@ -18,12 +18,13 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Navigation",
+            name: "Generic",
             dependencies: [
                 "Swinject",
                 "SwinjectAutoregistration",
-                .product(name: "Logger", package: "Infrastructure"),
-            ]
+                "Infrastructure",
+            ],
+            path: "Sources"
         ),
     ]
 )

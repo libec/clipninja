@@ -3,25 +3,35 @@
 import PackageDescription
 
 let package = Package(
-    name: "Infrastructure",
+    name: "Features",
     platforms: [.macOS(.v11)],
     products: [
-        .library(name: "Infrastructure", targets: ["Infrastructure"])
+        .library(
+            name: "Features",
+            targets: ["Features"]
+        ),
     ],
     dependencies: [
+        .package(path: "../Infrastructure"),
+        .package(path: "../Generic"),
         .package(url: "https://github.com/Swinject/Swinject.git", .upToNextMajor(from: "2.8.0")),
         .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMajor(from: "2.7.0")),
-        .package(url: "https://github.com/sindresorhus/KeyboardShortcuts", .upToNextMajor(from: "1.3.0")),
     ],
     targets: [
         .target(
-            name: "Infrastructure",
+            name: "Features",
             dependencies: [
                 "Swinject",
-                "KeyboardShortcuts",
-                "SwinjectAutoregistration"
+                "SwinjectAutoregistration",
+                "Infrastructure",
+                "Generic",
             ],
             path: "Sources"
+        ),
+        .testTarget(
+            name: "FeaturesTests",
+            dependencies: ["Features"],
+            path: "Tests"
         ),
     ]
 )

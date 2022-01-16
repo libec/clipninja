@@ -1,9 +1,6 @@
 import Swinject
-import InstanceProvider
-import Settings
-import Clipboard
-import Shortcuts
-import Navigation
+import Infrastructure
+import Generic
 
 public struct ApplicationAssembly {
 
@@ -16,6 +13,8 @@ public struct ApplicationAssembly {
             NavigationAssembly()
         ]
     }
+
+    public init() { }
 
     public func resolveDependencyGraph<Instance>() -> Instance {
         let assembler = Assembler()
