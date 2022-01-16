@@ -1,6 +1,6 @@
 import Swinject
 
-public class InstanceProviderAssembly: Assembly {
+public struct InstanceProviderAssembly: Assembly {
 
     public init() { }
     

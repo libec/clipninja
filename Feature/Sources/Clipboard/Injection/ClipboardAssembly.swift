@@ -2,7 +2,7 @@ import Swinject
 import SwinjectAutoregistration
 import Navigation
 
-public final class ClipboardAssembly: Assembly {
+public struct ClipboardAssembly: Assembly {
 
     public init() { }
     

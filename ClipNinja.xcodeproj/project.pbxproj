@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C781F01272AE92B00DBDD9E /* AppKitNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F00272AE92B00DBDD9E /* AppKitNavigation.swift */; };
+		2C2FE18227940E7600419A7C /* ApplicationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FE18127940E7600419A7C /* ApplicationAssembly.swift */; };
+		2C2FE18F279415DE00419A7C /* Shortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 2C2FE18E279415DE00419A7C /* Shortcuts */; };
 		2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C781F04272AE9A400DBDD9E /* Navigation */; };
-		2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */; };
 		2C91E71227931E3500BEFD2F /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 2C91E71127931E3500BEFD2F /* Settings */; };
 		2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F95272BD7CC009F4663 /* Clipboard */; };
 		2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB16F97272BD7CC009F4663 /* InstanceProvider */; };
@@ -19,8 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2C781F00272AE92B00DBDD9E /* AppKitNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKitNavigation.swift; sourceTree = "<group>"; };
-		2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAssembly.swift; sourceTree = "<group>"; };
+		2C2FE18127940E7600419A7C /* ApplicationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationAssembly.swift; sourceTree = "<group>"; };
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
 		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,6 +38,7 @@
 			files = (
 				2CB16F9A272BD7CC009F4663 /* Logger in Frameworks */,
 				2C91E71227931E3500BEFD2F /* Settings in Frameworks */,
+				2C2FE18F279415DE00419A7C /* Shortcuts in Frameworks */,
 				2CB16F98272BD7CC009F4663 /* InstanceProvider in Frameworks */,
 				2C781F05272AE9A400DBDD9E /* Navigation in Frameworks */,
 				2CB16F96272BD7CC009F4663 /* Clipboard in Frameworks */,
@@ -48,31 +48,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2C781F02272AE98700DBDD9E /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				2C781F07272AEA0300DBDD9E /* Injection */,
-				2C781F06272AE9EB00DBDD9E /* System */,
-			);
-			path = Navigation;
-			sourceTree = "<group>";
-		};
-		2C781F06272AE9EB00DBDD9E /* System */ = {
-			isa = PBXGroup;
-			children = (
-				2C781F00272AE92B00DBDD9E /* AppKitNavigation.swift */,
-			);
-			path = System;
-			sourceTree = "<group>";
-		};
-		2C781F07272AEA0300DBDD9E /* Injection */ = {
-			isa = PBXGroup;
-			children = (
-				2C781F08272AEA0E00DBDD9E /* NavigationAssembly.swift */,
-			);
-			path = Injection;
-			sourceTree = "<group>";
-		};
 		2C91E4202722EF8F00CD2418 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,7 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
-				2C781F02272AE98700DBDD9E /* Navigation */,
+				2C2FE18127940E7600419A7C /* ApplicationAssembly.swift */,
 				2C91E4202722EF8F00CD2418 /* Assets */,
 			);
 			path = App;
@@ -143,6 +118,7 @@
 				2CB16F97272BD7CC009F4663 /* InstanceProvider */,
 				2CB16F99272BD7CC009F4663 /* Logger */,
 				2C91E71127931E3500BEFD2F /* Settings */,
+				2C2FE18E279415DE00419A7C /* Shortcuts */,
 			);
 			productName = ClipNinja;
 			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinja.app */;
@@ -197,8 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C781F01272AE92B00DBDD9E /* AppKitNavigation.swift in Sources */,
-				2C781F09272AEA0E00DBDD9E /* NavigationAssembly.swift in Sources */,
+				2C2FE18227940E7600419A7C /* ApplicationAssembly.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,6 +382,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C2FE18E279415DE00419A7C /* Shortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shortcuts;
+		};
 		2C781F04272AE9A400DBDD9E /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;

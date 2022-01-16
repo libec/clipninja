@@ -39,7 +39,8 @@ let package = Package(
             dependencies: [
                 "Swinject",
                 "SwinjectAutoregistration",
-                .product(name: "Navigation", package: "Infrastructure")
+                .product(name: "Navigation", package: "Generic"),
+                .product(name: "Shortcuts", package: "Infrastructure")
             ]
         )
     ]

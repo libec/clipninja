@@ -1,5 +1,6 @@
 import SwiftUI
 import Navigation
+import Shortcuts
 
 public struct SettingsView: View {
 
@@ -13,8 +14,7 @@ public struct SettingsView: View {
                 windowsState.mainViewHidden = false
                 NSApp.activate(ignoringOtherApps: true)
             }
-            Text("Preferences")
-            Text("Clear all")
+            RecordShortcutView()
             Button("Quit") {
                 exit(0)
             }

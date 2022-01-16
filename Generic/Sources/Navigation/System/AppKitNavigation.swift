@@ -1,9 +1,7 @@
-import Navigation
 import Combine
 import Logger
 import AppKit
 import SwiftUI
-import Clipboard
 
 final class AppKitNavigation: Navigation {
 

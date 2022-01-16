@@ -1,11 +1,12 @@
 import Swinject
 import SwinjectAutoregistration
-import Navigation
 import AppKit
 
-final class NavigationAssembly: Assembly {
+public struct NavigationAssembly: Assembly {
+
+    public init() { }
     
-    func assemble(container: Container) {
+    public func assemble(container: Container) {
         container.register(Navigation.self) { resolver in
             AppKitNavigation(
                 application: NSApplication.shared
@@ -14,7 +15,7 @@ final class NavigationAssembly: Assembly {
         .inObjectScope(.container)
     }
 
-    func loaded(resolver: Resolver) {
+    public func loaded(resolver: Resolver) {
         _ = resolver.resolve(Navigation.self)!
     }
 }

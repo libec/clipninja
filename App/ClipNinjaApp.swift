@@ -1,35 +1,9 @@
 import SwiftUI
-import Swinject
 import Settings
 import Clipboard
 import Navigation
 import InstanceProvider
 import Combine
-
-public final class ApplicationAssembly {
-
-    private var coreAssemblies: [Assembly] {
-        [
-            InstanceProviderAssembly(),
-            SettingsAssembly(),
-            ClipboardAssembly(),
-        ]
-    }
-
-    private var appSpecificAssemblies: [Assembly] {
-        [
-            NavigationAssembly()
-        ]
-    }
-
-    public func resolveDependencyGraph<Instance>() -> Instance {
-        let assembler = Assembler()
-        assembler.apply(assemblies: coreAssemblies)
-        assembler.apply(assemblies: appSpecificAssemblies)
-        return assembler.resolver.resolve(Instance.self)!
-    }
-}
-
 
 @main
 struct ClipNinjaApp: App {
@@ -53,7 +27,7 @@ struct ClipNinjaApp: App {
                     .environmentObject(windowsState)
             }
         }
-        //        .windowStyle(HiddenTitleBarWindowStyle())
+        .windowStyle(HiddenTitleBarWindowStyle())
     }
 
     private func setupSettings(instanceProvider: InstanceProvider) {
@@ -63,7 +37,7 @@ struct ClipNinjaApp: App {
             .environmentObject(windowsState)
         let view = NSHostingView(rootView: settingsView)
 
-        view.frame = NSRect(x: 0, y: 0, width: 200, height: 200)
+        view.frame = NSRect(x: 0, y: 0, width: 400, height: 200)
 
         let menuItem = NSMenuItem()
         menuItem.view = view

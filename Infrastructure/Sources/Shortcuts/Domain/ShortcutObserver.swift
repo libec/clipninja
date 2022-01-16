@@ -1,0 +1,3 @@
+protocol ShortcutObserver {
+    func observe()
+}
