@@ -1,4 +1,4 @@
-import Clipboard
+import Features
 import XCTest
 
 class ClipboardTests: XCTestCase {
