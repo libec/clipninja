@@ -20,6 +20,20 @@
                ReferencedContainer = "container:ClipNinja.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FeaturesTests"
+               BuildableName = "FeaturesTests"
+               BlueprintName = "FeaturesTests"
+               ReferencedContainer = "container:Features">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -32,10 +46,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ClipboardTests"
-               BuildableName = "ClipboardTests"
-               BlueprintName = "ClipboardTests"
-               ReferencedContainer = "container:Feature">
+               BlueprintIdentifier = "FeaturesTests"
+               BuildableName = "FeaturesTests"
+               BlueprintName = "FeaturesTests"
+               ReferencedContainer = "container:Features">
             </BuildableReference>
          </TestableReference>
       </Testables>
