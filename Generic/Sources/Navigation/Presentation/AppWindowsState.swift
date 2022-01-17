@@ -17,4 +17,5 @@ public class AppWindowsState: ObservableObject {
     }
 
     @Published public var showClipboard: Bool = true
+    @Published public var showSettings: Bool = false
 }

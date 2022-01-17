@@ -4,11 +4,16 @@ import Generic
 import Features
 import Combine
 
+class AppDelegate: NSObject, NSApplicationDelegate {
+
+}
+
 @main
 struct ClipNinjaApp: App {
 
     @State private var statusItem: NSStatusItem?
     @ObservedObject private var windowsState: AppWindowsState
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     private let applicationAssembly = ApplicationAssembly()
     private let instanceProvider: InstanceProvider

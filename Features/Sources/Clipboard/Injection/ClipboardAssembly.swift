@@ -1,6 +1,5 @@
 import Swinject
 import SwinjectAutoregistration
-import Navigation
 
 public struct ClipboardAssembly: Assembly {
 
