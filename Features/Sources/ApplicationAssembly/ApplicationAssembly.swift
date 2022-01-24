@@ -9,6 +9,7 @@ public struct ApplicationAssembly {
             InstanceProviderAssembly(),
             SettingsAssembly(),
             ClipboardAssembly(),
+            PasteAssembly(),
             ShortcutsAssembly(),
             NavigationAssembly()
         ]
