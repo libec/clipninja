@@ -1,6 +1,25 @@
 import SwiftUI
 import Infrastructure
 import Generic
+import Carbon
+
+struct KeyEventHandling: NSViewRepresentable {
+
+    class KeyView: NSView {
+        override var acceptsFirstResponder: Bool { true }
+
+        override func keyDown(with event: NSEvent) {
+            print("\(event.keyCode)")
+            print(CGKeyCode(kVK_ANSI_KeypadEnter))
+        }
+    }
+
+    func makeNSView(context: Context) -> NSView {
+        KeyView()
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) { }
+}
 
 public struct ClipboardView: View {
 
@@ -28,6 +47,7 @@ public struct ClipboardView: View {
                 alignment: .center
             )
         }
+        .background(KeyEventHandling())
     }
 
     func randomAlphaNumericString(length: Int) -> String {

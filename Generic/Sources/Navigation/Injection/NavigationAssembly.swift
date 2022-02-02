@@ -10,7 +10,6 @@ public struct NavigationAssembly: Assembly {
     public func assemble(container: Container) {
         container.register(Navigation.self) { resolver in
             AppKitNavigation(
-                application: NSApplication.shared,
                 shortcutObserver: resolver.resolve(ShortcutObserver.self)!
             )
         }

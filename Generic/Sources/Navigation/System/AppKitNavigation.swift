@@ -5,14 +5,11 @@ import Infrastructure
 
 final class AppKitNavigation: Navigation {
 
-    private let application: NSApplication
     private let shortcutObserver: ShortcutObserver
 
     init(
-        application: NSApplication,
         shortcutObserver: ShortcutObserver
     ) {
-        self.application = application
         self.shortcutObserver = shortcutObserver
     }
 
@@ -22,10 +19,23 @@ final class AppKitNavigation: Navigation {
             .eraseToAnyPublisher()
 
         let shortcut = shortcutObserver.showClipboard
+            .map { _ in true }
             .eraseToAnyPublisher()
+
+        /*
+         store app when going to foreground
+         */
 
         return resign.merge(with: shortcut).eraseToAnyPublisher()
     }
+
+    func showPreviousApp() {
+        /*
+         1. switch app
+         2. remove stored app from background
+         */
+    }
+
 
     deinit {
         log(message: "AppKit Navigation deinited")

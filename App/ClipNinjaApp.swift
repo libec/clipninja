@@ -36,6 +36,7 @@ struct ClipNinjaApp: App {
                     .environmentObject(windowsState)
             }
         }
+
         .windowStyle(HiddenTitleBarWindowStyle())
     }
 

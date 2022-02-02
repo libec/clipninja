@@ -7,7 +7,7 @@ extension KeyboardShortcuts.Name {
 
 final class SystemShortcutObserver: ShortcutObserver {
 
-    private let subject = PassthroughSubject<Bool, Never>()
+    private let subject = PassthroughSubject<Void, Never>()
 
     init() {
     }
@@ -15,11 +15,12 @@ final class SystemShortcutObserver: ShortcutObserver {
     func observe() {
         log(message: "Listen for shortcut")
         KeyboardShortcuts.onKeyUp(for: .toggleClipNinja) { [self] in
-            subject.send(true)
+            subject.send(())
         }
     }
 
-    var showClipboard: AnyPublisher<Bool, Never> {
+    var showClipboard: AnyPublisher<Void, Never> {
         subject.eraseToAnyPublisher()
     }
 }
+
