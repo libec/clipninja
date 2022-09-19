@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/KeyboardShortcuts",
       "state" : {
-        "revision" : "0d77aa6851615007a84c9ca77c420dbd13bbad8a",
-        "version" : "1.3.0"
+        "revision" : "5e674337c13f9d0f8ff72d9d39ded08ce9bb7e34",
+        "version" : "1.7.2"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Swinject/Swinject.git",
       "state" : {
-        "revision" : "f10b6e9ebff440f985c43008f7c2d097639fcb81",
-        "version" : "2.8.1"
+        "revision" : "b1d92a53159fe45e162c307183aec9be15e4e7ae",
+        "version" : "2.8.0"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Swinject/SwinjectAutoregistration.git",
       "state" : {
-        "revision" : "9936170fd1a5e8c141a21de987c48cc4e0d6c943",
-        "version" : "2.8.1"
+        "revision" : "136e57231434d038c3beef939e81f60f36ec8aec",
+        "version" : "2.7.0"
       }
     }
   ],

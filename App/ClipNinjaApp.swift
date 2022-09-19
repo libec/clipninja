@@ -1,8 +1,6 @@
 import SwiftUI
-import Infrastructure
-import Generic
-import Features
 import Combine
+import ClipNinja
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 

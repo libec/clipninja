@@ -7,23 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CBC809328D8F1BD00490E80 /* ClipNinja in Frameworks */ = {isa = PBXBuildFile; productRef = 2CBC809228D8F1BD00490E80 /* ClipNinja */; };
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
-		2CE7B5EF27943A6F00BDDE33 /* Features in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE7B5EE27943A6F00BDDE33 /* Features */; };
-		2CE7B5F127943A6F00BDDE33 /* Generic in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE7B5F027943A6F00BDDE33 /* Generic */; };
-		2CE7B5F327943A6F00BDDE33 /* Infrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE7B5F227943A6F00BDDE33 /* Infrastructure */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
-		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CBC809128D8F1B100490E80 /* ClipNinja */ = {isa = PBXFileReference; lastKnownFileType = text; path = ClipNinja; sourceTree = SOURCE_ROOT; };
+		2CE346522722B0F6000AAEC9 /* ClipNinjaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinjaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipNinja.entitlements; sourceTree = "<group>"; };
-		2CE346802722B12E000AAEC9 /* Infrastructure */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Infrastructure; sourceTree = "<group>"; };
-		2CE346822722B12E000AAEC9 /* Generic */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generic; sourceTree = "<group>"; };
-		2CE7B5ED27943A1600BDDE33 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,9 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CE7B5F127943A6F00BDDE33 /* Generic in Frameworks */,
-				2CE7B5F327943A6F00BDDE33 /* Infrastructure in Frameworks */,
-				2CE7B5EF27943A6F00BDDE33 /* Features in Frameworks */,
+				2CBC809328D8F1BD00490E80 /* ClipNinja in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,9 +49,7 @@
 			children = (
 				2C91E41A2722B43A00CD2418 /* README.md */,
 				2CE346542722B0F6000AAEC9 /* App */,
-				2CE7B5ED27943A1600BDDE33 /* Features */,
-				2CE346822722B12E000AAEC9 /* Generic */,
-				2CE346802722B12E000AAEC9 /* Infrastructure */,
+				2CBC809128D8F1B100490E80 /* ClipNinja */,
 				2CE346532722B0F6000AAEC9 /* Products */,
 				2CE346842722B170000AAEC9 /* Frameworks */,
 			);
@@ -66,7 +58,7 @@
 		2CE346532722B0F6000AAEC9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2CE346522722B0F6000AAEC9 /* ClipNinja.app */,
+				2CE346522722B0F6000AAEC9 /* ClipNinjaApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,9 +82,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2CE346512722B0F6000AAEC9 /* ClipNinja */ = {
+		2CE346512722B0F6000AAEC9 /* ClipNinjaApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinja" */;
+			buildConfigurationList = 2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinjaApp" */;
 			buildPhases = (
 				2CE3464E2722B0F6000AAEC9 /* Sources */,
 				2CE3464F2722B0F6000AAEC9 /* Frameworks */,
@@ -102,14 +94,12 @@
 			);
 			dependencies = (
 			);
-			name = ClipNinja;
+			name = ClipNinjaApp;
 			packageProductDependencies = (
-				2CE7B5EE27943A6F00BDDE33 /* Features */,
-				2CE7B5F027943A6F00BDDE33 /* Generic */,
-				2CE7B5F227943A6F00BDDE33 /* Infrastructure */,
+				2CBC809228D8F1BD00490E80 /* ClipNinja */,
 			);
 			productName = ClipNinja;
-			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinja.app */;
+			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinjaApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -140,7 +130,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2CE346512722B0F6000AAEC9 /* ClipNinja */,
+				2CE346512722B0F6000AAEC9 /* ClipNinjaApp */,
 			);
 		};
 /* End PBXProject section */
@@ -219,7 +209,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -274,7 +264,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -298,13 +288,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "App/Assets/ClipNinja-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ninja.clip.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -329,13 +320,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "App/Assets/ClipNinja-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ninja.clip.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -357,7 +349,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinja" */ = {
+		2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinjaApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2CE346782722B0F8000AAEC9 /* Debug */,
@@ -369,17 +361,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2CE7B5EE27943A6F00BDDE33 /* Features */ = {
+		2CBC809228D8F1BD00490E80 /* ClipNinja */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Features;
-		};
-		2CE7B5F027943A6F00BDDE33 /* Generic */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Generic;
-		};
-		2CE7B5F227943A6F00BDDE33 /* Infrastructure */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Infrastructure;
+			productName = ClipNinja;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
