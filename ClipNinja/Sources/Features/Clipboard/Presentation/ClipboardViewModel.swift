@@ -10,6 +10,7 @@ public protocol ClipboardViewModel: ObservableObject {
     var shownTab: Int { get }
     var totalTabs: Int { get }
     var clips: [Clip] { get }
+    func onEvent(input: ClipboardViewModelInput)
 }
 
 public enum ClipboardViewModelInput {

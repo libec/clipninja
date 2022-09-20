@@ -74,6 +74,8 @@ struct ClipboardView_Previews: PreviewProvider {
         var clips: [Clip] {
             texts.map { Clip(text: $0, pinned: texts.firstIndex(of: $0)! < 2, selected: texts[4] == $0) }
         }
+        
+        func onEvent(input: ClipboardViewModelInput) { }
     }
 
     static var previews: some View {
