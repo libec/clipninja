@@ -1,41 +1,28 @@
 import SwiftUI
-import Carbon
-
-struct KeyEventHandling: NSViewRepresentable {
-
-    class KeyView: NSView {
-        override var acceptsFirstResponder: Bool { true }
-
-        override func keyDown(with event: NSEvent) {
-            print("\(event.keyCode)")
-            print(CGKeyCode(kVK_ANSI_KeypadEnter))
-        }
-    }
-
-    func makeNSView(context: Context) -> NSView {
-        KeyView()
-    }
-
-    func updateNSView(_ nsView: NSView, context: Context) { }
-}
+import Combine
 
 public struct ClipboardView: View {
 
     private let navigation: Navigation
+    let viewModel: any ClipboardViewModel
 
-    public init(navigation: Navigation) {
+    public init(
+        viewModel: any ClipboardViewModel,
+        navigation: Navigation
+    ) {
+        self.viewModel = viewModel
         self.navigation = navigation
     }
 
     public var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                ForEach(1..<10) { row in
+                ForEach(0..<viewModel.clips.count, id: \.self) { row in
                     ClipboardRow(
-                        text: randomAlphaNumericString(length: 15),
+                        text: viewModel.clips[row].text,
                         shortcut: "\(row)",
-                        pinned: row < 6,
-                        selected: row == 3
+                        pinned: viewModel.clips[row].pinned,
+                        selected: viewModel.clips[row].selected
                     )
                 }
             }
@@ -48,21 +35,6 @@ public struct ClipboardView: View {
         .background(KeyEventHandling())
     }
 
-    func randomAlphaNumericString(length: Int) -> String {
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let allowedCharsCount = UInt32(allowedChars.count)
-        var randomString = ""
-
-        for _ in 0 ..< length {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
-            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
-            let newCharacter = allowedChars[randomIndex]
-            randomString += String(newCharacter)
-        }
-
-        return randomString
-    }
-
     func color(for row: Int, column: Int) -> some View {
         let white = Color(red: 1, green: 1, blue: 1)
         let black = Color(red: 0, green: 0, blue: 0)
@@ -71,4 +43,44 @@ public struct ClipboardView: View {
         let shouldUseBlack = (oddRow && oddColumn) || (!oddRow && !oddColumn)
         return shouldUseBlack ? black : white
     }
+}
+
+struct ClipboardView_Previews: PreviewProvider {
+
+    class NavigationPreview: Navigation {
+        var showClipboard: AnyPublisher<Bool, Never> {
+            Empty().eraseToAnyPublisher()
+        }
+    }
+
+    class ClipboardViewModelPreview: ClipboardViewModel {
+        var shownTab: Int = 0
+
+        var totalTabs: Int = 5
+
+        private var texts: [String] = [
+            "Lorem ipsum dolor",
+            "sit amet, consectetur",
+            "adipiscing elit. Donec nec",
+            "maximus dolor. Quisque id",
+            "eros vel enim tempus fermentum",
+            "eget a lorem.",
+            "Fusce a viverra lorem.",
+            "Sed auctor, lorem eget",
+            "semper facilisis, risus",
+            "dui ornare dolor, sit amet"
+        ]
+
+        var clips: [Clip] {
+            texts.map { Clip(text: $0, pinned: texts.firstIndex(of: $0)! < 2, selected: texts[4] == $0) }
+        }
+    }
+
+    static var previews: some View {
+        ClipboardView(
+            viewModel: ClipboardViewModelPreview(),
+            navigation: NavigationPreview()
+        )
+    }
+
 }
