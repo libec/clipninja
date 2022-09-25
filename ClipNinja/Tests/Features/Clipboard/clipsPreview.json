@@ -1,0 +1,20 @@
+[
+  {
+    "previewText": "foo",
+    "pinned": false,
+    "selected": false,
+    "shortcutNumber": "1"
+  },
+  {
+    "previewText": "bar",
+    "pinned": false,
+    "selected": false,
+    "shortcutNumber": "2"
+  },
+  {
+    "previewText": "extension Array {",
+    "pinned": false,
+    "selected": false,
+    "shortcutNumber": "3"
+  }
+]

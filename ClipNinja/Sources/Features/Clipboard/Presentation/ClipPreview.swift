@@ -1,6 +1,6 @@
-public struct ClipPreview {
-    public let previewText: String
-    public let selected: Bool
-    public let pinned: Bool
-    public let shortcutNumber: String
+struct ClipPreview: Codable, Equatable {
+    let previewText: String
+    let selected: Bool
+    let pinned: Bool
+    let shortcutNumber: String
 }

@@ -1,12 +1,12 @@
 import SwiftUI
 import Combine
 
-public struct ClipboardView: View {
+struct ClipboardView: View {
 
     private let navigation: Navigation
     let viewModel: any ClipboardViewModel
 
-    public init(
+    init(
         viewModel: any ClipboardViewModel,
         navigation: Navigation
     ) {
@@ -83,7 +83,8 @@ struct ClipboardView_Previews: PreviewProvider {
             }
         }
         
-        func onEvent(input: ClipboardViewModelInput) { }
+        func onEvent(_ input: ClipboardViewModelEvent) { }
+        func subscribe() { }
     }
 
     static var previews: some View {

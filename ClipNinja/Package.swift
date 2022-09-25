@@ -29,7 +29,11 @@ let package = Package(
         .testTarget(
             name: "ClipNinjaTests",
             dependencies: ["ClipNinja"],
-            path: "Tests"
-        ),
+            path: "Tests",
+            resources: [
+                .process("Features/Clipboard/clips.json"),
+                .process("Features/Clipboard/clipsPreview.json")
+            ]
+        )
     ]
 )

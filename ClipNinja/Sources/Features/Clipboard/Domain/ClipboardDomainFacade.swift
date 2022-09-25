@@ -20,9 +20,9 @@ protocol DeleteUseCase {
     func delete()
 }
 
-enum PasteIndex {
+enum PasteIndex: Equatable {
     case selected
-    case index(index: Int)
+    case index(_ index: Int)
 }
 
 protocol PasteUseCase {
