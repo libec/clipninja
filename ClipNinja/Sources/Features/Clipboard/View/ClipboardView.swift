@@ -17,12 +17,12 @@ public struct ClipboardView: View {
     public var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                ForEach(0..<viewModel.clips.count, id: \.self) { row in
+                ForEach(0..<viewModel.clipPreviews.count, id: \.self) { row in
                     ClipboardRow(
-                        text: viewModel.clips[row].text,
+                        text: viewModel.clipPreviews[row].previewText,
                         shortcut: "\(row)",
-                        pinned: viewModel.clips[row].pinned,
-                        selected: viewModel.clips[row].selected
+                        pinned: viewModel.clipPreviews[row].pinned,
+                        selected: viewModel.clipPreviews[row].selected
                     )
                 }
             }
@@ -54,6 +54,7 @@ struct ClipboardView_Previews: PreviewProvider {
     }
 
     class ClipboardViewModelPreview: ClipboardViewModel {
+
         var shownTab: Int = 0
 
         var totalTabs: Int = 5
@@ -71,8 +72,15 @@ struct ClipboardView_Previews: PreviewProvider {
             "dui ornare dolor, sit amet"
         ]
 
-        var clips: [Clip] {
-            texts.map { Clip(text: $0, pinned: texts.firstIndex(of: $0)! < 2, selected: texts[4] == $0) }
+        var clipPreviews: [ClipPreview] {
+            texts.map {
+                ClipPreview(
+                    previewText: $0,
+                    selected: texts[4] == $0,
+                    pinned: texts.firstIndex(of: $0)! < 2,
+                    shortcutNumber: "\($0)"
+                )
+            }
         }
         
         func onEvent(input: ClipboardViewModelInput) { }
