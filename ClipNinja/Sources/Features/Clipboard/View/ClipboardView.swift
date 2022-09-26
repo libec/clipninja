@@ -1,7 +1,7 @@
 import SwiftUI
 import Combine
 
-struct ClipboardView: View {
+public struct ClipboardView: View {
 
     private let navigation: Navigation
     let viewModel: any ClipboardViewModel

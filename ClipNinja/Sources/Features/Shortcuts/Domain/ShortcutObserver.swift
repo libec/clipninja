@@ -1,6 +1,6 @@
 import Combine
 
-public protocol ShortcutObserver {
+protocol ShortcutObserver {
     func observe() 
     var showClipboard: AnyPublisher<Void, Never> { get }
 }

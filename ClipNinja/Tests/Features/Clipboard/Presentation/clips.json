@@ -10,7 +10,7 @@
     "selected": false
 },
     {
-    "text": "extension Array {\n\npublic func mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {\nreturn zip((self.startIndex ..< self.endIndex), self).map(f)\n}\n}",
+    "text": "extension Array {\n\nfunc mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {\nreturn zip((self.startIndex ..< self.endIndex), self).map(f)\n}\n}",
     "pinned": false,
     "selected": false
 }

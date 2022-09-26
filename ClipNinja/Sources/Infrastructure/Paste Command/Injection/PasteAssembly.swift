@@ -1,11 +1,11 @@
 import Swinject
 import SwinjectAutoregistration
 
-public struct PasteAssembly: Assembly {
+struct PasteAssembly: Assembly {
     
-    public init() { }
+    init() { }
 
-    public func assemble(container: Container) {
+    func assemble(container: Container) {
         container.autoregister(PasteCommand.self, initializer: SystemPasteCommand.init)
     }
 }

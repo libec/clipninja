@@ -4,7 +4,7 @@ public struct SettingsView: View {
 
     @EnvironmentObject private var windowsState: AppWindowsState
 
-    public init() { }
+    init() { }
 
     public var body: some View {
         VStack {

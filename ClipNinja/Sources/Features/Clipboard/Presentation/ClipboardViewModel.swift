@@ -22,9 +22,9 @@ enum ClipboardViewModelEvent: Equatable {
 
 final class ClipboardViewModelImpl: ClipboardViewModel {
 
-    @Published public var shownPage: Int = ViewPortConfiguration.defaultSelectedPage
-    @Published public var totalPages: Int = ViewPortConfiguration.totalPages
-    @Published public var clipPreviews: [ClipPreview] = []
+    @Published var shownPage: Int = ViewPortConfiguration.defaultSelectedPage
+    @Published var totalPages: Int = ViewPortConfiguration.totalPages
+    @Published var clipPreviews: [ClipPreview] = []
 
     private var subscriptions = Set<AnyCancellable>()
 

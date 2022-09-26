@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Clip: Codable {
+struct Clip: Codable {
     let text: String
     let pinned: Bool
     let selected: Bool

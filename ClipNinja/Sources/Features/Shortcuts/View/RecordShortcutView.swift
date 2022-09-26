@@ -1,11 +1,11 @@
 import SwiftUI
 import KeyboardShortcuts
 
-public struct RecordShortcutView: View {
+struct RecordShortcutView: View {
 
-    public init() { }
+    init() { }
 
-    public var body: some View {
+    var body: some View {
         HStack(alignment: .firstTextBaseline) {
             Text("Shortcut to show clipboards:")
             KeyboardShortcuts.Recorder(for: .toggleClipNinja) { shortcut in

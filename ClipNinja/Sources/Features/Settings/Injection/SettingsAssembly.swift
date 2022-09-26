@@ -1,11 +1,11 @@
 import Swinject
 import SwinjectAutoregistration
 
-public struct SettingsAssembly: Assembly {
+struct SettingsAssembly: Assembly {
 
-    public init() { }
+    init() { }
     
-    public func assemble(container: Container) {
+    func assemble(container: Container) {
         container.autoregister(SettingsView.self, initializer: SettingsView.init)
     }
 }

@@ -1,5 +1,5 @@
 import Carbon
 
-public protocol PasteCommand {
+protocol PasteCommand {
     func paste()
 }

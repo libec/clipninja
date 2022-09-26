@@ -1,10 +1,10 @@
 import Swinject
 
-public struct InstanceProviderAssembly: Assembly {
+struct InstanceProviderAssembly: Assembly {
 
-    public init() { }
+    init() { }
     
-    public func assemble(container: Container) {
+    func assemble(container: Container) {
         container.register(InstanceProvider.self) { resolver in
             SwinjectInstanceProvider(resolver: resolver)
         }.inObjectScope(.container)

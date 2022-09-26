@@ -1,4 +1,4 @@
-public protocol Logger {
+protocol Logger {
     func log(message: String)
 }
 
@@ -12,6 +12,6 @@ struct LoggerHolder {
     static let logger: Logger = PrintLogger()
 }
 
-public func log(message: String) {
+func log(message: String) {
     LoggerHolder.logger.log(message: message)
 }

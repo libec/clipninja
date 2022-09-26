@@ -1,10 +1,10 @@
 import Carbon
 
-public final class SystemPasteCommand: PasteCommand {
+final class SystemPasteCommand: PasteCommand {
 
-    public init() { }
+    init() { }
 
-    public func paste() {
+    func paste() {
         let pasteCommandDown = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_ANSI_V), keyDown: true)
         pasteCommandDown?.flags = .maskCommand
 

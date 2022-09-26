@@ -1,16 +1,16 @@
 import Swinject
 import SwinjectAutoregistration
 
-public struct ShortcutsAssembly: Assembly {
+struct ShortcutsAssembly: Assembly {
 
-    public init() { }
+    init() { }
     
-    public func assemble(container: Container) {
+    func assemble(container: Container) {
         container.autoregister(ShortcutObserver.self, initializer: SystemShortcutObserver.init)
             .inObjectScope(.container)
     }
 
-    public func loaded(resolver: Resolver) {
+    func loaded(resolver: Resolver) {
         resolver.resolve(ShortcutObserver.self)!.observe()
     }
 }
