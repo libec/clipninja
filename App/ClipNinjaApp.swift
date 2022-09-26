@@ -19,7 +19,6 @@ struct ClipNinjaApp: App {
     init() {
         self.instanceProvider = applicationAssembly.resolveDependencyGraph()
         self.windowsState = AppWindowsState(navigation: instanceProvider.resolve(Navigation.self))
-
     }
 
     var body: some Scene {
@@ -36,7 +35,6 @@ struct ClipNinjaApp: App {
             }
         }
         .windowStyle(HiddenTitleBarWindowStyle())
-
     }
 
     private func setupSettings(instanceProvider: InstanceProvider) {
