@@ -1,6 +1,6 @@
 import Combine
 
 protocol ClipsRepository {
-    var clips: AnyPublisher<[Clip], Never> { get }
-    var lastClips: [Clip] { get }
+    var clips: AnyPublisher<[ClipboardRecord], Never> { get }
+    var lastClips: [ClipboardRecord] { get }
 }

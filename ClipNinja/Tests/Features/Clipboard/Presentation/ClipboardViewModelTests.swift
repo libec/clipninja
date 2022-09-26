@@ -54,8 +54,8 @@ class ClipboardViewModelTests: XCTestCase {
         clipboards.subject.send(
             ClipboardViewPort(
                 clips: clips,
-                selectedTab: 3,
-                numberOfTabs: 7
+                selectedPage: 3,
+                numberOfPages: 7
             )
         )
 
@@ -63,11 +63,11 @@ class ClipboardViewModelTests: XCTestCase {
             XCTAssertEqual(value, clipsPreviews)
         }.store(in: &subscriptions)
 
-        sut.$totalTabs.sink { tabs in
+        sut.$totalPages.sink { tabs in
             XCTAssertEqual(tabs, 7)
         }.store(in: &subscriptions)
 
-        sut.$shownTab.sink { tabs in
+        sut.$shownPage.sink { tabs in
             XCTAssertEqual(tabs, 3)
         }.store(in: &subscriptions)
     }

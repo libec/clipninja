@@ -2,8 +2,8 @@ import Combine
 
 struct ClipboardViewPort {
     let clips: [Clip]
-    let selectedTab: Int
-    let numberOfTabs: Int
+    let selectedPage: Int
+    let numberOfPages: Int
 }
 
 protocol GetViewPortUseCase {

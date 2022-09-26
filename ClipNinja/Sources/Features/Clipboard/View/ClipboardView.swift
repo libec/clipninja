@@ -55,9 +55,9 @@ struct ClipboardView_Previews: PreviewProvider {
 
     class ClipboardViewModelPreview: ClipboardViewModel {
 
-        var shownTab: Int = 0
+        var shownPage: Int = 0
 
-        var totalTabs: Int = 5
+        var totalPages: Int = 5
 
         private var texts: [String] = [
             "Lorem ipsum dolor",

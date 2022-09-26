@@ -56,14 +56,14 @@ class ViewPortRepositorySpy: ViewPortRepository {
 }
 
 class ClipsRepositoryStub: ClipsRepository {
-    var clips: AnyPublisher<[Clip], Never> {
+    var clips: AnyPublisher<[ClipboardRecord], Never> {
         Just(lastClips)
             .eraseToAnyPublisher()
     }
 
-    var lastClips: [Clip] {
+    var lastClips: [ClipboardRecord] {
         return (0..<numberOfClips).map { _ in
-            Clip(text: "", pinned: false, selected: false)
+            ClipboardRecord(text: "", pinned: false)
         }
     }
 

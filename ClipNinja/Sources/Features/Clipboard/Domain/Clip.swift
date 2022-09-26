@@ -5,3 +5,8 @@ public struct Clip: Codable {
     let pinned: Bool
     let selected: Bool
 }
+
+struct ClipboardRecord: Codable {
+    let text: String
+    let pinned: Bool
+}

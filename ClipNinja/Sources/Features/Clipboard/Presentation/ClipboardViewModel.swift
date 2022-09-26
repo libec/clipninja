@@ -2,8 +2,8 @@ import Combine
 import Foundation
 
 protocol ClipboardViewModel: ObservableObject {
-    var shownTab: Int { get }
-    var totalTabs: Int { get }
+    var shownPage: Int { get }
+    var totalPages: Int { get }
     var clipPreviews: [ClipPreview] { get }
     func onEvent(_ event: ClipboardViewModelEvent)
     func subscribe()
@@ -22,8 +22,8 @@ enum ClipboardViewModelEvent: Equatable {
 
 final class ClipboardViewModelImpl: ClipboardViewModel {
 
-    @Published public var shownTab: Int = ViewPortConfiguration.defaultSelectedTab
-    @Published public var totalTabs: Int = ViewPortConfiguration.totalPages
+    @Published public var shownPage: Int = ViewPortConfiguration.defaultSelectedPage
+    @Published public var totalPages: Int = ViewPortConfiguration.totalPages
     @Published public var clipPreviews: [ClipPreview] = []
 
     private var subscriptions = Set<AnyCancellable>()
@@ -42,8 +42,8 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
     func subscribe() {
         clipboards.clips
             .sink { value in
-                self.totalTabs = value.numberOfTabs
-                self.shownTab = value.selectedTab
+                self.totalPages = value.numberOfPages
+                self.shownPage = value.selectedPage
                 self.clipPreviews = value.clips.enumerated().map { index, clip in
                     self.previewFactory.makePreview(from: clip, index: index)
                 }
