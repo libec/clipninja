@@ -38,22 +38,8 @@ class ClipboardViewModelTests: XCTestCase {
     }
 
     func test_it_updates_view_with_formatted_clip_previews() throws {
-        guard let clipsPath = Bundle.module.url(forResource: "clips", withExtension: "json")
-        else {
-            XCTFail()
-            return
-        }
-
-        guard let clipsPreviewPath = Bundle.module.url(forResource: "clipsPreview", withExtension: "json")
-        else {
-            XCTFail()
-            return
-        }
-
-        let clipsData = try Data(contentsOf: clipsPath, options: [])
-        let clipsPreviewData = try Data(contentsOf: clipsPreviewPath, options: [])
-        let clips = try JSONDecoder().decode([Clip].self, from: clipsData)
-        let clipsPreviews = try JSONDecoder().decode([ClipPreview].self, from: clipsPreviewData)
+        let clips = try loadFromJson(type: [Clip].self, path: "clips")
+        let clipsPreviews = try loadFromJson(type: [ClipPreview].self, path: "clipsPreview")
         let clipboards = ClipboardsStub()
         let factory = ClipboardPreviewFactoryImpl()
         var subscriptions = Set<AnyCancellable>()
@@ -125,12 +111,14 @@ class ClipboardsStub: ClipboardsSpy {
 }
 
 class ClipboardPreviewFactoryDummy: ClipboardPreviewFactory {
+
     func makePreview(from clip: Clip, index: Int) -> ClipPreview {
         return .dummy
     }
 }
 
 extension ClipPreview {
+
     static var dummy: ClipPreview {
         ClipPreview(
             previewText: "foo",

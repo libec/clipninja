@@ -31,8 +31,8 @@ let package = Package(
             dependencies: ["ClipNinja"],
             path: "Tests",
             resources: [
-                .process("Features/Clipboard/clips.json"),
-                .process("Features/Clipboard/clipsPreview.json")
+                .process("Features/Clipboard/Presentation/clips.json"),
+                .process("Features/Clipboard/Presentation/clipsPreview.json")
             ]
         )
     ]
