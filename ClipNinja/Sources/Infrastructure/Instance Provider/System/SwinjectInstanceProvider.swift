@@ -15,4 +15,8 @@ class SwinjectInstanceProvider: InstanceProvider {
     func resolve<Instance, Argument>(_ type: Instance.Type, argument: Argument) -> Instance {
         resolver.resolve(type, argument: argument)!
     }
+
+    func resolve<Instance>(_ type: Instance.Type, name: String) -> Instance {
+        resolver.resolve(type, name: name)!
+    }
 }
