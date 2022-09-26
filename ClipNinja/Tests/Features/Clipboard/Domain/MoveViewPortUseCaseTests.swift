@@ -24,8 +24,8 @@ class MoveViewPortUseCaseTests: XCTestCase {
         movement: ViewPortMovement,
         expectedPosition: Int
     ) {
-        let viewPortRepository = ViewPortRepositorySpy()
-        viewPortRepository.lastPosition = position
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: position)
         let clipsRepository = ClipsRepositoryStub()
         clipsRepository.numberOfClips = numberOfClips
         let sut = MoveViewPortUseCaseImpl(
@@ -35,24 +35,8 @@ class MoveViewPortUseCaseTests: XCTestCase {
 
         sut.move(to: movement)
 
-        XCTAssertEqual(viewPortRepository.newPosition, expectedPosition)
+        XCTAssertEqual(viewPortRepository.lastPosition, expectedPosition)
     }
-}
-
-class ViewPortRepositorySpy: ViewPortRepository {
-
-    var newPosition: Int = Int.min
-
-    var position: AnyPublisher<Int, Never> {
-        Just(lastPosition)
-            .eraseToAnyPublisher()
-    }
-
-    func update(position: Int) {
-        newPosition = position
-    }
-
-    var lastPosition: Int = 0
 }
 
 class ClipsRepositoryStub: ClipsRepository {
