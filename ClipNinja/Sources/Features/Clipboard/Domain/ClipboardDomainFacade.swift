@@ -2,6 +2,40 @@ import Combine
 
 protocol Clipboards: GetViewPortUseCase, PinUseCase, DeleteUseCase, PasteUseCase, MoveViewPortUseCase { }
 
+final class ClipboardsFacade: Clipboards {
+
+    private let getViewPortUseCase: GetViewPortUseCase
+    private let moveViewPortUseCase: MoveViewPortUseCase
+
+    init(
+        getViewPortUseCase: GetViewPortUseCase,
+        moveViewPortUseCase: MoveViewPortUseCase
+    ) {
+        self.moveViewPortUseCase = moveViewPortUseCase
+        self.getViewPortUseCase = getViewPortUseCase
+    }
+
+    var clips: AnyPublisher<ClipboardViewPort, Never> {
+        getViewPortUseCase.clips
+    }
+
+    func pin() {
+
+    }
+
+    func delete() {
+
+    }
+
+    func paste(at index: PasteIndex) {
+
+    }
+
+    func move(to viewPort: ViewPortMovement) {
+        moveViewPortUseCase.move(to: viewPort)
+    }
+}
+
 protocol PinUseCase {
     func pin()
 }
