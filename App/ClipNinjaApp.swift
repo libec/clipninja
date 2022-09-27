@@ -3,7 +3,6 @@ import Combine
 import ClipNinja
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-
 }
 
 @main
@@ -26,7 +25,7 @@ struct ClipNinjaApp: App {
             if windowsState.showClipboard {
                 let clipboardView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
                 clipboardView
-                    .frame(width: 400, height: 400)
+                    .frame(width: 600, height: 600)
                     .onAppear {
                         NSApp.activate(ignoringOtherApps: true)
                         setupSettings(instanceProvider: instanceProvider)

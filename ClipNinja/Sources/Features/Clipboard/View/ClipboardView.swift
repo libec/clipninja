@@ -33,6 +33,33 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
             )
         }
         .background(KeyEventHandling())
+//        .background(KeyEventHandling { keyPress in
+//            switch keyPress {
+//            case .numeric(let numericKey):
+//                viewModel.onEvent(.number(number: numericKey.mapToIndex()))
+//            case .key(let key):
+//                switch key {
+//                case .down:
+//                    viewModel.onEvent(.down)
+//                case .up:
+//                    viewModel.onEvent(.up)
+//                case .right:
+//                    viewModel.onEvent(.right)
+//                case .left:
+//                    viewModel.onEvent(.left)
+//                case .backspace:
+//                    viewModel.onEvent(.delete)
+//                case .enter:
+//                    viewModel.onEvent(.enter)
+//                case .space:
+//                    viewModel.onEvent(.space)
+//                case .esc:
+//                    break
+//                case .w:
+//                    break
+//                }
+//            }
+//        })
         .onAppear(perform: viewModel.subscribe)
     }
 }
