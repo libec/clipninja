@@ -2,7 +2,7 @@ import KeyboardShortcuts
 import Combine
 
 extension KeyboardShortcuts.Name {
-    static let toggleClipNinja = Self("aewwf", default: .init(.v, modifiers: [.command, .shift]))
+    static let toggleClipNinja = Self("aewwsgref", default: .init(.v, modifiers: [.command, .shift]))
 }
 
 final class SystemShortcutObserver: ShortcutObserver {
@@ -15,6 +15,7 @@ final class SystemShortcutObserver: ShortcutObserver {
     func observe() {
         log(message: "Listen for shortcut")
         KeyboardShortcuts.onKeyUp(for: .toggleClipNinja) { [self] in
+            print("FOO")
             subject.send(())
         }
     }
@@ -23,4 +24,3 @@ final class SystemShortcutObserver: ShortcutObserver {
         subject.eraseToAnyPublisher()
     }
 }
-

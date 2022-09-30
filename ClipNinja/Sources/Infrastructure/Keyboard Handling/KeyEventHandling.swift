@@ -3,26 +3,30 @@ import SwiftUI
 
 struct KeyEventHandling: NSViewRepresentable {
 
-    class KeyView: NSView {
-
-        override var acceptsFirstResponder: Bool { true }
-
-        override func keyDown(with event: NSEvent) {
-            print("\(event.keyCode)")
-            print(CGKeyCode(kVK_ANSI_KeypadEnter))
-            if let key = Key(rawValue: event.keyCode) {
-                log(message: "\(key)")
-            }
-            if let numericKey = NumericKey(rawValue: event.keyCode) {
-                log(message: "\(numericKey)")
-            }
-        }
-    }
+    let onKeyPress: (KeyPress)->Void
 
     func makeNSView(context: Context) -> NSView {
-        KeyView()
+        let keyView = KeyView()
+        keyView.onKeyPress = onKeyPress
+        return keyView
     }
 
     func updateNSView(_ nsView: NSView, context: Context) { }
+}
+
+class KeyView: NSView {
+
+    var onKeyPress: ((KeyPress)->Void)?
+
+    override var acceptsFirstResponder: Bool { true }
+    
+    override func keyDown(with event: NSEvent) {
+        if let key = Key(rawValue: event.keyCode) {
+            onKeyPress?(.key(key))
+        }
+        if let numericKey = NumericKey(rawValue: event.keyCode) {
+            onKeyPress?(.numeric(numericKey))
+        }
+    }
 }
 

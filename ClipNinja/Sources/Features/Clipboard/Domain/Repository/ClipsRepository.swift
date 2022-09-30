@@ -15,7 +15,7 @@ class InMemoryClipboardsRepository: ClipsRepository {
             "↑ ↑ ↓ ↓ ← → ← →",
             "Text you copy appears here",
             "You can paste with enter",
-            "Also, each clipboard is marked with number",
+            "Also, each clipboard is marked with a number",
             "You can paste by pressing that number",
             "Delete with backspace",
             "Pin to top with space",
