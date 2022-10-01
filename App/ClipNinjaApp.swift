@@ -7,31 +7,27 @@ struct ClipNinjaApp: App {
 
     @State private var window: NSWindow?
     @State private var statusItem: NSStatusItem?
-    @ObservedObject private var windowsState: AppWindowsState
 
     private let applicationAssembly = ApplicationAssembly()
     private let instanceProvider: InstanceProvider
 
     init() {
         self.instanceProvider = applicationAssembly.resolveDependencyGraph()
-        self.windowsState = AppWindowsState(navigation: instanceProvider.resolve(Navigation.self))
     }
 
     var body: some Scene {
         WindowGroup {
-            if windowsState.showClipboard {
-                clipboardView
-            }
+            clipboardView
         }
         .windowStyle(HiddenTitleBarWindowStyle())
     }
 
     private var clipboardView: some View {
-        let clipboardView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
-        return clipboardView
+        instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
             .frame(width: 600, height: 600)
             .onAppear {
                 NSApp.activate(ignoringOtherApps: true)
+                instanceProvider.resolve(Navigation.self).subscribe()
                 setupSettings(instanceProvider: instanceProvider)
                 /*
                  TODO: - Replace with MenuBarExtra on new macOS
@@ -39,7 +35,6 @@ struct ClipNinjaApp: App {
                  */
 
             }
-            .environmentObject(windowsState)
             .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
                 styleWindow()
             }
@@ -55,7 +50,6 @@ struct ClipNinjaApp: App {
         guard statusItem == nil else { return }
 
         let settingsView = instanceProvider.resolve(SettingsView.self)
-            .environmentObject(windowsState)
         let view = NSHostingView(rootView: settingsView)
 
         view.frame = NSRect(x: 0, y: 0, width: 400, height: 200)

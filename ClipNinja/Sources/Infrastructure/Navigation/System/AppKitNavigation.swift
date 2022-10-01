@@ -7,13 +7,15 @@ final class AppKitNavigation: Navigation {
     private let shortcutObserver: ShortcutObserver
     private let hideSubject = PassthroughSubject<Void, Never>()
 
+    private var subscriptions = Set<AnyCancellable>()
+
     init(
         shortcutObserver: ShortcutObserver
     ) {
         self.shortcutObserver = shortcutObserver
     }
 
-    var showClipboard: AnyPublisher<Bool, Never> {
+    private var showClipboard: AnyPublisher<Bool, Never> {
         let resign = NotificationCenter.default
             .publisher(
                 for: NSApplication.didResignActiveNotification,
@@ -40,6 +42,17 @@ final class AppKitNavigation: Navigation {
 
     func hide() {
         hideSubject.send(())
+    }
+
+    func subscribe() {
+        showClipboard.receive(on: DispatchQueue.main)
+            .sink { show in
+                if show {
+                    NSApp.activate(ignoringOtherApps: true)
+                } else {
+                    NSApp.hide(self)
+                }
+            }.store(in: &subscriptions)
     }
 
     private func showPreviousApp() {

@@ -14,8 +14,4 @@ struct NavigationAssembly: Assembly {
         }
         .inObjectScope(.container)
     }
-
-    func loaded(resolver: Resolver) {
-        _ = resolver.resolve(Navigation.self)!
-    }
 }

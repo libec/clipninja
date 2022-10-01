@@ -65,9 +65,7 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 struct ClipboardView_Previews: PreviewProvider {
 
     class NavigationPreview: Navigation {
-        var showClipboard: AnyPublisher<Bool, Never> {
-            Empty().eraseToAnyPublisher()
-        }
+        func subscribe() { }
         func hide() { }
     }
 
