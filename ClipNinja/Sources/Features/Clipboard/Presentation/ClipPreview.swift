@@ -1,9 +1,8 @@
+import Foundation
+
 struct ClipPreview: Codable, Equatable, Identifiable {
-    typealias ObjectIdentifier = String
-    // TODO: - Replace with real identifier
-    var id: ObjectIdentifier {
-        return "\(previewText) + \(shortcutNumber)"
-    }
+
+    var id: String { UUID().uuidString }
 
     let previewText: String
     let selected: Bool
