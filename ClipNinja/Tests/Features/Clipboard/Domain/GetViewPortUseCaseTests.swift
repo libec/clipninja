@@ -2,40 +2,38 @@ import Combine
 import XCTest
 @testable import ClipNinja
 
-class GetViewPortUseCaseTests: XCTestCase {
+class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
 
-    let viewPortConfiguration = TestViewPortConfiguration()
-
-    func test_it_shows_view_port_with_selected_clip_and_calculated_pages() {
-        runViewPortCalculationTests(
+    func test_it_shows_view_port_with_calculated_total_and_shown_pages() {
+        runViewPortPageCalculationTests(
             numberOfClips: viewPortConfiguration.clipsPerPage - 3,
             selectedClip: 3,
             expectedSelectedPage: 0,
             expectedNumberOfPages: 1
         )
 
-        runViewPortCalculationTests(
+        runViewPortPageCalculationTests(
             numberOfClips: viewPortConfiguration.clipsPerPage * 4 - 2,
             selectedClip: viewPortConfiguration.clipsPerPage * 3 + 5,
             expectedSelectedPage: 3,
             expectedNumberOfPages: 4
         )
 
-        runViewPortCalculationTests(
+        runViewPortPageCalculationTests(
             numberOfClips: viewPortConfiguration.clipsPerPage * 4 + 2,
             selectedClip: viewPortConfiguration.clipsPerPage * 4 + 2,
             expectedSelectedPage: 4,
             expectedNumberOfPages: 5
         )
 
-        runViewPortCalculationTests(
+        runViewPortPageCalculationTests(
             numberOfClips: viewPortConfiguration.clipsPerPage * 4,
             selectedClip: viewPortConfiguration.clipsPerPage * 2 + 2,
             expectedSelectedPage: 2,
             expectedNumberOfPages: 4
         )
 
-        runViewPortCalculationTests(
+        runViewPortPageCalculationTests(
             numberOfClips: viewPortConfiguration.clipsPerPage * 2 + 4,
             selectedClip: viewPortConfiguration.clipsPerPage * 2 + 2,
             expectedSelectedPage: 2,
@@ -129,88 +127,5 @@ class GetViewPortUseCaseTests: XCTestCase {
             numberOfClips: viewPortConfiguration.clipsPerPage * 3 + 6,
             expectedSelectedClip: 2
         )
-    }
-
-    func runViewPortCalculationTests(
-        numberOfClips: Int,
-        selectedClip: Int,
-        expectedSelectedPage: Int,
-        expectedNumberOfPages: Int
-    ) {
-        let viewPortRepository = InMemoryViewPortRepository()
-        viewPortRepository.update(position: selectedClip)
-        let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
-        let sut = GetViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
-            viewPortRepository: viewPortRepository,
-            viewPortConfiguration: viewPortConfiguration
-        )
-        var subscription = Set<AnyCancellable>()
-        let expectation = expectation(description: "")
-
-        sut.clips
-            .sink { viewPort in
-                XCTAssertEqual(expectedNumberOfPages, viewPort.numberOfPages)
-                XCTAssertEqual(expectedSelectedPage, viewPort.selectedPage)
-                expectation.fulfill()
-            }
-            .store(in: &subscription)
-
-        waitForExpectations(timeout: .leastNonzeroMagnitude)
-    }
-
-    func runSelectedClipTests(
-        selectedClip: Int,
-        numberOfClips: Int,
-        expectedSelectedClip: Int
-    ) {
-        let viewPortRepository = InMemoryViewPortRepository()
-        viewPortRepository.update(position: selectedClip)
-        let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
-        let sut = GetViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
-            viewPortRepository: viewPortRepository,
-            viewPortConfiguration: viewPortConfiguration
-        )
-        var subscription = Set<AnyCancellable>()
-        let expectation = expectation(description: "")
-
-        sut.clips
-            .sink { viewPort in
-                XCTAssertTrue(viewPort.clips[expectedSelectedClip].selected)
-                viewPort.clips.enumerated().forEach { index, clip in
-                    XCTAssertEqual(clip.selected, index == expectedSelectedClip)
-                }
-                expectation.fulfill()
-            }
-            .store(in: &subscription)
-
-        waitForExpectations(timeout: .leastNonzeroMagnitude)
-    }
-
-    func runClipsSliceTests(
-        clipboardRecords: [ClipboardRecord],
-        selectedClip: Int,
-        expectedClips: [Clip]
-    ) { 
-        let viewPortRepository = InMemoryViewPortRepository()
-        viewPortRepository.update(position: selectedClip)
-        let clipsRepository = ClipsRepositoryStub(lastClips: clipboardRecords)
-        let sut = GetViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
-            viewPortRepository: viewPortRepository,
-            viewPortConfiguration: viewPortConfiguration
-        )
-        var subscription = Set<AnyCancellable>()
-        let expectation = expectation(description: "")
-
-        sut.clips
-            .sink { viewPort in
-                XCTAssertEqual(expectedClips, viewPort.clips)
-                expectation.fulfill()
-            }
-            .store(in: &subscription)
-
-        waitForExpectations(timeout: .leastNonzeroMagnitude)
     }
 }

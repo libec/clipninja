@@ -28,17 +28,18 @@ final class GetViewPortUseCaseImpl: GetViewPortUseCase {
 
     var clips: AnyPublisher<ClipboardViewPort, Never> {
         clipsRepositorty.clips.combineLatest(viewPortRepository.position)
-            .map { (clips, viewPort) in
-                let clipsRemainder = clips.count % self.viewPortConfiguration.clipsPerPage
-                let numberOfPages = (clips.count / self.viewPortConfiguration.clipsPerPage) + (clipsRemainder == 0 ? 0 : 1)
-                let selectedPage = viewPort / self.viewPortConfiguration.clipsPerPage
-                let viewPortRemainder = viewPort % self.viewPortConfiguration.clipsPerPage
-                let clipsLowerBound = selectedPage * self.viewPortConfiguration.clipsPerPage
-                let clipsUpperBound = min((selectedPage + 1) * self.viewPortConfiguration.clipsPerPage, clips.count - 1)
+            .map { (clips, selectedClipIndex) in
+                let clipsPerPage = self.viewPortConfiguration.clipsPerPage
+                let clipsRemainder = clips.count % clipsPerPage
+                let numberOfPages = (clips.count / clipsPerPage) + (clipsRemainder == 0 ? 0 : 1)
+                let selectedPage = selectedClipIndex / clipsPerPage
+                let selectedIndexRemainder = selectedClipIndex % clipsPerPage
+                let clipsLowerBound = selectedPage * clipsPerPage
+                let clipsUpperBound = min((selectedPage + 1) * clipsPerPage, clips.count - 1)
                 let clipsInRange = clips[clipsLowerBound...clipsUpperBound]
                 return ClipboardViewPort(
                     clips: clipsInRange.enumerated().map { (index, clip) in
-                        return Clip(text: clip.text, pinned: clip.pinned, selected: index == viewPortRemainder)
+                        Clip(text: clip.text, pinned: clip.pinned, selected: index == selectedIndexRemainder)
                     },
                     selectedPage: selectedPage,
                     numberOfPages: numberOfPages
