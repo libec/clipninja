@@ -44,6 +44,7 @@ struct ClipNinjaApp: App {
     private func styleWindow() {
         window?.standardWindowButton(.zoomButton)?.isHidden = true
         window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
+        window?.collectionBehavior = .moveToActiveSpace
     }
 
     private func setupSettings(instanceProvider: InstanceProvider) {

@@ -26,8 +26,7 @@ class MoveViewPortUseCaseTests: XCTestCase {
     ) {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: position)
-        let clipsRepository = ClipsRepositoryStub()
-        clipsRepository.numberOfClips = numberOfClips
+        let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
         let sut = MoveViewPortUseCaseImpl(
             viewPortRepository: viewPortRepository,
             clipsRepository: clipsRepository
@@ -37,19 +36,4 @@ class MoveViewPortUseCaseTests: XCTestCase {
 
         XCTAssertEqual(viewPortRepository.lastPosition, expectedPosition)
     }
-}
-
-class ClipsRepositoryStub: ClipsRepository {
-    var clips: AnyPublisher<[ClipboardRecord], Never> {
-        Just(lastClips)
-            .eraseToAnyPublisher()
-    }
-
-    var lastClips: [ClipboardRecord] {
-        return (0..<numberOfClips).map { _ in
-            ClipboardRecord(text: "", pinned: false)
-        }
-    }
-
-    var numberOfClips: Int = 0
 }

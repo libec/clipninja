@@ -1,3 +1,4 @@
+// Make view port injectable for sure
 enum ViewPortConfiguration {
     static let totalPages = 9
     static let defaultSelectedPage = 0
