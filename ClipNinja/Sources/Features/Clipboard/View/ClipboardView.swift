@@ -24,12 +24,12 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
     private var clipboardContent: some View  {
         VStack(spacing: 0) {
-            ForEach(0..<viewModel.clipPreviews.count, id: \.self) { row in
+            ForEach(viewModel.clipPreviews) { preview in
                 ClipboardRow(
-                    text: viewModel.clipPreviews[row].previewText,
-                    shortcut: "\(row)",
-                    pinned: viewModel.clipPreviews[row].pinned,
-                    selected: viewModel.clipPreviews[row].selected
+                    text: preview.previewText,
+                    shortcut: preview.shortcutNumber,
+                    pinned: preview.pinned,
+                    selected: preview.selected
                 )
             }
             SettingsView()
