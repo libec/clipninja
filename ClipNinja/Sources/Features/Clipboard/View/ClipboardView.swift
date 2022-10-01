@@ -52,8 +52,7 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
         case .space:
             viewModel.onEvent(.space)
         case .escape:
-//            navigation.hide()
-            log(message: "escape")
+            navigation.hide()
         case .keypad1, .one:
             log(message: "one pressed")
         default:

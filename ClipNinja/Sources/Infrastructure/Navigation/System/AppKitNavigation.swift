@@ -5,6 +5,7 @@ import SwiftUI
 final class AppKitNavigation: Navigation {
 
     private let shortcutObserver: ShortcutObserver
+    private let hideSubject = PassthroughSubject<Void, Never>()
 
     init(
         shortcutObserver: ShortcutObserver
@@ -13,7 +14,11 @@ final class AppKitNavigation: Navigation {
     }
 
     var showClipboard: AnyPublisher<Bool, Never> {
-        let resign = NotificationCenter.default.publisher(for: NSApplication.didResignActiveNotification, object: nil)
+        let resign = NotificationCenter.default
+            .publisher(
+                for: NSApplication.didResignActiveNotification,
+                object: nil
+            )
             .map { _ in false }
             .eraseToAnyPublisher()
 
@@ -21,22 +26,27 @@ final class AppKitNavigation: Navigation {
             .map { _ in true }
             .eraseToAnyPublisher()
 
+        let hide = hideSubject.map { _ in false }
+            .eraseToAnyPublisher()
+
         /*
          store app when going to foreground
          */
 
-        return resign.merge(with: shortcut).eraseToAnyPublisher()
+        return resign.merge(with: shortcut)
+            .merge(with: hide)
+            .print("Navigation")
+            .eraseToAnyPublisher()
     }
 
-    func showPreviousApp() {
+    func hide() {
+        hideSubject.send(())
+    }
+
+    private func showPreviousApp() {
         /*
          1. switch app
          2. remove stored app from background
          */
-    }
-
-
-    deinit {
-        log(message: "AppKit Navigation deinited")
     }
 }
