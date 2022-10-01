@@ -2,15 +2,11 @@ import SwiftUI
 import Combine
 import ClipNinja
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-}
-
 @main
 struct ClipNinjaApp: App {
 
     @State private var statusItem: NSStatusItem?
     @ObservedObject private var windowsState: AppWindowsState
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     private let applicationAssembly = ApplicationAssembly()
     private let instanceProvider: InstanceProvider
@@ -23,17 +19,29 @@ struct ClipNinjaApp: App {
     var body: some Scene {
         WindowGroup {
             if windowsState.showClipboard {
-                let clipboardView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
                 clipboardView
-                    .frame(width: 600, height: 600)
-                    .onAppear {
-                        NSApp.activate(ignoringOtherApps: true)
-                        setupSettings(instanceProvider: instanceProvider)
-                    }
-                    .environmentObject(windowsState)
             }
         }
         .windowStyle(HiddenTitleBarWindowStyle())
+    }
+
+    private var clipboardView: some View {
+        let clipboardView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
+        return clipboardView
+            .frame(width: 600, height: 600)
+            .onAppear {
+                NSApp.activate(ignoringOtherApps: true)
+                setupSettings(instanceProvider: instanceProvider)
+            }
+            .environmentObject(windowsState)
+            .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+                styleWindow()
+            }
+    }
+
+    private func styleWindow() {
+        NSApp.mainWindow?.standardWindowButton(.zoomButton)?.isHidden = true
+        NSApp.mainWindow?.standardWindowButton(.miniaturizeButton)?.isHidden = true
     }
 
     private func setupSettings(instanceProvider: InstanceProvider) {

@@ -1,9 +1,10 @@
 import Carbon
 import SwiftUI
+import KeyboardShortcuts
 
 struct KeyEventHandling: NSViewRepresentable {
 
-    let onKeyPress: (KeyPress)->Void
+    let onKeyPress: (KeyboardShortcuts.Key)->Void
 
     func makeNSView(context: Context) -> NSView {
         let keyView = KeyView()
@@ -16,17 +17,13 @@ struct KeyEventHandling: NSViewRepresentable {
 
 class KeyView: NSView {
 
-    var onKeyPress: ((KeyPress)->Void)?
+    var onKeyPress: ((KeyboardShortcuts.Key)->Void)?
 
     override var acceptsFirstResponder: Bool { true }
     
     override func keyDown(with event: NSEvent) {
-        if let key = Key(rawValue: event.keyCode) {
-            onKeyPress?(.key(key))
-        }
-        if let numericKey = NumericKey(rawValue: event.keyCode) {
-            onKeyPress?(.numeric(numericKey))
-        }
+        let keyboardShortcut = KeyboardShortcuts.Key(rawValue: Int(event.keyCode))
+        onKeyPress?(keyboardShortcut)
     }
 }
 

@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import KeyboardShortcuts
 
 struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
@@ -15,52 +16,49 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                ForEach(0..<viewModel.clipPreviews.count, id: \.self) { row in
-                    ClipboardRow(
-                        text: viewModel.clipPreviews[row].previewText,
-                        shortcut: "\(row)",
-                        pinned: viewModel.clipPreviews[row].pinned,
-                        selected: viewModel.clipPreviews[row].selected
-                    )
-                }
-            }
-            .frame(
-                width: geometry.size.width,
-                height: geometry.size.height,
-                alignment: .center
-            )
-        }
-        .background(KeyEventHandling(onKeyPress: { keyPress in
+        clipboardContent
+            .background(KeyEventHandling(onKeyPress: onKeyPress(keyPress:)))
+            .onAppear(perform: viewModel.subscribe)
+    }
 
-            switch keyPress {
-            case .numeric(let numericKey):
-                viewModel.onEvent(.number(number: numericKey.mapToIndex()))
-            case .key(let key):
-                switch key {
-                case .down:
-                    viewModel.onEvent(.down)
-                case .up:
-                    viewModel.onEvent(.up)
-                case .right:
-                    viewModel.onEvent(.right)
-                case .left:
-                    viewModel.onEvent(.left)
-                case .backspace:
-                    viewModel.onEvent(.delete)
-                case .enter:
-                    viewModel.onEvent(.enter)
-                case .space:
-                    viewModel.onEvent(.space)
-                case .esc:
-                    print("FOO ESCAPE YOOOO")
-                case .w:
-                    break
-                }
+    private var clipboardContent: some View  {
+        VStack(spacing: 0) {
+            ForEach(0..<viewModel.clipPreviews.count, id: \.self) { row in
+                ClipboardRow(
+                    text: viewModel.clipPreviews[row].previewText,
+                    shortcut: "\(row)",
+                    pinned: viewModel.clipPreviews[row].pinned,
+                    selected: viewModel.clipPreviews[row].selected
+                )
             }
-        }))
-        .onAppear(perform: viewModel.subscribe)
+            SettingsView()
+        }
+    }
+
+    private func onKeyPress(keyPress: KeyboardShortcuts.Key) {
+        switch keyPress {
+        case .downArrow:
+            viewModel.onEvent(.down)
+        case .upArrow:
+            viewModel.onEvent(.up)
+        case .rightArrow:
+            viewModel.onEvent(.right)
+        case .leftArrow:
+            viewModel.onEvent(.left)
+        case .delete:
+            viewModel.onEvent(.delete)
+        case .keypadEnter, .`return`:
+            viewModel.onEvent(.enter)
+        case .space:
+            viewModel.onEvent(.space)
+        case .escape:
+//            navigation.hide()
+            log(message: "escape")
+        case .keypad1, .one:
+            log(message: "one pressed")
+        default:
+            log(message: "unhandled key press: \(keyPress)")
+        }
     }
 }
 
@@ -70,6 +68,7 @@ struct ClipboardView_Previews: PreviewProvider {
         var showClipboard: AnyPublisher<Bool, Never> {
             Empty().eraseToAnyPublisher()
         }
+        func hide() { }
     }
 
     class ClipboardViewModelPreview: ClipboardViewModel {
