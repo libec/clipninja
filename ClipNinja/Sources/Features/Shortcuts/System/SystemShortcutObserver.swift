@@ -13,7 +13,6 @@ final class SystemShortcutObserver: ShortcutObserver {
     }
 
     func observe() {
-        log(message: "Listen for shortcut")
         KeyboardShortcuts.onKeyUp(for: .toggleClipNinja) { [self] in
             subject.send(())
         }

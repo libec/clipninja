@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C57FE2C28E8301700CCFB1D /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57FE2B28E8301700CCFB1D /* WindowAccessor.swift */; };
 		2CBC809328D8F1BD00490E80 /* ClipNinja in Frameworks */ = {isa = PBXBuildFile; productRef = 2CBC809228D8F1BD00490E80 /* ClipNinja */; };
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C57FE2B28E8301700CCFB1D /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
 		2CBC809128D8F1B100490E80 /* ClipNinja */ = {isa = PBXFileReference; lastKnownFileType = text; path = ClipNinja; sourceTree = SOURCE_ROOT; };
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
+				2C57FE2B28E8301700CCFB1D /* WindowAccessor.swift */,
 				2C91E4202722EF8F00CD2418 /* Assets */,
 			);
 			path = App;
@@ -151,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C57FE2C28E8301700CCFB1D /* WindowAccessor.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

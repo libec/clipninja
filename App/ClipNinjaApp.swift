@@ -5,6 +5,7 @@ import ClipNinja
 @main
 struct ClipNinjaApp: App {
 
+    @State private var window: NSWindow?
     @State private var statusItem: NSStatusItem?
     @ObservedObject private var windowsState: AppWindowsState
 
@@ -32,16 +33,22 @@ struct ClipNinjaApp: App {
             .onAppear {
                 NSApp.activate(ignoringOtherApps: true)
                 setupSettings(instanceProvider: instanceProvider)
+                /*
+                 TODO: - Replace with MenuBarExtra on new macOS
+                    https://developer.apple.com/documentation/SwiftUI/MenuBarExtra
+                 */
+
             }
             .environmentObject(windowsState)
             .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
                 styleWindow()
             }
+            .background(WindowAccessor(window: $window))
     }
 
     private func styleWindow() {
-        NSApp.mainWindow?.standardWindowButton(.zoomButton)?.isHidden = true
-        NSApp.mainWindow?.standardWindowButton(.miniaturizeButton)?.isHidden = true
+        window?.standardWindowButton(.zoomButton)?.isHidden = true
+        window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
     }
 
     private func setupSettings(instanceProvider: InstanceProvider) {

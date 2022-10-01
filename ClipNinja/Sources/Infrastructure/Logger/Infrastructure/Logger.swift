@@ -12,6 +12,6 @@ struct LoggerHolder {
     static let logger: Logger = PrintLogger()
 }
 
-func log(message: String) {
+public func log(message: String) {
     LoggerHolder.logger.log(message: message)
 }

@@ -35,7 +35,6 @@ final class AppKitNavigation: Navigation {
 
         return resign.merge(with: shortcut)
             .merge(with: hide)
-            .print("Navigation")
             .eraseToAnyPublisher()
     }
 
