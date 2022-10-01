@@ -19,6 +19,7 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
         clipboardContent
             .background(KeyEventHandling(onKeyPress: onKeyPress(keyPress:)))
             .onAppear(perform: viewModel.subscribe)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var clipboardContent: some View  {
