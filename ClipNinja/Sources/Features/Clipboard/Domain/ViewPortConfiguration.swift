@@ -1,6 +1,11 @@
-// Make view port injectable for sure
-enum ViewPortConfiguration {
-    static let totalPages = 9
-    static let defaultSelectedPage = 0
-    static let clipsPerPage = 9
+protocol ViewPortConfiguration {
+    var totalPages: Int { get }
+    var defaultSelectedPage: Int { get }
+    var clipsPerPage: Int { get }
+}
+
+struct DefaultViewPortConfiguration: ViewPortConfiguration {
+    let totalPages = 9
+    let defaultSelectedPage = 0
+    let clipsPerPage = 9
 }

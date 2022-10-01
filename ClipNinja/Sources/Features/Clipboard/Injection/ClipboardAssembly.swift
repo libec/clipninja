@@ -24,5 +24,6 @@ struct ClipboardAssembly: Assembly {
         container.autoregister(GetViewPortUseCase.self, initializer: GetViewPortUseCaseImpl.init)
         container.autoregister(ViewPortRepository.self, initializer: InMemoryViewPortRepository.init)
         container.autoregister(ClipsRepository.self, initializer: InMemoryClipboardsRepository.init)
+        container.autoregister(ViewPortConfiguration.self, initializer: DefaultViewPortConfiguration.init).inObjectScope(.container)
     }
 }

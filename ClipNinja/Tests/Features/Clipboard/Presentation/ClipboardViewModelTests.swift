@@ -9,7 +9,8 @@ class ClipboardViewModelTests: XCTestCase {
         let factory = ClipboardPreviewFactoryDummy()
         let sut = ClipboardViewModelImpl(
             clipboards: clipboards,
-            previewFactory: factory
+            previewFactory: factory,
+            viewPortConfiguration: TestViewPortConfiguration()
         )
 
         sut.onEvent(.up)
@@ -46,7 +47,8 @@ class ClipboardViewModelTests: XCTestCase {
 
         let sut = ClipboardViewModelImpl(
             clipboards: clipboards,
-            previewFactory: factory
+            previewFactory: factory,
+            viewPortConfiguration: TestViewPortConfiguration()
         )
 
         sut.subscribe()

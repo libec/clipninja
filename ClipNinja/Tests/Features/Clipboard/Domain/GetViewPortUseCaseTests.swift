@@ -4,38 +4,40 @@ import XCTest
 
 class GetViewPortUseCaseTests: XCTestCase {
 
+    let viewPortConfiguration = TestViewPortConfiguration()
+
     func test_it_shows_view_port_with_selected_clip_and_calculated_pages() {
         runViewPortCalculationTests(
-            numberOfClips: ViewPortConfiguration.clipsPerPage - 3,
+            numberOfClips: viewPortConfiguration.clipsPerPage - 3,
             selectedClip: 3,
             expectedSelectedPage: 0,
             expectedNumberOfPages: 1
         )
 
         runViewPortCalculationTests(
-            numberOfClips: ViewPortConfiguration.clipsPerPage * 4 - 2,
-            selectedClip: ViewPortConfiguration.clipsPerPage * 3 + 5,
+            numberOfClips: viewPortConfiguration.clipsPerPage * 4 - 2,
+            selectedClip: viewPortConfiguration.clipsPerPage * 3 + 5,
             expectedSelectedPage: 3,
             expectedNumberOfPages: 4
         )
 
         runViewPortCalculationTests(
-            numberOfClips: ViewPortConfiguration.clipsPerPage * 4 + 2,
-            selectedClip: ViewPortConfiguration.clipsPerPage * 4 + 2,
+            numberOfClips: viewPortConfiguration.clipsPerPage * 4 + 2,
+            selectedClip: viewPortConfiguration.clipsPerPage * 4 + 2,
             expectedSelectedPage: 4,
             expectedNumberOfPages: 5
         )
 
         runViewPortCalculationTests(
-            numberOfClips: ViewPortConfiguration.clipsPerPage * 4,
-            selectedClip: ViewPortConfiguration.clipsPerPage * 2 + 2,
+            numberOfClips: viewPortConfiguration.clipsPerPage * 4,
+            selectedClip: viewPortConfiguration.clipsPerPage * 2 + 2,
             expectedSelectedPage: 2,
             expectedNumberOfPages: 4
         )
 
         runViewPortCalculationTests(
-            numberOfClips: ViewPortConfiguration.clipsPerPage * 2 + 4,
-            selectedClip: ViewPortConfiguration.clipsPerPage * 2 + 2,
+            numberOfClips: viewPortConfiguration.clipsPerPage * 2 + 4,
+            selectedClip: viewPortConfiguration.clipsPerPage * 2 + 2,
             expectedSelectedPage: 2,
             expectedNumberOfPages: 3
         )
@@ -48,7 +50,8 @@ class GetViewPortUseCaseTests: XCTestCase {
         viewPortRepository.update(position: 0)
         let sut = GetViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
-            viewPortRepository: viewPortRepository
+            viewPortRepository: viewPortRepository,
+            viewPortConfiguration: viewPortConfiguration
         )
 
         var subscription = Set<AnyCancellable>()
@@ -65,13 +68,14 @@ class GetViewPortUseCaseTests: XCTestCase {
     }
 
     func test_it_uses_pinned_clips_from_repository() {
-        let pinnedClips = (0..<ViewPortConfiguration.clipsPerPage).map { _ in Bool.random() }
+        let pinnedClips = (0..<viewPortConfiguration.clipsPerPage).map { _ in Bool.random() }
         let clipsRepository = ClipRepositoryPinnedStub(pinnedClips: pinnedClips)
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
         let sut = GetViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
-            viewPortRepository: viewPortRepository
+            viewPortRepository: viewPortRepository,
+            viewPortConfiguration: viewPortConfiguration
         )
 
         var subscription = Set<AnyCancellable>()
@@ -89,21 +93,21 @@ class GetViewPortUseCaseTests: XCTestCase {
 
     func test_it_uses_clips_that_correspond_to_selected_page() {
         runClipsSliceTests(
-            clipboardRecords: ClipboardRecord.numberStubs(amount: ViewPortConfiguration.clipsPerPage - 2),
+            clipboardRecords: ClipboardRecord.numberStubs(amount: viewPortConfiguration.clipsPerPage - 2),
             selectedClip: 2,
-            expectedClips: Clip.numberStubs(range: 0..<(ViewPortConfiguration.clipsPerPage - 2), selected: 2)
+            expectedClips: Clip.numberStubs(range: 0..<(viewPortConfiguration.clipsPerPage - 2), selected: 2)
         )
 
         runClipsSliceTests(
-            clipboardRecords: ClipboardRecord.numberStubs(amount: ViewPortConfiguration.clipsPerPage * 3),
-            selectedClip: ViewPortConfiguration.clipsPerPage * 2 + 5,
-            expectedClips: Clip.numberStubs(range: ViewPortConfiguration.clipsPerPage * 2..<(ViewPortConfiguration.clipsPerPage * 3), selected: 5)
+            clipboardRecords: ClipboardRecord.numberStubs(amount: viewPortConfiguration.clipsPerPage * 3),
+            selectedClip: viewPortConfiguration.clipsPerPage * 2 + 5,
+            expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 2..<(viewPortConfiguration.clipsPerPage * 3), selected: 5)
         )
 
         runClipsSliceTests(
-            clipboardRecords: ClipboardRecord.numberStubs(amount: ViewPortConfiguration.clipsPerPage * 4),
-            selectedClip: ViewPortConfiguration.clipsPerPage * 3,
-            expectedClips: Clip.numberStubs(range: ViewPortConfiguration.clipsPerPage * 3..<(ViewPortConfiguration.clipsPerPage * 4), selected: 0)
+            clipboardRecords: ClipboardRecord.numberStubs(amount: viewPortConfiguration.clipsPerPage * 4),
+            selectedClip: viewPortConfiguration.clipsPerPage * 3,
+            expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 3..<(viewPortConfiguration.clipsPerPage * 4), selected: 0)
         )
     }
 
@@ -115,14 +119,14 @@ class GetViewPortUseCaseTests: XCTestCase {
         )
 
         runSelectedClipTests(
-            selectedClip: ViewPortConfiguration.clipsPerPage * 3,
-            numberOfClips: ViewPortConfiguration.clipsPerPage * 3 + 6,
+            selectedClip: viewPortConfiguration.clipsPerPage * 3,
+            numberOfClips: viewPortConfiguration.clipsPerPage * 3 + 6,
             expectedSelectedClip: 0
         )
 
         runSelectedClipTests(
-            selectedClip: ViewPortConfiguration.clipsPerPage * 3 + 2,
-            numberOfClips: ViewPortConfiguration.clipsPerPage * 3 + 6,
+            selectedClip: viewPortConfiguration.clipsPerPage * 3 + 2,
+            numberOfClips: viewPortConfiguration.clipsPerPage * 3 + 6,
             expectedSelectedClip: 2
         )
     }
@@ -136,7 +140,11 @@ class GetViewPortUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
-        let sut = GetViewPortUseCaseImpl(clipsRepositorty: clipsRepository, viewPortRepository: viewPortRepository)
+        let sut = GetViewPortUseCaseImpl(
+            clipsRepositorty: clipsRepository,
+            viewPortRepository: viewPortRepository,
+            viewPortConfiguration: viewPortConfiguration
+        )
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
@@ -159,7 +167,11 @@ class GetViewPortUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
-        let sut = GetViewPortUseCaseImpl(clipsRepositorty: clipsRepository, viewPortRepository: viewPortRepository)
+        let sut = GetViewPortUseCaseImpl(
+            clipsRepositorty: clipsRepository,
+            viewPortRepository: viewPortRepository,
+            viewPortConfiguration: viewPortConfiguration
+        )
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
@@ -184,7 +196,11 @@ class GetViewPortUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryStub(lastClips: clipboardRecords)
-        let sut = GetViewPortUseCaseImpl(clipsRepositorty: clipsRepository, viewPortRepository: viewPortRepository)
+        let sut = GetViewPortUseCaseImpl(
+            clipsRepositorty: clipsRepository,
+            viewPortRepository: viewPortRepository,
+            viewPortConfiguration: viewPortConfiguration
+        )
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 

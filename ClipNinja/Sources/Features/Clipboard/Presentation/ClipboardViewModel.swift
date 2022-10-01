@@ -22,8 +22,8 @@ enum ClipboardViewModelEvent: Equatable {
 
 final class ClipboardViewModelImpl: ClipboardViewModel {
 
-    @Published var shownPage: Int = ViewPortConfiguration.defaultSelectedPage
-    @Published var totalPages: Int = ViewPortConfiguration.totalPages
+    @Published var shownPage: Int
+    @Published var totalPages: Int
     @Published var clipPreviews: [ClipPreview] = []
 
     private var subscriptions = Set<AnyCancellable>()
@@ -33,10 +33,13 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
 
     init(
         clipboards: any Clipboards,
-        previewFactory: ClipboardPreviewFactory
+        previewFactory: ClipboardPreviewFactory,
+        viewPortConfiguration: ViewPortConfiguration
     ) {
         self.clipboards = clipboards
         self.previewFactory = previewFactory
+        self.shownPage = viewPortConfiguration.defaultSelectedPage
+        self.totalPages = viewPortConfiguration.totalPages
     }
 
     func subscribe() {
