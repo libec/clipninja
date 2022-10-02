@@ -62,6 +62,6 @@ struct ClipNinjaApp: App {
         menu.addItem(menuItem)
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusItem?.menu = menu
-        self.statusItem?.button?.title = "ClipNinja"
+        self.statusItem?.button?.image = NSImage(named: "MenuIcon")
     }
 }
