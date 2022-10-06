@@ -49,7 +49,3 @@ enum PasteIndex: Equatable {
     case selected
     case index(_ index: Int)
 }
-
-protocol PasteUseCase {
-    func paste(at index: PasteIndex)
-}

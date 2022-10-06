@@ -32,7 +32,19 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
                     selected: preview.selected
                 )
             }
+            Spacer()
+            pages
             SettingsView()
+        }
+    }
+
+    private var pages: some View {
+        HStack {
+            ForEach(0..<viewModel.totalPages, id: \.self) { index in
+                Color(index == viewModel.shownPage ? .red : .white)
+                    .frame(width: 50, height: 5, alignment: .center)
+                    .clipShape(Capsule())
+            }
         }
     }
 
@@ -89,12 +101,12 @@ struct ClipboardView_Previews: PreviewProvider {
         ]
 
         var clipPreviews: [ClipPreview] {
-            texts.map {
+            texts.enumerated().map { index, clip in
                 ClipPreview(
-                    previewText: $0,
-                    selected: texts[4] == $0,
-                    pinned: texts.firstIndex(of: $0)! < 2,
-                    shortcutNumber: "\($0)"
+                    previewText: clip,
+                    selected: texts[1] == clip,
+                    pinned: index < 2,
+                    shortcutNumber: "\(index)"
                 )
             }
         }
