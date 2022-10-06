@@ -18,6 +18,7 @@ enum ClipboardViewModelEvent: Equatable {
     case delete
     case space
     case number(number: Int)
+    case escape
 }
 
 final class ClipboardViewModelImpl: ClipboardViewModel {
@@ -29,15 +30,18 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
     private var subscriptions = Set<AnyCancellable>()
 
     private let clipboards: Clipboards
+    private let hideAppUseCase: HideAppUseCase
     private let previewFactory: ClipboardPreviewFactory
 
     init(
         clipboards: any Clipboards,
         previewFactory: ClipboardPreviewFactory,
+        hideAppUseCase: HideAppUseCase,
         viewPortConfiguration: ViewPortConfiguration
     ) {
         self.clipboards = clipboards
         self.previewFactory = previewFactory
+        self.hideAppUseCase = hideAppUseCase
         self.shownPage = viewPortConfiguration.defaultSelectedPage
         self.totalPages = viewPortConfiguration.totalPages
     }
@@ -72,6 +76,8 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
             clipboards.pin()
         case .number(let number):
             clipboards.paste(at: .index(number))
+        case .escape:
+            hideAppUseCase.hide()
         }
     }
 }

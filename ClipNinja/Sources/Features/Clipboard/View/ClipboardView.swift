@@ -4,15 +4,12 @@ import KeyboardShortcuts
 
 struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
-    private let navigation: Navigation
     @StateObject var viewModel: ViewModel
 
     init(
-        viewModel: ViewModel,
-        navigation: Navigation
+        viewModel: ViewModel
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self.navigation = navigation
     }
 
     var body: some View {
@@ -65,7 +62,7 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
         case .space:
             viewModel.onEvent(.space)
         case .escape:
-            navigation.hide()
+            viewModel.onEvent(.escape)
         case .keypad1, .one:
             log(message: "one pressed")
         default:
@@ -75,11 +72,6 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 }
 
 struct ClipboardView_Previews: PreviewProvider {
-
-    class NavigationPreview: Navigation {
-        func subscribe() { }
-        func hide() { }
-    }
 
     class ClipboardViewModelPreview: ClipboardViewModel {
 
@@ -117,8 +109,7 @@ struct ClipboardView_Previews: PreviewProvider {
 
     static var previews: some View {
         ClipboardView(
-            viewModel: ClipboardViewModelPreview(),
-            navigation: NavigationPreview()
+            viewModel: ClipboardViewModelPreview()
         )
     }
 

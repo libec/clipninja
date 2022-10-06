@@ -10,6 +10,7 @@ class ClipboardViewModelTests: XCTestCase {
         let sut = ClipboardViewModelImpl(
             clipboards: clipboards,
             previewFactory: factory,
+            hideAppUseCase: HideAppUseCaseDummy(),
             viewPortConfiguration: TestViewPortConfiguration()
         )
 
@@ -48,6 +49,7 @@ class ClipboardViewModelTests: XCTestCase {
         let sut = ClipboardViewModelImpl(
             clipboards: clipboards,
             previewFactory: factory,
+            hideAppUseCase: HideAppUseCaseDummy(),
             viewPortConfiguration: TestViewPortConfiguration()
         )
 
@@ -73,8 +75,23 @@ class ClipboardViewModelTests: XCTestCase {
             XCTAssertEqual(tabs, 3)
         }.store(in: &subscriptions)
     }
+
+    func test_is_hides_app_on_escape_event() throws {
+        let hideAppUseCase = HideAppUseCaseSpy()
+        let sut = ClipboardViewModelImpl(
+            clipboards: ClipboardsDummy(),
+            previewFactory: ClipboardPreviewFactoryDummy(),
+            hideAppUseCase: hideAppUseCase,
+            viewPortConfiguration: TestViewPortConfiguration()
+        )
+
+        sut.onEvent(ClipboardViewModelEvent.escape)
+
+        XCTAssertTrue(try XCTUnwrap(hideAppUseCase.hideCalled))
+    }
 }
 
+typealias ClipboardsDummy = ClipboardsSpy
 class ClipboardsSpy: Clipboards {
 
     var pinCalled = false
@@ -100,6 +117,16 @@ class ClipboardsSpy: Clipboards {
 
     func move(to viewPort: ViewPortMovement) {
         movedToViewPort = viewPort
+    }
+}
+
+typealias HideAppUseCaseDummy = HideAppUseCaseSpy
+class HideAppUseCaseSpy: HideAppUseCase {
+
+    var hideCalled: Bool?
+
+    func hide() {
+        hideCalled = true
     }
 }
 
