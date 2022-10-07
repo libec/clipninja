@@ -7,5 +7,5 @@ protocol ViewPortConfiguration {
 struct DefaultViewPortConfiguration: ViewPortConfiguration {
     let totalPages = 9
     let defaultSelectedPage = 0
-    let clipsPerPage = 8
+    let clipsPerPage = 9
 }

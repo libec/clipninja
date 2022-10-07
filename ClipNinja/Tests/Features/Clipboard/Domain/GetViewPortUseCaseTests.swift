@@ -93,7 +93,7 @@ class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
         runClipsSliceTests(
             clipboardRecords: ClipboardRecord.numberStubs(amount: viewPortConfiguration.clipsPerPage - 2),
             selectedClip: 2,
-            expectedClips: Clip.numberStubs(range: 0..<(viewPortConfiguration.clipsPerPage - 2), selected: 2)
+            expectedClips: Clip.numberStubs(range: 0..<(viewPortConfiguration.clipsPerPage - 1), selected: 2)
         )
 
         runClipsSliceTests(
@@ -106,6 +106,12 @@ class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
             clipboardRecords: ClipboardRecord.numberStubs(amount: viewPortConfiguration.clipsPerPage * 4),
             selectedClip: viewPortConfiguration.clipsPerPage * 3,
             expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 3..<(viewPortConfiguration.clipsPerPage * 4), selected: 0)
+        )
+
+        runClipsSliceTests(
+            clipboardRecords: ClipboardRecord.numberStubs(amount: viewPortConfiguration.clipsPerPage),
+            selectedClip: viewPortConfiguration.clipsPerPage - 1,
+            expectedClips: Clip.numberStubs(range: 0..<viewPortConfiguration.clipsPerPage, selected: viewPortConfiguration.clipsPerPage - 1)
         )
     }
 
