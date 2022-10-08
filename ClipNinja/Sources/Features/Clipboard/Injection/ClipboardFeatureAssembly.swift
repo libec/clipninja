@@ -6,7 +6,7 @@ public enum AssemblyKeys: String {
     case clipboardView
 }
 
-struct ClipboardAssembly: Assembly {
+struct ClipboardFeatureAssembly: Assembly {
 
     init() { }
     
@@ -23,7 +23,6 @@ struct ClipboardAssembly: Assembly {
         container.autoregister(MoveViewPortUseCase.self, initializer: MoveViewPortUseCaseImpl.init)
         container.autoregister(GetViewPortUseCase.self, initializer: GetViewPortUseCaseImpl.init)
         container.autoregister(PasteUseCase.self, initializer: PasteUseCaseImpl.init)
-        container.autoregister(ViewPortRepository.self, initializer: InMemoryViewPortRepository.init)
         container.autoregister(ClipsRepository.self, initializer: InMemoryClipboardsRepository.init)
         container.autoregister(ViewPortConfiguration.self, initializer: DefaultViewPortConfiguration.init).inObjectScope(.container)
     }

@@ -7,7 +7,8 @@ public struct ApplicationAssembly {
             InstanceProviderAssembly(),
             SettingsInfrastructureAssembly(),
             SettingsFeatureAssembly(),
-            ClipboardAssembly(),
+            ClipboardFeatureAssembly(),
+            ClipboardInfrastructureAssembly(),
             PasteAssembly(),
             ShortcutsAssembly(),
             NavigationAssembly()
