@@ -5,8 +5,8 @@ import SwiftUI
 final class AppKitNavigation: Navigation {
 
     private let shortcutObserver: ShortcutObserver
-    private let hideSubject = PassthroughSubject<Void, Never>()
 
+    private let hideSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
     init(
@@ -31,10 +31,6 @@ final class AppKitNavigation: Navigation {
         let hide = hideSubject.map { _ in false }
             .eraseToAnyPublisher()
 
-        /*
-         store app when going to foreground
-         */
-
         return resign.merge(with: shortcut)
             .merge(with: hide)
             .eraseToAnyPublisher()
@@ -46,19 +42,12 @@ final class AppKitNavigation: Navigation {
 
     func subscribe() {
         showClipboard.receive(on: DispatchQueue.main)
-            .sink { show in
+            .sink { [weak self] show in
                 if show {
                     NSApp.activate(ignoringOtherApps: true)
                 } else {
                     NSApp.hide(self)
                 }
             }.store(in: &subscriptions)
-    }
-
-    private func showPreviousApp() {
-        /*
-         1. switch app
-         2. remove stored app from background
-         */
     }
 }

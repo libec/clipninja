@@ -8,11 +8,7 @@ struct NavigationAssembly: Assembly {
     
     func assemble(container: Container) {
         container.autoregister(HideAppUseCase.self, initializer: HideAppUseCaseImpl.init)
-        container.register(Navigation.self) { resolver in
-            AppKitNavigation(
-                shortcutObserver: resolver.resolve(ShortcutObserver.self)!
-            )
-        }
-        .inObjectScope(.container)
+        container.autoregister(Navigation.self, initializer: AppKitNavigation.init)
+            .inObjectScope(.container)
     }
 }
