@@ -58,7 +58,6 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
     }
 
     func onEvent(_ event: ClipboardViewModelEvent) {
-        log(message: "\(event)")
         switch event {
         case .left:
             clipboards.move(to: .left)
@@ -75,7 +74,8 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
         case .space:
             clipboards.pin()
         case .number(let number):
-            clipboards.paste(at: .index(number))
+            // TODO: - Use selectedPage to calculate index
+            clipboards.paste(at: .index(number - 1))
         case .escape:
             hideAppUseCase.hide()
         }

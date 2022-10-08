@@ -30,7 +30,7 @@ class ClipboardViewModelTests: XCTestCase {
         XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .selected)
 
         sut.onEvent(.number(number: 7))
-        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(7))
+        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(6))
 
         sut.onEvent(.delete)
         XCTAssertTrue(clipboards.deleteCalled)
@@ -38,6 +38,24 @@ class ClipboardViewModelTests: XCTestCase {
         sut.onEvent(.space)
         XCTAssertTrue(clipboards.pinCalled)
     }
+
+    func test_it_adjusts_pressed_number_to_index() {
+        let clipboards = ClipboardsSpy()
+        let factory = ClipboardPreviewFactoryDummy()
+        let sut = ClipboardViewModelImpl(
+            clipboards: clipboards,
+            previewFactory: factory,
+            hideAppUseCase: HideAppUseCaseDummy(),
+            viewPortConfiguration: TestViewPortConfiguration()
+        )
+        
+        sut.onEvent(.number(number: 7))
+        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(6))
+
+        sut.onEvent(.number(number: 2))
+        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(1))
+    }
+
 
     func test_it_updates_view_with_formatted_clip_previews() throws {
         let clips = try loadFromJson(type: [Clip].self, path: "clips")
