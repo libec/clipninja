@@ -5,7 +5,8 @@ public struct ApplicationAssembly {
     private var assemblies: [Assembly] {
         [
             InstanceProviderAssembly(),
-            SettingsAssembly(),
+            SettingsInfrastructureAssembly(),
+            SettingsFeatureAssembly(),
             ClipboardAssembly(),
             PasteAssembly(),
             ShortcutsAssembly(),

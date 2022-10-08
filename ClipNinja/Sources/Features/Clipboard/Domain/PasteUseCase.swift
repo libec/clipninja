@@ -1,20 +1,5 @@
-import Foundation
-import ApplicationServices
-import AppKit
-
 protocol PasteUseCase {
     func paste(at index: PasteIndex)
-}
-
-protocol SettingsRepository {
-    var shouldPasteDirectly: Bool { get }
-}
-
-protocol PasteTextUseCase {
-    // check settings repository
-    // fill pasteboard
-    // run paste command
-    func paste(text: String)
 }
 
 // TODO: - Rename PasteClipUseCase

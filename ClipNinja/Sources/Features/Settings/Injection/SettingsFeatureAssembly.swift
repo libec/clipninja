@@ -1,7 +1,7 @@
 import Swinject
 import SwinjectAutoregistration
 
-struct SettingsAssembly: Assembly {
+struct SettingsFeatureAssembly: Assembly {
 
     init() { }
     
