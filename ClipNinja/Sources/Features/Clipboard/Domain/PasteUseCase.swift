@@ -48,21 +48,21 @@ final class PasteUseCaseImpl: PasteUseCase {
     }
 
     private func getClipboardRecord(at index: PasteIndex) -> ClipboardRecord? {
-        switch index {
+        let indexToPaste = clipIndex(for: index)
+        if clipsRepository.lastClips.indices.contains(indexToPaste) {
+            return clipsRepository.lastClips[indexToPaste]
+        } else {
+            return nil
+        }
+    }
+
+    private func clipIndex(for pasteIndex: PasteIndex) -> Int {
+        switch pasteIndex {
         case .index(let index):
             let selectedPage = viewPortRepository.lastPosition / viewPortConfiguration.clipsPerPage
-            let indexToPaste = selectedPage * viewPortConfiguration.clipsPerPage + index
-            if clipsRepository.lastClips.indices.contains(indexToPaste) {
-                return clipsRepository.lastClips[indexToPaste]
-            } else {
-                return nil
-            }
+            return selectedPage * viewPortConfiguration.clipsPerPage + index
         case .selected:
-            if clipsRepository.lastClips.indices.contains(viewPortRepository.lastPosition) {
-                return clipsRepository.lastClips[viewPortRepository.lastPosition]
-            } else {
-                return nil
-            }
+            return viewPortRepository.lastPosition
         }
     }
 }
