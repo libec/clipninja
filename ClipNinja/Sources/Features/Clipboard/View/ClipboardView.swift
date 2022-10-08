@@ -64,7 +64,23 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
         case .escape:
             viewModel.onEvent(.escape)
         case .keypad1, .one:
-            log(message: "one pressed")
+            viewModel.onEvent(.number(number: 1))
+        case .keypad2, .two:
+            viewModel.onEvent(.number(number: 2))
+        case .keypad3, .three:
+            viewModel.onEvent(.number(number: 3))
+        case .keypad4, .four:
+            viewModel.onEvent(.number(number: 4))
+        case .keypad5, .five:
+            viewModel.onEvent(.number(number: 5))
+        case .keypad6, .six:
+            viewModel.onEvent(.number(number: 6))
+        case .keypad7, .seven:
+            viewModel.onEvent(.number(number: 7))
+        case .keypad8, .eight:
+            viewModel.onEvent(.number(number: 8))
+        case .keypad9, .nine:
+            viewModel.onEvent(.number(number: 9))
         default:
             log(message: "unhandled key press: \(keyPress)")
         }
