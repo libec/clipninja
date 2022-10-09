@@ -9,6 +9,5 @@ struct SettingsInfrastructureAssembly: Assembly {
     func assemble(container: Container) {
         container.autoregister(SettingsRepository.self, initializer: UserDefaultsSettingsRepository.init)
             .inObjectScope(.container)
-        container.register(UserDefaults.self) { _ in UserDefaults.standard }
     }
 }

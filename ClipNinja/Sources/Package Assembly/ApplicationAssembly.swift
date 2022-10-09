@@ -11,6 +11,7 @@ public struct ApplicationAssembly {
             ClipboardInfrastructureAssembly(),
             PasteboardAssembly(),
             ShortcutsAssembly(),
+            SystemAssembly(),
             NavigationAssembly()
         ]
     }

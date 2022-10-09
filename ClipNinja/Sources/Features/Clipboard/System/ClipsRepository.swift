@@ -6,61 +6,61 @@ protocol ClipsRepository {
     func delete(at index: Int)
 }
 
-class InMemoryClipboardsRepository: ClipsRepository {
-
-    static var fakeClips: [ClipboardRecord] {
-        let legacyOnboardinTexts = [
-            "Yo, Welcome to ClipNinja!",
-            "Here you see your clipboard history",
-            "You can move using arrow keys",
-            "↑ ↑ ↓ ↓ ← → ← →",
-            "Text you copy appears here",
-            "You can paste with enter",
-            "Also, each clipboard is marked with a number",
-            "You can paste by pressing that number",
-            "Delete with backspace",
-            "Pin to top with space",
-            "To not paste anything press ESC",
-            "Customize shortcut in preferences",
-            "That's it. Enjoy!"
-        ]
-        return legacyOnboardinTexts.map {
-            ClipboardRecord(text: $0, pinned: false)
-        }
-    }
+final class InMemoryClipboardsRepository: ClipsRepository {
 
     var clips: AnyPublisher<[ClipboardRecord], Never> {
-        currentValueSubject.eraseToAnyPublisher()
+        clipboardRecords.eraseToAnyPublisher()
     }
 
     var lastClips: [ClipboardRecord] {
-        currentValueSubject.value
+        clipboardRecords.value
     }
 
-    private let currentValueSubject: CurrentValueSubject<[ClipboardRecord], Never> = .init(InMemoryClipboardsRepository.fakeClips)
+    private let clipboardRecords: CurrentValueSubject<[ClipboardRecord], Never>
 
     private let pasteboardObserver: PasteboardObserver
+    private let clipsStorage: ClipsStorage
     private var subscriptions = Set<AnyCancellable>()
 
-    init(pasteboardObserver: PasteboardObserver) {
+    init(
+        pasteboardObserver: PasteboardObserver,
+        clipsStorage: ClipsStorage
+    ) {
         self.pasteboardObserver = pasteboardObserver
+        self.clipsStorage = clipsStorage
+        self.clipboardRecords = .init(clipsStorage.clips)
+        observePasteboard()
+        setupPersistency()
+    }
 
-        pasteboardObserver.newCopiedText.filter { newText in
-            return !self.currentValueSubject.value.contains { record in
+    func delete(at index: Int) {
+        if clipboardRecords.value.indices.contains(index) {
+            clipboardRecords.value.remove(at: index)
+        }
+    }
+
+    private func setupPersistency() {
+        clipboardRecords.sink(receiveValue: { [unowned self] records in
+            self.persist(records: records)
+        })
+        .store(in: &subscriptions)
+    }
+
+    private func observePasteboard() {
+        pasteboardObserver.newCopiedText.filter { [unowned self] newText in
+            return !self.clipboardRecords.value.contains { record in
                 record.text == newText
             }
         }.map {
             ClipboardRecord(text: $0, pinned: false)
-        }.sink { newRecord in
+        }.sink { [unowned self] newRecord in
             // TODO: - Consider moving to use case and handle more safely
-            let pinnedRecords = self.currentValueSubject.value.filter({ $0.pinned }).count
-            self.currentValueSubject.value.insert(newRecord, at: max(0, pinnedRecords - 1))
+            let pinnedRecords = self.clipboardRecords.value.filter({ $0.pinned }).count
+            self.clipboardRecords.value.insert(newRecord, at: max(0, pinnedRecords - 1))
         }.store(in: &subscriptions)
     }
 
-    func delete(at index: Int) {
-        if currentValueSubject.value.indices.contains(index) {
-            currentValueSubject.value.remove(at: index)
-        }
+    private func persist(records: [ClipboardRecord]) {
+        clipsStorage.persist(records: records)
     }
 }
