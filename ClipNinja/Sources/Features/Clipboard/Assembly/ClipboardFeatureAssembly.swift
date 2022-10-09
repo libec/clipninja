@@ -28,4 +28,3 @@ struct ClipboardFeatureAssembly: Assembly {
         container.autoregister(ViewPortConfiguration.self, initializer: DefaultViewPortConfiguration.init).inObjectScope(.container)
     }
 }
-

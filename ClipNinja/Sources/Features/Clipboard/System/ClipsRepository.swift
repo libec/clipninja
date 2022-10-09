@@ -39,6 +39,25 @@ class InMemoryClipboardsRepository: ClipsRepository {
 
     private let currentValueSubject: CurrentValueSubject<[ClipboardRecord], Never> = .init(InMemoryClipboardsRepository.fakeClips)
 
+    private let pasteboardObserver: PasteboardObserver
+    private var subscriptions = Set<AnyCancellable>()
+
+    init(pasteboardObserver: PasteboardObserver) {
+        self.pasteboardObserver = pasteboardObserver
+
+        pasteboardObserver.newCopiedText.filter { newText in
+            return !self.currentValueSubject.value.contains { record in
+                record.text == newText
+            }
+        }.map {
+            ClipboardRecord(text: $0, pinned: false)
+        }.sink { newRecord in
+            // TODO: - Consider moving to use case and handle more safely
+            let pinnedRecords = self.currentValueSubject.value.filter({ $0.pinned }).count
+            self.currentValueSubject.value.insert(newRecord, at: max(0, pinnedRecords - 1))
+        }.store(in: &subscriptions)
+    }
+
     func delete(at index: Int) {
         if currentValueSubject.value.indices.contains(index) {
             currentValueSubject.value.remove(at: index)

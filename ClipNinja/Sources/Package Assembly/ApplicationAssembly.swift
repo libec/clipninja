@@ -9,7 +9,7 @@ public struct ApplicationAssembly {
             SettingsFeatureAssembly(),
             ClipboardFeatureAssembly(),
             ClipboardInfrastructureAssembly(),
-            PasteAssembly(),
+            PasteboardAssembly(),
             ShortcutsAssembly(),
             NavigationAssembly()
         ]
