@@ -7,15 +7,18 @@ final class ClipboardsFacade: Clipboards {
     private let getViewPortUseCase: GetViewPortUseCase
     private let moveViewPortUseCase: MoveViewPortUseCase
     private let pasteUseCase: PasteUseCase
+    private let deleteUseCase: DeleteUseCase
 
     init(
         getViewPortUseCase: GetViewPortUseCase,
         moveViewPortUseCase: MoveViewPortUseCase,
-        pasteUseCase: PasteUseCase
+        pasteUseCase: PasteUseCase,
+        deleteUseCase: DeleteUseCase
     ) {
         self.moveViewPortUseCase = moveViewPortUseCase
         self.getViewPortUseCase = getViewPortUseCase
         self.pasteUseCase = pasteUseCase
+        self.deleteUseCase = deleteUseCase
     }
 
     var clips: AnyPublisher<ClipboardViewPort, Never> {
@@ -27,7 +30,7 @@ final class ClipboardsFacade: Clipboards {
     }
 
     func delete() {
-
+        deleteUseCase.delete()
     }
 
     func paste(at index: PasteIndex) {
@@ -41,10 +44,6 @@ final class ClipboardsFacade: Clipboards {
 
 protocol PinUseCase {
     func pin()
-}
-
-protocol DeleteUseCase {
-    func delete()
 }
 
 enum PasteIndex: Equatable {

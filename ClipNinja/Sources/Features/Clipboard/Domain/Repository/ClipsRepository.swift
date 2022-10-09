@@ -3,11 +3,12 @@ import Combine
 protocol ClipsRepository {
     var clips: AnyPublisher<[ClipboardRecord], Never> { get }
     var lastClips: [ClipboardRecord] { get }
+    func delete(at index: Int)
 }
 
 class InMemoryClipboardsRepository: ClipsRepository {
 
-    var fakeClips: [ClipboardRecord] {
+    static var fakeClips: [ClipboardRecord] {
         let legacyOnboardinTexts = [
             "Yo, Welcome to ClipNinja!",
             "Here you see your clipboard history",
@@ -29,11 +30,18 @@ class InMemoryClipboardsRepository: ClipsRepository {
     }
 
     var clips: AnyPublisher<[ClipboardRecord], Never> {
-        Just(fakeClips)
-            .eraseToAnyPublisher()
+        currentValueSubject.eraseToAnyPublisher()
     }
 
     var lastClips: [ClipboardRecord] {
-        fakeClips
+        currentValueSubject.value
+    }
+
+    private let currentValueSubject: CurrentValueSubject<[ClipboardRecord], Never> = .init(InMemoryClipboardsRepository.fakeClips)
+
+    func delete(at index: Int) {
+        if currentValueSubject.value.indices.contains(index) {
+            currentValueSubject.value.remove(at: index)
+        }
     }
 }

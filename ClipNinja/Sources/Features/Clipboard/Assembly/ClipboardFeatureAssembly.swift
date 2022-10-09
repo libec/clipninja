@@ -23,6 +23,7 @@ struct ClipboardFeatureAssembly: Assembly {
         container.autoregister(MoveViewPortUseCase.self, initializer: MoveViewPortUseCaseImpl.init)
         container.autoregister(GetViewPortUseCase.self, initializer: GetViewPortUseCaseImpl.init)
         container.autoregister(PasteUseCase.self, initializer: PasteUseCaseImpl.init)
+        container.autoregister(DeleteUseCase.self, initializer: DeleteUseCaseImpl.init)
         container.autoregister(ClipsRepository.self, initializer: InMemoryClipboardsRepository.init)
         container.autoregister(ViewPortConfiguration.self, initializer: DefaultViewPortConfiguration.init).inObjectScope(.container)
     }
