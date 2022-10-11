@@ -56,7 +56,6 @@ class ClipboardViewModelTests: XCTestCase {
         try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(1))
     }
 
-
     func test_it_updates_view_with_formatted_clip_previews() throws {
         let clips = try loadFromJson(type: [Clip].self, path: "clips")
         let clipsPreviews = try loadFromJson(type: [ClipPreview].self, path: "clipsPreview")
@@ -106,54 +105,6 @@ class ClipboardViewModelTests: XCTestCase {
         sut.onEvent(ClipboardViewModelEvent.escape)
 
         XCTAssertTrue(try XCTUnwrap(hideAppUseCase.hideCalled))
-    }
-}
-
-typealias ClipboardsDummy = ClipboardsSpy
-class ClipboardsSpy: Clipboards {
-
-    var pinCalled = false
-    var deleteCalled = false
-    var pastedAtIndex: PasteIndex? = nil
-    var movedToViewPort: ViewPortMovement? = nil
-
-    var clips: AnyPublisher<ClipboardViewPort, Never> {
-        Empty().eraseToAnyPublisher()
-    }
-
-    func pin() {
-        pinCalled = true
-    }
-
-    func delete() {
-        deleteCalled = true
-    }
-
-    func paste(at index: PasteIndex) {
-        pastedAtIndex = index
-    }
-
-    func move(to viewPort: ViewPortMovement) {
-        movedToViewPort = viewPort
-    }
-}
-
-typealias HideAppUseCaseDummy = HideAppUseCaseSpy
-class HideAppUseCaseSpy: HideAppUseCase {
-
-    var hideCalled: Bool?
-
-    func hide() {
-        hideCalled = true
-    }
-}
-
-class ClipboardsStub: ClipboardsSpy {
-
-    let subject = PassthroughSubject<ClipboardViewPort, Never>()
-
-    override var clips: AnyPublisher<ClipboardViewPort, Never> {
-        subject.eraseToAnyPublisher()
     }
 }
 
