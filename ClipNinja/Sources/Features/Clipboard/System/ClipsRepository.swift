@@ -5,6 +5,7 @@ protocol ClipsRepository {
     var lastClips: [ClipboardRecord] { get }
     func delete(at index: Int)
     func togglePin(at index: Int)
+    func moveAfterPins(index: Int)
 }
 
 final class InMemoryClipboardsRepository: ClipsRepository {
@@ -40,6 +41,26 @@ final class InMemoryClipboardsRepository: ClipsRepository {
         }
     }
 
+    func togglePin(at index: Int) {
+        if clipboardRecords.value.indices.contains(index) {
+            var toggledClip = clipboardRecords.value[index]
+            toggledClip.pinned.toggle()
+            clipboardRecords.value.remove(at: index)
+            let pinned = clipboardRecords.value.filter(\.pinned).count
+            clipboardRecords.value.insert(toggledClip, at: max(0, pinned))
+
+        }
+    }
+
+    func moveAfterPins(index: Int) {
+        if clipboardRecords.value.indices.contains(index) {
+            let record = clipboardRecords.value[index]
+            clipboardRecords.value.remove(at: index)
+            let pinned = clipboardRecords.value.filter(\.pinned).count
+            clipboardRecords.value.insert(record, at: max(0, pinned))
+        }
+    }
+
     private func setupPersistency() {
         clipboardRecords.sink(receiveValue: { [unowned self] records in
             self.persist(records: records)
@@ -63,16 +84,5 @@ final class InMemoryClipboardsRepository: ClipsRepository {
 
     private func persist(records: [ClipboardRecord]) {
         clipsStorage.persist(records: records)
-    }
-
-    func togglePin(at index: Int) {
-        if clipboardRecords.value.indices.contains(index) {
-            var toggledClip = clipboardRecords.value[index]
-            toggledClip.pinned.toggle()
-            clipboardRecords.value.remove(at: index)
-            let pinned = clipboardRecords.value.filter(\.pinned).count
-            clipboardRecords.value.insert(toggledClip, at: max(0, pinned))
-
-        }
     }
 }

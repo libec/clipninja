@@ -38,6 +38,26 @@ class PasteUseCaseTests: XCTestCase {
         XCTAssertEqual(selectedClipboardRecordToPaste.text, pasteTextUseCase.pastedText)
     }
 
+    func test_it_moves_pasted_clip_after_pins() {
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 2)
+        let selectedClipboardRecordToPaste = ClipboardRecord(text: "eaf31z", pinned: false)
+        let clipsRepository = ClipsRepositoryStub(lastClips: [
+            ClipboardRecord(text: "aewf2", pinned: true),
+            ClipboardRecord(text: "aeaefwf2", pinned: false),
+            selectedClipboardRecordToPaste,
+            ClipboardRecord(text: "wa24", pinned: false),
+        ])
+        let sut = makeSut(
+            clipsRepository: clipsRepository,
+            viewPortRepository: viewPortRepository
+        )
+
+        sut.paste(at: .selected)
+
+        try XCTAssertEqual(XCTUnwrap(clipsRepository.movedAfterPinsAtIndex), 2)
+    }
+
     func test_it_doesnt_paste_or_hide_when_selected_doesnt_exist() {
         let pasteTextUseCase = PasteTextUseCaseSpy()
         let hideAppUseCase = HideAppUseCaseSpy()

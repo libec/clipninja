@@ -5,6 +5,7 @@ class ClipsRepositoryStub: ClipsRepository {
     let lastClips: [ClipboardRecord]
     var deletedIndex: Int?
     var toggledPin: Int?
+    var movedAfterPinsAtIndex: Int?
 
     var clips: AnyPublisher<[ClipboardRecord], Never> {
         Just(lastClips)
@@ -21,6 +22,10 @@ class ClipsRepositoryStub: ClipsRepository {
 
     func togglePin(at index: Int) {
         self.toggledPin = index
+    }
+
+    func moveAfterPins(index: Int) {
+        self.movedAfterPinsAtIndex = index
     }
 }
 

@@ -33,6 +33,8 @@ final class PasteUseCaseImpl: PasteUseCase {
     func paste(at index: PasteIndex) {
         guard let clip = getClipboardRecord(at: index) else { return }
 
+        // TODO: - Test order! It must move clip, THEN hide, and THEN paste
+        clipsRepository.moveAfterPins(index: clipIndex(for: index))
         hideAppUseCase.hide()
         pasteTextUseCase.paste(text: clip.text)
     }
