@@ -10,6 +10,8 @@ protocol GetViewPortUseCase {
     var clips: AnyPublisher<ClipboardViewPort, Never> { get }
 }
 
+// TODO: - Rename to reflect that it returns view port with clips
+// or rename view port to reflect it only returns index
 final class GetViewPortUseCaseImpl: GetViewPortUseCase {
 
     private let clipsRepositorty: ClipsRepository

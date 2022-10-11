@@ -27,10 +27,10 @@ class ClipboardViewModelTests: XCTestCase {
         XCTAssertEqual(clipboards.movedToViewPort, .right)
 
         sut.onEvent(.enter)
-        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .selected)
+        try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .selected)
 
         sut.onEvent(.number(number: 7))
-        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(6))
+        try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(6))
 
         sut.onEvent(.delete)
         XCTAssertTrue(clipboards.deleteCalled)
@@ -50,10 +50,10 @@ class ClipboardViewModelTests: XCTestCase {
         )
         
         sut.onEvent(.number(number: 7))
-        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(6))
+        try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(6))
 
         sut.onEvent(.number(number: 2))
-        XCTAssertEqual(try XCTUnwrap(clipboards.pastedAtIndex), .index(1))
+        try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(1))
     }
 
 

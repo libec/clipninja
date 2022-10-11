@@ -2,6 +2,11 @@ protocol PasteUseCase {
     func paste(at index: PasteIndex)
 }
 
+enum PasteIndex: Equatable {
+    case selected
+    case index(_ index: Int)
+}
+
 // TODO: - Rename PasteClipUseCase
 final class PasteUseCaseImpl: PasteUseCase {
 

@@ -12,7 +12,7 @@ class HideAppUseCaseTests: XCTestCase {
 
         sut.hide()
 
-        XCTAssertTrue(try XCTUnwrap(navigation.hideCalled))
+        try XCTAssertTrue(XCTUnwrap(navigation.hideCalled))
     }
 
     func test_hiding_app_moves_view_port_to_beginning() {

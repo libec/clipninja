@@ -14,7 +14,7 @@ class PasteUseCaseTests: XCTestCase {
 
         sut.paste(at: .selected)
 
-        XCTAssertTrue(try XCTUnwrap(hideAppUseCase.hideCalled))
+        try XCTAssertTrue(XCTUnwrap(hideAppUseCase.hideCalled))
     }
 
     func test_it_pastes_selected_clip() {

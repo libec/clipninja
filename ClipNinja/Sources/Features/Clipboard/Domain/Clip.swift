@@ -8,7 +8,7 @@ struct Clip: Codable, Equatable {
 }
 
 // TODO: - Revisit name
-struct ClipboardRecord: Codable {
+struct ClipboardRecord: Equatable, Codable {
     let text: String
-    let pinned: Bool
+    var pinned: Bool
 }

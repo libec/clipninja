@@ -4,6 +4,7 @@ import Combine
 class ClipsRepositoryStub: ClipsRepository {
     let lastClips: [ClipboardRecord]
     var deletedIndex: Int?
+    var toggledPin: Int?
 
     var clips: AnyPublisher<[ClipboardRecord], Never> {
         Just(lastClips)
@@ -16,6 +17,10 @@ class ClipsRepositoryStub: ClipsRepository {
 
     func delete(at index: Int) {
         self.deletedIndex = index
+    }
+
+    func togglePin(at index: Int) {
+        self.toggledPin = index
     }
 }
 

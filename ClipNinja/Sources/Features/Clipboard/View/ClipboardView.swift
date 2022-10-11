@@ -30,9 +30,11 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
                 )
             }
             Spacer()
-            pages
-            SettingsView()
+
+
+            pages.padding(.top).padding(.bottom)
         }
+        .background(Color.black)
     }
 
     private var pages: some View {
