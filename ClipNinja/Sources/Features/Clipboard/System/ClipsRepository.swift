@@ -77,8 +77,10 @@ final class InMemoryClipboardsRepository: ClipsRepository {
             ClipboardRecord(text: $0, pinned: false)
         }.sink { [unowned self] newRecord in
             // TODO: - Consider moving to use case and handle more safely
+            // TODO: - Remove if already exists and is not pinned
+            // TODO: - Ignore if already exists and is pinned
             let pinnedRecords = self.clipboardRecords.value.filter({ $0.pinned }).count
-            self.clipboardRecords.value.insert(newRecord, at: max(0, pinnedRecords - 1))
+            self.clipboardRecords.value.insert(newRecord, at: max(0, pinnedRecords))
         }.store(in: &subscriptions)
     }
 
