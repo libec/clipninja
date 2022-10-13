@@ -64,7 +64,7 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
     }
 
     private func subscribe() {
-        clipboards.clips
+        clipboards.clipsViewPort
             .sink { value in
                 self.totalPages = value.numberOfPages
                 self.shownPage = value.selectedPage

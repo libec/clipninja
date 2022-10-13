@@ -2,7 +2,7 @@ import Combine
 @testable import ClipNinja
 import XCTest
 
-class GetViewPortUseCaseParametrizedTests: XCTestCase {
+class GetClipsViewPortUseCaseParametrizedTests: XCTestCase {
 
     let viewPortConfiguration = TestViewPortConfiguration()
     
@@ -15,7 +15,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
-        let sut = GetViewPortUseCaseImpl(
+        let sut = GetClipsViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
@@ -23,7 +23,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
-        sut.clips
+        sut.clipsViewPort
             .sink { viewPort in
                 XCTAssertEqual(expectedNumberOfPages, viewPort.numberOfPages)
                 XCTAssertEqual(expectedSelectedPage, viewPort.selectedPage)
@@ -42,7 +42,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
-        let sut = GetViewPortUseCaseImpl(
+        let sut = GetClipsViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
@@ -50,7 +50,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
-        sut.clips
+        sut.clipsViewPort
             .sink { viewPort in
                 XCTAssertEqual(viewPort.selectedClipIndex, expectedSelectedClip)
                 expectation.fulfill()
@@ -68,7 +68,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryStub(lastClips: clips)
-        let sut = GetViewPortUseCaseImpl(
+        let sut = GetClipsViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
@@ -76,7 +76,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
-        sut.clips
+        sut.clipsViewPort
             .sink { viewPort in
                 XCTAssertEqual(expectedClips, viewPort.clips)
                 expectation.fulfill()

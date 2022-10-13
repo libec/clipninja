@@ -2,7 +2,7 @@ import Combine
 import XCTest
 @testable import ClipNinja
 
-class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
+class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
 
     func test_it_shows_view_port_with_calculated_total_and_shown_pages() {
         runViewPortPageCalculationTests(
@@ -46,7 +46,7 @@ class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
         let clipsRepository = ClipRepositoryNamesStub(texts: clipTexts)
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
-        let sut = GetViewPortUseCaseImpl(
+        let sut = GetClipsViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
@@ -55,7 +55,7 @@ class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
-        sut.clips
+        sut.clipsViewPort
             .sink { viewPort in
                 XCTAssertEqual(clipTexts, viewPort.clips.map(\.text))
                 expectation.fulfill()
@@ -70,7 +70,7 @@ class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
         let clipsRepository = ClipRepositoryPinnedStub(pinnedClips: pinnedClips)
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
-        let sut = GetViewPortUseCaseImpl(
+        let sut = GetClipsViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
@@ -79,7 +79,7 @@ class GetViewPortUseCaseTests: GetViewPortUseCaseParametrizedTests {
         var subscription = Set<AnyCancellable>()
         let expectation = expectation(description: "")
 
-        sut.clips
+        sut.clipsViewPort
             .sink { viewPort in
                 XCTAssertEqual(pinnedClips, viewPort.clips.map(\.pinned))
                 expectation.fulfill()

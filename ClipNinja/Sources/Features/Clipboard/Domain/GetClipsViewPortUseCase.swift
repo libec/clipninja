@@ -7,13 +7,11 @@ struct ClipboardViewPort {
     let numberOfPages: Int
 }
 
-protocol GetViewPortUseCase {
-    var clips: AnyPublisher<ClipboardViewPort, Never> { get }
+protocol GetClipsViewPortUseCase {
+    var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> { get }
 }
 
-// TODO: - Rename to reflect that it returns view port with clips
-// or rename view port to reflect it only returns index
-final class GetViewPortUseCaseImpl: GetViewPortUseCase {
+final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
 
     private let clipsRepositorty: ClipsRepository
     private let viewPortRepository: ViewPortRepository
@@ -29,7 +27,7 @@ final class GetViewPortUseCaseImpl: GetViewPortUseCase {
         self.viewPortConfiguration = viewPortConfiguration
     }
 
-    var clips: AnyPublisher<ClipboardViewPort, Never> {
+    var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> {
         clipsRepositorty.clips.combineLatest(viewPortRepository.position)
             .map { (clips, selectedClipIndex) in
                 let clipsPerPage = self.viewPortConfiguration.clipsPerPage

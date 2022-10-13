@@ -9,7 +9,7 @@ class ClipboardsSpy: Clipboards {
     var pastedAtIndex: PasteIndex? = nil
     var movedToViewPort: ViewPortMovement? = nil
 
-    var clips: AnyPublisher<ClipboardViewPort, Never> {
+    var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> {
         Empty().eraseToAnyPublisher()
     }
 
@@ -34,7 +34,7 @@ class ClipboardsStub: ClipboardsSpy {
 
     let subject = PassthroughSubject<ClipboardViewPort, Never>()
 
-    override var clips: AnyPublisher<ClipboardViewPort, Never> {
+    override var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> {
         subject.eraseToAnyPublisher()
     }
 }

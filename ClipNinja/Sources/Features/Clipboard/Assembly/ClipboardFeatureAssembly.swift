@@ -29,7 +29,7 @@ struct ClipboardFeatureAssembly: Assembly {
 
     func assembleDomain(container: Container) {
         container.autoregister(Clipboards.self, initializer: ClipboardsFacade.init)
-        container.autoregister(GetViewPortUseCase.self, initializer: GetViewPortUseCaseImpl.init)
+        container.autoregister(GetClipsViewPortUseCase.self, initializer: GetClipsViewPortUseCaseImpl.init)
         container.autoregister(PasteUseCase.self, initializer: PasteUseCaseImpl.init)
         container.autoregister(DeleteUseCase.self, initializer: DeleteUseCaseImpl.init)
         container.autoregister(PinUseCase.self, initializer: PinUseCaseImpl.init)
