@@ -53,7 +53,7 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
                 self.totalPages = value.numberOfPages
                 self.shownPage = value.selectedPage
                 self.clipPreviews = value.clips.enumerated().map { index, clip in
-                    self.previewFactory.makePreview(from: clip, index: index)
+                    self.previewFactory.makePreview(from: clip, index: index, selected: index == value.selectedClipIndex)
                 }
             }.store(in: &subscriptions)
     }

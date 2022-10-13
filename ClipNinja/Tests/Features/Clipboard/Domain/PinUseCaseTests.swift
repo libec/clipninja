@@ -19,11 +19,11 @@ class PinUseCaseTests: XCTestCase {
 
     func test_it_changes_view_port_to_newly_pinned_clip() {
         let clipsRepository = ClipsRepositoryStub(lastClips: [
-            ClipboardRecord(text: "awefwa", pinned: true),
-            ClipboardRecord(text: "a3d31", pinned: true),
-            ClipboardRecord(text: "foo_bar_a3d31", pinned: true),
-            ClipboardRecord(text: "478zsda", pinned: false),
-            ClipboardRecord(text: "fooasdfsdfb_a3d31", pinned: false),
+            Clip(text: "awefwa", pinned: true),
+            Clip(text: "a3d31", pinned: true),
+            Clip(text: "foo_bar_a3d31", pinned: true),
+            Clip(text: "478zsda", pinned: false),
+            Clip(text: "fooasdfsdfb_a3d31", pinned: false),
         ])
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 4)
@@ -40,11 +40,11 @@ class PinUseCaseTests: XCTestCase {
 
     func test_it_changes_view_port_to_newly_unpinned_clip() {
         let clipsRepository = ClipsRepositoryStub(lastClips: [
-            ClipboardRecord(text: "awefwa", pinned: true),
-            ClipboardRecord(text: "a3d31", pinned: true),
-            ClipboardRecord(text: "foo_bar_a3d31", pinned: true),
-            ClipboardRecord(text: "478zsda", pinned: false),
-            ClipboardRecord(text: "fooasdfsdfb_a3d31", pinned: false),
+            Clip(text: "awefwa", pinned: true),
+            Clip(text: "a3d31", pinned: true),
+            Clip(text: "foo_bar_a3d31", pinned: true),
+            Clip(text: "478zsda", pinned: false),
+            Clip(text: "fooasdfsdfb_a3d31", pinned: false),
         ])
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)

@@ -1,9 +1,9 @@
 protocol ClipboardPreviewFactory {
-    func makePreview(from clip: Clip, index: Int) -> ClipPreview
+    func makePreview(from clip: Clip, index: Int, selected: Bool) -> ClipPreview
 }
 
 class ClipboardPreviewFactoryImpl: ClipboardPreviewFactory {
-    func makePreview(from clip: Clip, index: Int) -> ClipPreview {
+    func makePreview(from clip: Clip, index: Int, selected: Bool) -> ClipPreview {
         let lines = clip.text.split(
             maxSplits: .max,
             omittingEmptySubsequences: true,
@@ -13,7 +13,7 @@ class ClipboardPreviewFactoryImpl: ClipboardPreviewFactory {
 
         return ClipPreview(
             previewText: firstNonEmptyLine,
-            selected: clip.selected,
+            selected: selected,
             pinned: clip.pinned,
             shortcutNumber: "\(index + 1)"
         )

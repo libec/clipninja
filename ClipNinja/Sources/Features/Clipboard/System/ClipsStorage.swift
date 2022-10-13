@@ -1,8 +1,8 @@
 import Foundation
 
 protocol ClipsStorage {
-    func persist(records: [ClipboardRecord])
-    var clips: [ClipboardRecord] { get }
+    func persist(clips: [Clip])
+    var clips: [Clip] { get }
 }
 
 final class UserDefaultsClipsStorage: ClipsStorage {
@@ -23,22 +23,22 @@ final class UserDefaultsClipsStorage: ClipsStorage {
         self.userDefaults = userDefaults
     }
 
-    func persist(records: [ClipboardRecord]) {
+    func persist(clips: [Clip]) {
         do {
-            let data = try jsonEncoder.encode(records)
+            let data = try jsonEncoder.encode(clips)
             userDefaults.set(data, forKey: clipboardsStorageKey)
         } catch {
             log(message: "Cant encode clips: \(error)")
         }
     }
 
-    var clips: [ClipboardRecord] {
+    var clips: [Clip] {
         guard let data = userDefaults.data(forKey: clipboardsStorageKey) else {
             log(message: "No data in user defaults")
             return []
         }
         do {
-            let clips = try jsonDecoder.decode([ClipboardRecord].self, from: data)
+            let clips = try jsonDecoder.decode([Clip].self, from: data)
             return clips
         } catch {
             log(message: "Failed to decode clips: \(error)")

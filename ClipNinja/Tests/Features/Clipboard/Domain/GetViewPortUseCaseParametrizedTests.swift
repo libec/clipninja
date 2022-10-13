@@ -52,10 +52,7 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
 
         sut.clips
             .sink { viewPort in
-                XCTAssertTrue(viewPort.clips[expectedSelectedClip].selected)
-                viewPort.clips.enumerated().forEach { index, clip in
-                    XCTAssertEqual(clip.selected, index == expectedSelectedClip)
-                }
+                XCTAssertEqual(viewPort.selectedClipIndex, expectedSelectedClip)
                 expectation.fulfill()
             }
             .store(in: &subscription)
@@ -64,13 +61,13 @@ class GetViewPortUseCaseParametrizedTests: XCTestCase {
     }
 
     func runClipsSliceTests(
-        clipboardRecords: [ClipboardRecord],
+        clips: [Clip],
         selectedClip: Int,
         expectedClips: [Clip]
     ) {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: selectedClip)
-        let clipsRepository = ClipsRepositoryStub(lastClips: clipboardRecords)
+        let clipsRepository = ClipsRepositoryStub(lastClips: clips)
         let sut = GetViewPortUseCaseImpl(
             clipsRepositorty: clipsRepository,
             viewPortRepository: viewPortRepository,

@@ -7,10 +7,10 @@ class DeleteUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 3)
         let clipsRepository = ClipsRepositoryStub(lastClips: [
-            ClipboardRecord(text: "3_Aefe", pinned: false),
-            ClipboardRecord(text: "3_Aeaaefe", pinned: false),
-            ClipboardRecord(text: "cewasdfe", pinned: false),
-            ClipboardRecord(text: "364sddae", pinned: false),
+            Clip(text: "3_Aefe", pinned: false),
+            Clip(text: "3_Aeaaefe", pinned: false),
+            Clip(text: "cewasdfe", pinned: false),
+            Clip(text: "364sddae", pinned: false),
         ])
         let sut = DeleteUseCaseImpl(viewPortRepository: viewPortRepository, clipsRepository: clipsRepository)
 
@@ -23,8 +23,8 @@ class DeleteUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 1)
         let clipsRepository = ClipsRepositoryStub(lastClips: [
-            ClipboardRecord(text: "3_Aefe", pinned: false),
-            ClipboardRecord(text: "3_Aeaaefe", pinned: false),
+            Clip(text: "3_Aefe", pinned: false),
+            Clip(text: "3_Aeaaefe", pinned: false),
         ])
         let sut = DeleteUseCaseImpl(viewPortRepository: viewPortRepository, clipsRepository: clipsRepository)
 
@@ -38,7 +38,7 @@ class DeleteUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
         let clipsRepository = ClipsRepositoryStub(lastClips: [
-            ClipboardRecord(text: "3_Aefe", pinned: false),
+            Clip(text: "3_Aefe", pinned: false),
         ])
         let sut = DeleteUseCaseImpl(viewPortRepository: viewPortRepository, clipsRepository: clipsRepository)
 

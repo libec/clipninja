@@ -1,8 +1,8 @@
 import Combine
 
 protocol ClipsRepository {
-    var clips: AnyPublisher<[ClipboardRecord], Never> { get }
-    var lastClips: [ClipboardRecord] { get }
+    var clips: AnyPublisher<[Clip], Never> { get }
+    var lastClips: [Clip] { get }
     func delete(at index: Int)
     func togglePin(at index: Int)
     func moveAfterPins(index: Int)
@@ -10,15 +10,15 @@ protocol ClipsRepository {
 
 final class InMemoryClipboardsRepository: ClipsRepository {
 
-    var clips: AnyPublisher<[ClipboardRecord], Never> {
-        clipboardRecords.eraseToAnyPublisher()
+    var clips: AnyPublisher<[Clip], Never> {
+        clipsSubject.eraseToAnyPublisher()
     }
 
-    var lastClips: [ClipboardRecord] {
-        clipboardRecords.value
+    var lastClips: [Clip] {
+        clipsSubject.value
     }
 
-    private let clipboardRecords: CurrentValueSubject<[ClipboardRecord], Never>
+    private let clipsSubject: CurrentValueSubject<[Clip], Never>
 
     private let pasteboardObserver: PasteboardObserver
     private let clipsStorage: ClipsStorage
@@ -30,61 +30,61 @@ final class InMemoryClipboardsRepository: ClipsRepository {
     ) {
         self.pasteboardObserver = pasteboardObserver
         self.clipsStorage = clipsStorage
-        self.clipboardRecords = .init(clipsStorage.clips)
+        self.clipsSubject = .init(clipsStorage.clips)
         observePasteboard()
         setupPersistency()
     }
 
     func delete(at index: Int) {
-        if clipboardRecords.value.indices.contains(index) {
-            clipboardRecords.value.remove(at: index)
+        if clipsSubject.value.indices.contains(index) {
+            clipsSubject.value.remove(at: index)
         }
     }
 
     func togglePin(at index: Int) {
-        if clipboardRecords.value.indices.contains(index) {
-            var toggledClip = clipboardRecords.value[index]
+        if clipsSubject.value.indices.contains(index) {
+            var toggledClip = clipsSubject.value[index]
             toggledClip.pinned.toggle()
-            clipboardRecords.value.remove(at: index)
-            let pinned = clipboardRecords.value.filter(\.pinned).count
-            clipboardRecords.value.insert(toggledClip, at: max(0, pinned))
+            clipsSubject.value.remove(at: index)
+            let pinned = clipsSubject.value.filter(\.pinned).count
+            clipsSubject.value.insert(toggledClip, at: max(0, pinned))
 
         }
     }
 
     func moveAfterPins(index: Int) {
-        if clipboardRecords.value.indices.contains(index) {
-            let record = clipboardRecords.value[index]
-            clipboardRecords.value.remove(at: index)
-            let pinned = clipboardRecords.value.filter(\.pinned).count
-            clipboardRecords.value.insert(record, at: max(0, pinned))
+        if clipsSubject.value.indices.contains(index) {
+            let clip = clipsSubject.value[index]
+            clipsSubject.value.remove(at: index)
+            let pinned = clipsSubject.value.filter(\.pinned).count
+            clipsSubject.value.insert(clip, at: max(0, pinned))
         }
     }
 
     private func setupPersistency() {
-        clipboardRecords.sink(receiveValue: { [unowned self] records in
-            self.persist(records: records)
+        clipsSubject.sink(receiveValue: { [unowned self] clips in
+            self.persist(clips: clips)
         })
         .store(in: &subscriptions)
     }
 
     private func observePasteboard() {
         pasteboardObserver.newCopiedText.filter { [unowned self] newText in
-            return !self.clipboardRecords.value.contains { record in
-                record.text == newText
+            return !self.clipsSubject.value.contains { clip in
+                clip.text == newText
             }
         }.map {
-            ClipboardRecord(text: $0, pinned: false)
-        }.sink { [unowned self] newRecord in
+            Clip(text: $0, pinned: false)
+        }.sink { [unowned self] newClip in
             // TODO: - Consider moving to use case and handle more safely
             // TODO: - Remove if already exists and is not pinned
             // TODO: - Ignore if already exists and is pinned
-            let pinnedRecords = self.clipboardRecords.value.filter({ $0.pinned }).count
-            self.clipboardRecords.value.insert(newRecord, at: max(0, pinnedRecords))
+            let pinnedClips = self.clipsSubject.value.filter({ $0.pinned }).count
+            self.clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
         }.store(in: &subscriptions)
     }
 
-    private func persist(records: [ClipboardRecord]) {
-        clipsStorage.persist(records: records)
+    private func persist(clips: [Clip]) {
+        clipsStorage.persist(clips: clips)
     }
 }

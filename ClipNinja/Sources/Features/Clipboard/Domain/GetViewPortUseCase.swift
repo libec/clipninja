@@ -2,6 +2,7 @@ import Combine
 
 struct ClipboardViewPort {
     let clips: [Clip]
+    let selectedClipIndex: Int
     let selectedPage: Int
     let numberOfPages: Int
 }
@@ -44,9 +45,8 @@ final class GetViewPortUseCaseImpl: GetViewPortUseCase {
                 log(message: "Pages: (\(selectedPage)/\(numberOfPages))")
 
                 return ClipboardViewPort(
-                    clips: clipsInRange.enumerated().map { (index, clip) in
-                        Clip(text: clip.text, pinned: clip.pinned, selected: index == selectedIndexRemainder)
-                    },
+                    clips: Array(clipsInRange),
+                    selectedClipIndex: selectedIndexRemainder,
                     selectedPage: selectedPage,
                     numberOfPages: numberOfPages
                 )

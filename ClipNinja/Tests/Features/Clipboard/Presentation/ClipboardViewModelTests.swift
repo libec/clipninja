@@ -58,11 +58,11 @@ class ClipboardViewModelTests: XCTestCase {
 
     func test_it_updates_view_with_formatted_clip_previews() throws {
         let clipTexts = ["foo", "bar", "extension Array {\n\nfunc mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {\nreturn zip((self.startIndex ..< self.endIndex), self).map(f)\n}\n}"]
-        let clips: [Clip] = clipTexts.map { Clip(text: $0, pinned: false, selected: false) }
+        let clips: [Clip] = clipTexts.map { Clip(text: $0, pinned: false) }
 
         let clipPreviewTexts = ["foo", "bar", "extension Array {"]
         let clipsPreviews: [ClipPreview] = clipPreviewTexts.enumerated().map { index, element in
-            ClipPreview(previewText: element, selected: false, pinned: false, shortcutNumber: "\(index + 1)")
+            ClipPreview(previewText: element, selected: index == 0, pinned: false, shortcutNumber: "\(index + 1)")
         }
         let clipboards = ClipboardsStub()
         let factory = ClipboardPreviewFactoryImpl()
@@ -80,6 +80,7 @@ class ClipboardViewModelTests: XCTestCase {
         clipboards.subject.send(
             ClipboardViewPort(
                 clips: clips,
+                selectedClipIndex: 0,
                 selectedPage: 3,
                 numberOfPages: 7
             )
@@ -115,7 +116,7 @@ class ClipboardViewModelTests: XCTestCase {
 
 class ClipboardPreviewFactoryDummy: ClipboardPreviewFactory {
 
-    func makePreview(from clip: Clip, index: Int) -> ClipPreview {
+    func makePreview(from clip: Clip, index: Int, selected: Bool) -> ClipPreview {
         return .dummy
     }
 }

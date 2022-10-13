@@ -2,17 +2,17 @@
 import Combine
 
 class ClipsRepositoryStub: ClipsRepository {
-    let lastClips: [ClipboardRecord]
+    let lastClips: [Clip]
     var deletedIndex: Int?
     var toggledPin: Int?
     var movedAfterPinsAtIndex: Int?
 
-    var clips: AnyPublisher<[ClipboardRecord], Never> {
+    var clips: AnyPublisher<[Clip], Never> {
         Just(lastClips)
             .eraseToAnyPublisher()
     }
 
-    init(lastClips: [ClipboardRecord]) {
+    init(lastClips: [Clip]) {
         self.lastClips = lastClips
     }
 
@@ -33,7 +33,7 @@ class ClipsRepositoryAmountStub: ClipsRepositoryStub {
 
     init(numberOfClips: Int) {
         super.init(lastClips: (0..<numberOfClips).map { index in
-            ClipboardRecord(text: "\(index)", pinned: false)
+            Clip(text: "\(index)", pinned: false)
         })
     }
 }
@@ -42,7 +42,7 @@ class ClipRepositoryNamesStub: ClipsRepositoryStub {
 
     init(texts: [String]) {
         super.init(lastClips: texts.map {
-            ClipboardRecord(text: $0, pinned: false)
+            Clip(text: $0, pinned: false)
         })
     }
 }
@@ -51,7 +51,7 @@ class ClipRepositoryPinnedStub: ClipsRepositoryStub {
 
     init(pinnedClips: [Bool]) {
         super.init(lastClips: pinnedClips.map {
-            ClipboardRecord(text: "foo", pinned: $0)
+            Clip(text: "foo", pinned: $0)
         })
     }
 }

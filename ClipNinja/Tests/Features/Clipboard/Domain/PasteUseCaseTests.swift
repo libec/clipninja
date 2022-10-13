@@ -21,32 +21,32 @@ class PasteUseCaseTests: XCTestCase {
         let pasteTextUseCase = PasteTextUseCaseSpy()
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 2)
-        let selectedClipboardRecordToPaste = ClipboardRecord(text: "eaf31z", pinned: false)
+        let selectedClipToPaste = Clip(text: "eaf31z", pinned: false)
         let sut = makeSut(
             pasteTextUseCase: pasteTextUseCase,
             clipsRepository: ClipsRepositoryStub(lastClips: [
-                ClipboardRecord(text: "aewf2", pinned: true),
-                ClipboardRecord(text: "aeaefwf2", pinned: true),
-                selectedClipboardRecordToPaste,
-                ClipboardRecord(text: "wa24", pinned: true),
+                Clip(text: "aewf2", pinned: true),
+                Clip(text: "aeaefwf2", pinned: true),
+                selectedClipToPaste,
+                Clip(text: "wa24", pinned: true),
             ]),
             viewPortRepository: viewPortRepository
         )
 
         sut.paste(at: .selected)
 
-        XCTAssertEqual(selectedClipboardRecordToPaste.text, pasteTextUseCase.pastedText)
+        XCTAssertEqual(selectedClipToPaste.text, pasteTextUseCase.pastedText)
     }
 
     func test_it_moves_pasted_clip_after_pins() {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 2)
-        let selectedClipboardRecordToPaste = ClipboardRecord(text: "eaf31z", pinned: false)
+        let selectedClipToPaste = Clip(text: "eaf31z", pinned: false)
         let clipsRepository = ClipsRepositoryStub(lastClips: [
-            ClipboardRecord(text: "aewf2", pinned: true),
-            ClipboardRecord(text: "aeaefwf2", pinned: false),
-            selectedClipboardRecordToPaste,
-            ClipboardRecord(text: "wa24", pinned: false),
+            Clip(text: "aewf2", pinned: true),
+            Clip(text: "aeaefwf2", pinned: false),
+            selectedClipToPaste,
+            Clip(text: "wa24", pinned: false),
         ])
         let sut = makeSut(
             clipsRepository: clipsRepository,
@@ -67,9 +67,9 @@ class PasteUseCaseTests: XCTestCase {
             hideAppUseCase: hideAppUseCase,
             pasteTextUseCase: pasteTextUseCase,
             clipsRepository: ClipsRepositoryStub(lastClips: [
-                ClipboardRecord(text: "aewf2", pinned: true),
-                ClipboardRecord(text: "aeaefwf2", pinned: true),
-                ClipboardRecord(text: "wa24", pinned: true),
+                Clip(text: "aewf2", pinned: true),
+                Clip(text: "aeaefwf2", pinned: true),
+                Clip(text: "wa24", pinned: true),
             ]),
             viewPortRepository: viewPortRepository
         )
@@ -84,22 +84,22 @@ class PasteUseCaseTests: XCTestCase {
         let pasteTextUseCase = PasteTextUseCaseSpy()
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
-        let selectedClipboardRecordToPaste = ClipboardRecord(text: "fa_ea31", pinned: false)
+        let selectedClipToPaste = Clip(text: "fa_ea31", pinned: false)
         let sut = makeSut(
             pasteTextUseCase: pasteTextUseCase,
             clipsRepository: ClipsRepositoryStub(lastClips: [
-                ClipboardRecord(text: "aewf2", pinned: true),
-                ClipboardRecord(text: "aeaefwf2", pinned: true),
-                ClipboardRecord(text: "wa24", pinned: true),
-                ClipboardRecord(text: "secre_te2view", pinned: true),
-                selectedClipboardRecordToPaste,
+                Clip(text: "aewf2", pinned: true),
+                Clip(text: "aeaefwf2", pinned: true),
+                Clip(text: "wa24", pinned: true),
+                Clip(text: "secre_te2view", pinned: true),
+                selectedClipToPaste,
             ]),
             viewPortRepository: viewPortRepository
         )
 
         sut.paste(at: .index(4))
 
-        XCTAssertEqual(selectedClipboardRecordToPaste.text, pasteTextUseCase.pastedText)
+        XCTAssertEqual(selectedClipToPaste.text, pasteTextUseCase.pastedText)
     }
 
     func test_it_doesnt_paste_or_hide_when_index_doesnt_exist() {
@@ -111,10 +111,10 @@ class PasteUseCaseTests: XCTestCase {
             hideAppUseCase: hideAppUseCase,
             pasteTextUseCase: pasteTextUseCase,
             clipsRepository: ClipsRepositoryStub(lastClips: [
-                ClipboardRecord(text: "aewf2", pinned: true),
-                ClipboardRecord(text: "aeaefwf2", pinned: true),
-                ClipboardRecord(text: "wa24", pinned: true),
-                ClipboardRecord(text: "secre_te2view", pinned: true),
+                Clip(text: "aewf2", pinned: true),
+                Clip(text: "aeaefwf2", pinned: true),
+                Clip(text: "wa24", pinned: true),
+                Clip(text: "secre_te2view", pinned: true),
             ]),
             viewPortRepository: viewPortRepository
         )
