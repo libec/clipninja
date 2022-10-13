@@ -76,7 +76,6 @@ final class InMemoryClipboardsRepository: ClipsRepository {
         }.map {
             Clip(text: $0, pinned: false)
         }.sink { [unowned self] newClip in
-            // TODO: - Consider moving to use case and handle more safely
             // TODO: - Remove if already exists and is not pinned
             // TODO: - Ignore if already exists and is pinned
             let pinnedClips = self.clipsSubject.value.filter({ $0.pinned }).count

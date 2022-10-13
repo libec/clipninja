@@ -16,7 +16,8 @@ final class PinUseCaseImpl: PinUseCase {
     }
 
     func pin() {
-        // TODO: - check index in array just in case
+        guard clipsRepository.lastClips.indices.contains(viewPortRepository.lastPosition)
+        else { return }
         let isPinnned = clipsRepository.lastClips[viewPortRepository.lastPosition].pinned
         let numberOfPinned = clipsRepository.lastClips.filter(\.pinned).count
         let newViewPortIndex = isPinnned ? numberOfPinned - 1 : numberOfPinned

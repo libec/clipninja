@@ -7,7 +7,6 @@ enum PasteIndex: Equatable {
     case index(_ index: Int)
 }
 
-// TODO: - Rename PasteClipUseCase
 final class PasteUseCaseImpl: PasteUseCase {
 
     private let clipsRepository: ClipsRepository

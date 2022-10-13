@@ -58,4 +58,22 @@ class PinUseCaseTests: XCTestCase {
 
         XCTAssertEqual(viewPortRepository.lastPosition, 2)
     }
+
+    func test_it_checks_if_viewport_fits_into_clips_array() {
+        let clipsRepository = ClipsRepositoryStub(lastClips: [
+            Clip(text: "awefwa", pinned: true),
+            Clip(text: "a3d31", pinned: true),
+        ])
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 6)
+
+        let sut = PinUseCaseImpl(
+            clipsRepository: clipsRepository,
+            viewPortRepository: viewPortRepository
+        )
+
+        sut.pin()
+
+        XCTAssertNil(clipsRepository.toggledPin)
+    }
 }
