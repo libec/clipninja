@@ -1,5 +1,6 @@
 import XCTest
 @testable import ClipNinja
+import Combine
 
 class PasteUseCaseTests: XCTestCase {
     func test_it_hides_the_app_before_pasting() throws {
@@ -125,6 +126,27 @@ class PasteUseCaseTests: XCTestCase {
         XCTAssertNil(hideAppUseCase.hideCalled)
     }
 
+    func test_it_moves_clips_then_hides_and_then_pastes() {
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 0)
+        let pasteOrderSpy = PasteOrderSpy(
+            clips: [
+                Clip(text: "aewf2", pinned: true),
+                Clip(text: "aeaefwf2", pinned: true)
+            ]
+        )
+        let sut = makeSut(
+            hideAppUseCase: pasteOrderSpy,
+            pasteTextUseCase: pasteOrderSpy,
+            clipsRepository: pasteOrderSpy,
+            viewPortRepository: viewPortRepository
+        )
+
+        sut.paste(at: .selected)
+
+        XCTAssertEqual(pasteOrderSpy.steps, [.moveAfterPins, .hideApp, .paste])
+    }
+
     private func makeSut(
         hideAppUseCase: HideAppUseCase = HideAppUseCaseDummy(),
         pasteTextUseCase: PasteTextUseCase = PasteTextUseCaseDummy(),
@@ -138,5 +160,46 @@ class PasteUseCaseTests: XCTestCase {
             pasteTextUseCase: pasteTextUseCase,
             viewPortConfiguration: TestViewPortConfiguration()
         )
+    }
+}
+
+class PasteOrderSpy: ClipsRepository, HideAppUseCase, PasteTextUseCase {
+
+    enum PasteSteps {
+        case moveAfterPins
+        case hideApp
+        case paste
+    }
+
+    var steps: [PasteSteps] = []
+
+    var clips: AnyPublisher<[Clip], Never> {
+        Just(lastClips).eraseToAnyPublisher()
+    }
+
+    let lastClips: [Clip]
+
+    init(clips: [Clip]) {
+        self.lastClips = clips
+    }
+
+    func delete(at index: Int) {
+
+    }
+
+    func togglePin(at index: Int) {
+
+    }
+
+    func moveAfterPins(index: Int) {
+        steps.append(.moveAfterPins)
+    }
+
+    func hide() {
+        steps.append(.hideApp)
+    }
+
+    func paste(text: String) {
+        steps.append(.paste)
     }
 }
