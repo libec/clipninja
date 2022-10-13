@@ -1,25 +1,10 @@
 import Combine
-import Foundation
 
 protocol ClipboardViewModel: ObservableObject {
     var shownPage: Int { get }
     var totalPages: Int { get }
     var clipPreviews: [ClipPreview] { get }
     func onEvent(_ event: ClipboardViewModelEvent)
-    func subscribe()
-}
-
-// TODO: - Add event for appeared and subscribe
-enum ClipboardViewModelEvent: Equatable {
-    case left
-    case right
-    case down
-    case up
-    case enter
-    case delete
-    case space
-    case number(number: Int)
-    case escape
 }
 
 final class ClipboardViewModelImpl: ClipboardViewModel {
@@ -47,7 +32,38 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
         self.totalPages = viewPortConfiguration.totalPages
     }
 
-    func subscribe() {
+    func onEvent(_ event: ClipboardViewModelEvent) {
+        switch event {
+        case .keyboard(let keyboardEvent):
+            switch keyboardEvent {
+            case .left:
+                clipboards.move(to: .left)
+            case .right:
+                clipboards.move(to: .right)
+            case .down:
+                clipboards.move(to: .down)
+            case .up:
+                clipboards.move(to: .up)
+            case .enter:
+                clipboards.paste(at: .selected)
+            case .delete:
+                clipboards.delete()
+            case .space:
+                clipboards.pin()
+            case .number(let number):
+                clipboards.paste(at: .index(number - 1))
+            case .escape:
+                hideAppUseCase.hide()
+            }
+        case .lifecycle(let lifecycleEvent):
+            switch lifecycleEvent {
+            case .appear:
+                subscribe()
+            }
+        }
+    }
+
+    private func subscribe() {
         clipboards.clips
             .sink { value in
                 self.totalPages = value.numberOfPages
@@ -56,28 +72,5 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
                     self.previewFactory.makePreview(from: clip, index: index, selected: index == value.selectedClipIndex)
                 }
             }.store(in: &subscriptions)
-    }
-
-    func onEvent(_ event: ClipboardViewModelEvent) {
-        switch event {
-        case .left:
-            clipboards.move(to: .left)
-        case .right:
-            clipboards.move(to: .right)
-        case .down:
-            clipboards.move(to: .down)
-        case .up:
-            clipboards.move(to: .up)
-        case .enter:
-            clipboards.paste(at: .selected)
-        case .delete:
-            clipboards.delete()
-        case .space:
-            clipboards.pin()
-        case .number(let number):
-            clipboards.paste(at: .index(number - 1))
-        case .escape:
-            hideAppUseCase.hide()
-        }
     }
 }

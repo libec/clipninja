@@ -15,7 +15,7 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
     var body: some View {
         clipboardContent
             .background(KeyEventHandling(onKeyPress: onKeyPress(keyPress:)))
-            .onAppear(perform: viewModel.subscribe)
+            .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
@@ -50,39 +50,39 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
     private func onKeyPress(keyPress: KeyboardShortcuts.Key) {
         switch keyPress {
         case .downArrow:
-            viewModel.onEvent(.down)
+            viewModel.onEvent(.keyboard(.down))
         case .upArrow:
-            viewModel.onEvent(.up)
+            viewModel.onEvent(.keyboard(.up))
         case .rightArrow:
-            viewModel.onEvent(.right)
+            viewModel.onEvent(.keyboard(.right))
         case .leftArrow:
-            viewModel.onEvent(.left)
+            viewModel.onEvent(.keyboard(.left))
         case .delete:
-            viewModel.onEvent(.delete)
+            viewModel.onEvent(.keyboard(.delete))
         case .keypadEnter, .`return`:
-            viewModel.onEvent(.enter)
+            viewModel.onEvent(.keyboard(.enter))
         case .space:
-            viewModel.onEvent(.space)
+            viewModel.onEvent(.keyboard(.space))
         case .escape:
-            viewModel.onEvent(.escape)
+            viewModel.onEvent(.keyboard(.escape))
         case .keypad1, .one:
-            viewModel.onEvent(.number(number: 1))
+            viewModel.onEvent(.keyboard(.number(number: 1)))
         case .keypad2, .two:
-            viewModel.onEvent(.number(number: 2))
+            viewModel.onEvent(.keyboard(.number(number: 2)))
         case .keypad3, .three:
-            viewModel.onEvent(.number(number: 3))
+            viewModel.onEvent(.keyboard(.number(number: 3)))
         case .keypad4, .four:
-            viewModel.onEvent(.number(number: 4))
+            viewModel.onEvent(.keyboard(.number(number: 4)))
         case .keypad5, .five:
-            viewModel.onEvent(.number(number: 5))
+            viewModel.onEvent(.keyboard(.number(number: 5)))
         case .keypad6, .six:
-            viewModel.onEvent(.number(number: 6))
+            viewModel.onEvent(.keyboard(.number(number: 6)))
         case .keypad7, .seven:
-            viewModel.onEvent(.number(number: 7))
+            viewModel.onEvent(.keyboard(.number(number: 7)))
         case .keypad8, .eight:
-            viewModel.onEvent(.number(number: 8))
+            viewModel.onEvent(.keyboard(.number(number: 8)))
         case .keypad9, .nine:
-            viewModel.onEvent(.number(number: 9))
+            viewModel.onEvent(.keyboard(.number(number: 9)))
         default:
             log(message: "unhandled key press: \(keyPress)")
         }

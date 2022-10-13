@@ -1,6 +1,5 @@
 import Foundation
 
-// TODO: - Revisit name
 struct ClipPreview: Codable, Equatable, Identifiable {
 
     var id: String { UUID().uuidString }

@@ -14,28 +14,28 @@ class ClipboardViewModelTests: XCTestCase {
             viewPortConfiguration: TestViewPortConfiguration()
         )
 
-        sut.onEvent(.up)
+        sut.onEvent(.keyboard(.up))
         XCTAssertEqual(clipboards.movedToViewPort, .up)
 
-        sut.onEvent(.down)
+        sut.onEvent(.keyboard(.down))
         XCTAssertEqual(clipboards.movedToViewPort, .down)
 
-        sut.onEvent(.left)
+        sut.onEvent(.keyboard(.left))
         XCTAssertEqual(clipboards.movedToViewPort, .left)
 
-        sut.onEvent(.right)
+        sut.onEvent(.keyboard(.right))
         XCTAssertEqual(clipboards.movedToViewPort, .right)
 
-        sut.onEvent(.enter)
+        sut.onEvent(.keyboard(.enter))
         try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .selected)
 
-        sut.onEvent(.number(number: 7))
+        sut.onEvent(.keyboard(.number(number: 7)))
         try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(6))
 
-        sut.onEvent(.delete)
+        sut.onEvent(.keyboard(.delete))
         XCTAssertTrue(clipboards.deleteCalled)
 
-        sut.onEvent(.space)
+        sut.onEvent(.keyboard(.space))
         XCTAssertTrue(clipboards.pinCalled)
     }
 
@@ -49,10 +49,10 @@ class ClipboardViewModelTests: XCTestCase {
             viewPortConfiguration: TestViewPortConfiguration()
         )
         
-        sut.onEvent(.number(number: 7))
+        sut.onEvent(.keyboard(.number(number: 7)))
         try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(6))
 
-        sut.onEvent(.number(number: 2))
+        sut.onEvent(.keyboard(.number(number: 2)))
         try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(1))
     }
 
@@ -75,7 +75,7 @@ class ClipboardViewModelTests: XCTestCase {
             viewPortConfiguration: TestViewPortConfiguration()
         )
 
-        sut.subscribe()
+        sut.onEvent(.lifecycle(.appear))
 
         clipboards.subject.send(
             ClipboardViewPort(
@@ -108,7 +108,7 @@ class ClipboardViewModelTests: XCTestCase {
             viewPortConfiguration: TestViewPortConfiguration()
         )
 
-        sut.onEvent(ClipboardViewModelEvent.escape)
+        sut.onEvent(.keyboard(.escape))
 
         XCTAssertTrue(try XCTUnwrap(hideAppUseCase.hideCalled))
     }
