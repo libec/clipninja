@@ -9,6 +9,7 @@ protocol ClipboardViewModel: ObservableObject {
     func subscribe()
 }
 
+// TODO: - Add event for appeared and subscribe
 enum ClipboardViewModelEvent: Equatable {
     case left
     case right
@@ -74,7 +75,6 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
         case .space:
             clipboards.pin()
         case .number(let number):
-            // TODO: - Use selectedPage to calculate index
             clipboards.paste(at: .index(number - 1))
         case .escape:
             hideAppUseCase.hide()

@@ -57,8 +57,13 @@ class ClipboardViewModelTests: XCTestCase {
     }
 
     func test_it_updates_view_with_formatted_clip_previews() throws {
-        let clips = try loadFromJson(type: [Clip].self, path: "clips")
-        let clipsPreviews = try loadFromJson(type: [ClipPreview].self, path: "clipsPreview")
+        let clipTexts = ["foo", "bar", "extension Array {\n\nfunc mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {\nreturn zip((self.startIndex ..< self.endIndex), self).map(f)\n}\n}"]
+        let clips: [Clip] = clipTexts.map { Clip(text: $0, pinned: false, selected: false) }
+
+        let clipPreviewTexts = ["foo", "bar", "extension Array {"]
+        let clipsPreviews: [ClipPreview] = clipPreviewTexts.enumerated().map { index, element in
+            ClipPreview(previewText: element, selected: false, pinned: false, shortcutNumber: "\(index + 1)")
+        }
         let clipboards = ClipboardsStub()
         let factory = ClipboardPreviewFactoryImpl()
         var subscriptions = Set<AnyCancellable>()
