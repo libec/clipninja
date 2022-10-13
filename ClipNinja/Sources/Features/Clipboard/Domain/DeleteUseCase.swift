@@ -17,11 +17,7 @@ final class DeleteUseCaseImpl: DeleteUseCase {
 
     func delete() {
         let index = viewPortRepository.lastPosition
-        let shouldDecrementViewPort = index >= clipsRepository.lastClips.count - 1
         clipsRepository.delete(at: index)
-        if shouldDecrementViewPort {
-            viewPortRepository.update(position: max(index - 1, 0))
-        }
-
+        viewPortRepository.update(position: max(index - 1, 0))
     }
 }
