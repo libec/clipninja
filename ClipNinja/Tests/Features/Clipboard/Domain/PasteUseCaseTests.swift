@@ -131,8 +131,8 @@ class PasteUseCaseTests: XCTestCase {
         viewPortRepository.update(position: 0)
         let pasteOrderSpy = PasteOrderSpy(
             clips: [
-                Clip(text: "aewf2", pinned: true),
-                Clip(text: "aeaefwf2", pinned: true)
+                Clip(text: "aewf2", pinned: false),
+                Clip(text: "aeaefwf2", pinned: false)
             ]
         )
         let sut = makeSut(
@@ -145,6 +145,24 @@ class PasteUseCaseTests: XCTestCase {
         sut.paste(at: .selected)
 
         XCTAssertEqual(pasteOrderSpy.steps, [.moveAfterPins, .hideApp, .paste])
+    }
+
+    func test_it_doesnt_move_pinned_clip() {
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 0)
+        let clipsRepository = ClipsRepositoryStub(lastClips: [
+            Clip(text: "aewf2", pinned: true),
+            Clip(text: "aeaefwf2", pinned: true),
+            Clip(text: "wa24", pinned: false),
+        ])
+        let sut = makeSut(
+            clipsRepository: clipsRepository,
+            viewPortRepository: viewPortRepository
+        )
+
+        sut.paste(at: .selected)
+
+        XCTAssertNil(clipsRepository.movedAfterPinsAtIndex)
     }
 
     private func makeSut(
@@ -160,46 +178,5 @@ class PasteUseCaseTests: XCTestCase {
             pasteTextUseCase: pasteTextUseCase,
             viewPortConfiguration: TestViewPortConfiguration()
         )
-    }
-}
-
-class PasteOrderSpy: ClipsRepository, HideAppUseCase, PasteTextUseCase {
-
-    enum PasteSteps {
-        case moveAfterPins
-        case hideApp
-        case paste
-    }
-
-    var steps: [PasteSteps] = []
-
-    var clips: AnyPublisher<[Clip], Never> {
-        Just(lastClips).eraseToAnyPublisher()
-    }
-
-    let lastClips: [Clip]
-
-    init(clips: [Clip]) {
-        self.lastClips = clips
-    }
-
-    func delete(at index: Int) {
-
-    }
-
-    func togglePin(at index: Int) {
-
-    }
-
-    func moveAfterPins(index: Int) {
-        steps.append(.moveAfterPins)
-    }
-
-    func hide() {
-        steps.append(.hideApp)
-    }
-
-    func paste(text: String) {
-        steps.append(.paste)
     }
 }

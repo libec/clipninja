@@ -32,7 +32,9 @@ final class PasteUseCaseImpl: PasteUseCase {
     func paste(at index: PasteIndex) {
         guard let clip = getClip(at: index) else { return }
 
-        clipsRepository.moveAfterPins(index: clipIndex(for: index))
+        if !clip.pinned {
+            clipsRepository.moveAfterPins(index: clipIndex(for: index))
+        }
         hideAppUseCase.hide()
         pasteTextUseCase.paste(text: clip.text)
     }
