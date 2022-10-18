@@ -8,7 +8,7 @@ protocol ClipsRepository {
     func moveAfterPins(index: Int)
 }
 
-final class InMemoryClipboardsRepository: ClipsRepository {
+final class ClipsRepositoryImpl: ClipsRepository {
 
     var clips: AnyPublisher<[Clip], Never> {
         clipsSubject.eraseToAnyPublisher()
@@ -22,14 +22,17 @@ final class InMemoryClipboardsRepository: ClipsRepository {
 
     private let pasteboardObserver: PasteboardObserver
     private let clipsStorage: ClipsStorage
+    private let viewPortConfiguration: ViewPortConfiguration
     private var subscriptions = Set<AnyCancellable>()
 
     init(
         pasteboardObserver: PasteboardObserver,
-        clipsStorage: ClipsStorage
+        clipsStorage: ClipsStorage,
+        viewPortConfiguration: ViewPortConfiguration
     ) {
         self.pasteboardObserver = pasteboardObserver
         self.clipsStorage = clipsStorage
+        self.viewPortConfiguration = viewPortConfiguration
         self.clipsSubject = .init(clipsStorage.clips)
         observePasteboard()
         setupPersistency()
@@ -84,7 +87,8 @@ final class InMemoryClipboardsRepository: ClipsRepository {
                 delete(at: clipIndex)
             }
             let pinnedClips = self.clipsSubject.value.filter({ $0.pinned }).count
-            self.clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
+            clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
+            clipsSubject.value = Array(clipsSubject.value.prefix(viewPortConfiguration.clipsPerPage * viewPortConfiguration.totalPages))
         }
     }
 

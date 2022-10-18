@@ -98,13 +98,48 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
         try XCTAssertEqual(XCTUnwrap(clipsStorage.persistedClips), expectedClips)
     }
 
+    func test_it_trims_max_clips() {
+        let clips: [Clip] = [
+            .init(text: "foo", pinned: true),
+            .init(text: "3841", pinned: true),
+            .init(text: "import AppKit", pinned: false),
+            .init(text: "waerfawef", pinned: false),
+            .init(text: "clipninja", pinned: false),
+            .init(text: "__1231__", pinned: false),
+        ]
+        let clipsStorage = ClipsStorageStub(clips: clips)
+        let pasteboardObserver = PasteboardObserverStub()
+        setupSut(
+            pasteboardObserver: pasteboardObserver,
+            clipsStorage: clipsStorage,
+            viewPortConfiguration: ViewPortConfigurationStub(
+                totalPages: 2,
+                clipsPerPage: 3
+            )
+        )
+
+        pasteboardObserver.subject.send("heyclipninja")
+
+        let expectedClips: [Clip] = [
+            .init(text: "foo", pinned: true),
+            .init(text: "3841", pinned: true),
+            .init(text: "heyclipninja", pinned: false),
+            .init(text: "import AppKit", pinned: false),
+            .init(text: "waerfawef", pinned: false),
+            .init(text: "clipninja", pinned: false),
+        ]
+        try XCTAssertEqual(XCTUnwrap(clipsStorage.persistedClips), expectedClips)
+    }
+
     private func setupSut(
         pasteboardObserver: PasteboardObserver = PasteboardObserverDummy(),
-        clipsStorage: ClipsStorage = ClipsStorageDummy()
+        clipsStorage: ClipsStorage = ClipsStorageDummy(),
+        viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration()
     ) {
-        self.sut = InMemoryClipboardsRepository(
+        self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
-            clipsStorage: clipsStorage
+            clipsStorage: clipsStorage,
+            viewPortConfiguration: viewPortConfiguration
         )
     }
 }

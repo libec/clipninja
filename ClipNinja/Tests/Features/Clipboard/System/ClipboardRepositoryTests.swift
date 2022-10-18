@@ -139,11 +139,13 @@ final class ClipsRespotoryTests: XCTestCase {
 
     private func setupSut(
         pasteboardObserver: PasteboardObserver = PasteboardObserverDummy(),
-        clipsStorage: ClipsStorage = ClipsStorageDummy()
+        clipsStorage: ClipsStorage = ClipsStorageDummy(),
+        viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration()
     ) {
-        self.sut = InMemoryClipboardsRepository(
+        self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
-            clipsStorage: clipsStorage
+            clipsStorage: clipsStorage,
+            viewPortConfiguration: viewPortConfiguration
         )
     }
 }
