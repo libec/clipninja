@@ -21,7 +21,7 @@ struct ClipboardRow: View {
                 GeometryReader { geometry in
                     VStack {
                         Spacer()
-                        (pinned ? Color.red : Color.clear)
+                        (pinned ? Colors.factory.prominent : Colors.factory.clear)
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.4, alignment: .center)
                             .clipShape(Capsule())
                         Spacer()
@@ -31,18 +31,17 @@ struct ClipboardRow: View {
             Text(text)
                 .font(.custom("SF Mono", fixedSize: 14))
                 .fontWeight(.semibold)
-                .foregroundColor(selected ? Color.primary : Color.white)
+                .foregroundColor(selected ? Colors.factory.selectedTextColor : Colors.factory.defaultTextColor)
             Spacer()
-            Text(shortcut)
+            Text(selected ? "↵" : shortcut)
                 .font(.custom("Courier New", fixedSize: 25))
                 .fontWeight(.bold)
-                .foregroundColor(.red)
+                .foregroundColor(Colors.factory.prominent)
             Spacer()
                 .frame(width: 1)
         }
-        .background(selected ? Color.gray : Color.black)
+        .background(selected ? Colors.factory.selectedBackgroundColor : Colors.factory.backgroundColor)
         .cornerRadius(selected ? 5 : 0)
-        .background(Color.black)
         .frame(maxHeight: 65)
     }
 }
@@ -58,5 +57,15 @@ struct ClipboardRow_Previews: PreviewProvider {
                 .frame(width: 400, height: 50)
         }
         .preferredColorScheme(.light)
+
+        VStack(spacing: 0) {
+            ClipboardRow(text: "Lorem Ipsum", shortcut: "1", pinned: true, selected: false)
+                .frame(width: 400, height: 50)
+            ClipboardRow(text: "Dolor sit", shortcut: "↵", pinned: true, selected: true)
+                .frame(width: 400, height: 50)
+            ClipboardRow(text: "Ames tres", shortcut: "3", pinned: false, selected: false)
+                .frame(width: 400, height: 50)
+        }
+        .preferredColorScheme(.dark)
     }
 }

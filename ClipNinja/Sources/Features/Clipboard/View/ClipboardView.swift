@@ -14,6 +14,7 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
     var body: some View {
         clipboardContent
+            .padding(10)
             .background(KeyEventHandling(onKeyPress: onKeyPress(keyPress:)))
             .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -34,15 +35,16 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
             pages.padding(.top).padding(.bottom)
         }
-        .background(Color.black)
+        .background(Colors.factory.backgroundColor)
     }
 
     private var pages: some View {
         HStack {
             ForEach(0..<viewModel.totalPages, id: \.self) { index in
-                Color(index == viewModel.shownPage ? .red : .white)
-                    .frame(width: 50, height: 5, alignment: .center)
-                    .clipShape(Capsule())
+                (index == viewModel.shownPage ? Colors.factory.prominent : Colors.factory.selectedBackgroundColor)
+                        .frame(width: 50, height: 5, alignment: .center)
+                        .clipShape(Capsule())
+
             }
         }
     }
@@ -128,7 +130,11 @@ struct ClipboardView_Previews: PreviewProvider {
     static var previews: some View {
         ClipboardView(
             viewModel: ClipboardViewModelPreview()
-        )
+        ).preferredColorScheme(.light)
+
+        ClipboardView(
+            viewModel: ClipboardViewModelPreview()
+        ).preferredColorScheme(.dark)
     }
 
 }

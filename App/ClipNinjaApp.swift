@@ -45,6 +45,7 @@ struct ClipNinjaApp: App {
         window?.standardWindowButton(.zoomButton)?.isHidden = true
         window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
         window?.collectionBehavior = .moveToActiveSpace
+        window?.backgroundColor = NSColor(Colors.factory.backgroundColor)
     }
 
     private func setupSettings(instanceProvider: InstanceProvider) {

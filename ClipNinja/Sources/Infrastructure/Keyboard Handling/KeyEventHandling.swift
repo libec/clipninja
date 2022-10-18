@@ -26,4 +26,3 @@ class KeyView: NSView {
         onKeyPress?(keyboardShortcut)
     }
 }
-
