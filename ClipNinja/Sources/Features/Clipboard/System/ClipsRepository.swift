@@ -42,21 +42,21 @@ final class InMemoryClipboardsRepository: ClipsRepository {
     }
 
     func togglePin(at index: Int) {
-        if clipsSubject.value.indices.contains(index) {
-            var toggledClip = clipsSubject.value[index]
-            toggledClip.pinned.toggle()
-            clipsSubject.value.remove(at: index)
-            let pinned = clipsSubject.value.filter(\.pinned).count
-            clipsSubject.value.insert(toggledClip, at: max(0, pinned))
-
-        }
+        moveToTop(index: index, togglePin: true)
     }
 
     func moveAfterPins(index: Int) {
+        moveToTop(index: index, togglePin: false)
+    }
+
+    private func moveToTop(index: Int, togglePin: Bool) {
         if clipsSubject.value.indices.contains(index) {
-            let clip = clipsSubject.value[index]
+            var clip = clipsSubject.value[index]
             clipsSubject.value.remove(at: index)
             let pinned = clipsSubject.value.filter(\.pinned).count
+            if togglePin {
+                clip.pinned.toggle()
+            }
             clipsSubject.value.insert(clip, at: max(0, pinned))
         }
     }
@@ -69,18 +69,23 @@ final class InMemoryClipboardsRepository: ClipsRepository {
     }
 
     private func observePasteboard() {
-        pasteboardObserver.newCopiedText.filter { [unowned self] newText in
-            return !self.clipsSubject.value.contains { clip in
-                clip.text == newText
+        pasteboardObserver.newCopiedText.map(Clip.newClip(with:))
+            .sink { [unowned self] newClip in
+                self.addNewClipFromPasteboard(newClip: newClip)
+            }.store(in: &subscriptions)
+    }
+
+    private func addNewClipFromPasteboard(newClip: Clip) {
+        let isNewClipAlreadyPinned = clipsSubject.value.contains { clip in
+            clip.text == newClip.text && clip.pinned
+        }
+        if !isNewClipAlreadyPinned {
+            if let clipIndex = clipsSubject.value.firstIndex(of: newClip) {
+                delete(at: clipIndex)
             }
-        }.map {
-            Clip(text: $0, pinned: false)
-        }.sink { [unowned self] newClip in
-            // TODO: - Remove if already exists and is not pinned
-            // TODO: - Ignore if already exists and is pinned
             let pinnedClips = self.clipsSubject.value.filter({ $0.pinned }).count
             self.clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
-        }.store(in: &subscriptions)
+        }
     }
 
     private func persist(clips: [Clip]) {
