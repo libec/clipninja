@@ -39,13 +39,13 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
             pages.padding(.top).padding(.bottom)
         }
-        .background(Colors.factory.backgroundColor)
+        .background(Colors.backgroundColor)
     }
 
     private var pages: some View {
         HStack {
             ForEach(0..<viewModel.totalPages, id: \.self) { index in
-                (index == viewModel.shownPage ? Colors.factory.prominent : Colors.factory.selectedBackgroundColor)
+                (index == viewModel.shownPage ? Colors.prominent : Colors.selectedBackgroundColor)
                         .frame(width: 50, height: 5, alignment: .center)
                         .clipShape(Capsule())
 

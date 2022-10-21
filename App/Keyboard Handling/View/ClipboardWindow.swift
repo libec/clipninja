@@ -18,7 +18,7 @@ class ClipboardWindow: KeyboardEventWindow {
         titlebarAppearsTransparent = true
         isOpaque = false
         hasShadow = false
-        backgroundColor = NSColor(Colors.factory.backgroundColor)
+        backgroundColor = NSColor(Colors.backgroundColor)
         collectionBehavior = .moveToActiveSpace
     }
 }

@@ -14,6 +14,10 @@ struct ClipboardRow: View {
         self.selected = selected
     }
 
+    private var background: Color {
+        selected ? Colors.selectedBackgroundColor : Colors.backgroundColor
+    }
+
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             HStack {
@@ -21,7 +25,7 @@ struct ClipboardRow: View {
                 GeometryReader { geometry in
                     VStack {
                         Spacer()
-                        (pinned ? Colors.factory.prominent : Colors.factory.clear)
+                        (pinned ? Colors.prominent : background)
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.4, alignment: .center)
                             .clipShape(Capsule())
                         Spacer()
@@ -31,16 +35,16 @@ struct ClipboardRow: View {
             Text(text)
                 .font(.custom("SF Mono", fixedSize: 14))
                 .fontWeight(.semibold)
-                .foregroundColor(selected ? Colors.factory.selectedTextColor : Colors.factory.defaultTextColor)
+                .foregroundColor(selected ? Colors.selectedTextColor : Colors.defaultTextColor)
             Spacer()
             Text(selected ? "↵" : shortcut)
                 .font(.custom("Courier New", fixedSize: 25))
                 .fontWeight(.bold)
-                .foregroundColor(Colors.factory.prominent)
+                .foregroundColor(Colors.prominent)
             Spacer()
                 .frame(width: 1)
         }
-        .background(selected ? Colors.factory.selectedBackgroundColor : Colors.factory.backgroundColor)
+        .background(background)
         .cornerRadius(selected ? 5 : 0)
         .frame(maxHeight: 65)
     }
