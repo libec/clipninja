@@ -10,17 +10,20 @@ public struct ApplicationAssembly {
             ClipboardFeatureAssembly(),
             ClipboardInfrastructureAssembly(),
             PasteboardAssembly(),
-            ShortcutsAssembly(),
             SystemAssembly(),
             NavigationAssembly()
         ]
     }
 
-    public init() { }
+    private let systemAssemblies: [Assembly]
+
+    public init(systemAssemblies: [Assembly]) {
+        self.systemAssemblies = systemAssemblies
+    }
 
     public func resolveDependencyGraph<Instance>() -> Instance {
         let assembler = Assembler()
-        assembler.apply(assemblies: assemblies)
+        assembler.apply(assemblies: assemblies + systemAssemblies)
         return assembler.resolver.resolve(Instance.self)!
     }
 }

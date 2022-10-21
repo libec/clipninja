@@ -1,5 +1,6 @@
 import KeyboardShortcuts
 import Combine
+import ClipNinja
 
 extension KeyboardShortcuts.Name {
     static let toggleClipNinja = Self("aewwsgref", default: .init(.v, modifiers: [.command, .shift]))

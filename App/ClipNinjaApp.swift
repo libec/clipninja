@@ -2,53 +2,54 @@ import SwiftUI
 import Combine
 import ClipNinja
 
-@main
-struct ClipNinjaApp: App {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @State private var window: NSWindow?
-    @State private var statusItem: NSStatusItem?
+    private var window: NSWindow!
 
-    private let applicationAssembly = ApplicationAssembly()
+    private let applicationAssembly: ApplicationAssembly
     private let instanceProvider: InstanceProvider
+    private var statusItem: NSStatusItem?
+    private let keyboardController: KeyboardController
 
-    init() {
+    override init() {
+        self.keyboardController = KeyboardController()
+        let keyboardHandlingAssembly = KeyboardHandlingAssembly(keyboardNotifier: keyboardController)
+        self.applicationAssembly = ApplicationAssembly(systemAssemblies: [keyboardHandlingAssembly])
         self.instanceProvider = applicationAssembly.resolveDependencyGraph()
+        super.init()
     }
 
-    var body: some Scene {
-        WindowGroup {
-            clipboardView
-        }
-        .windowStyle(HiddenTitleBarWindowStyle())
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+
+        window = KeyboardEventWindow(
+            keyboardController: keyboardController,
+            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
+            styleMask: [.closable, .titled],
+            backing: .buffered,
+            defer: true
+        )
+        setupSettings()
+        instanceProvider.resolve(Navigation.self).subscribe()
+        window.makeKeyAndOrderFront(nil)
+        window.center()
+        window.backgroundColor = NSColor(Colors.factory.backgroundColor)
+        window.contentView = NSHostingView(rootView: clipsView)
+        window.backgroundColor = NSColor(Colors.factory.backgroundColor)
+        window.collectionBehavior = .moveToActiveSpace
     }
 
-    private var clipboardView: some View {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return false
+    }
+
+    var clipsView: some View {
         instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
-            .frame(width: 600, height: 600)
             .onAppear {
                 NSApp.activate(ignoringOtherApps: true)
-                instanceProvider.resolve(Navigation.self).subscribe()
-                setupSettings(instanceProvider: instanceProvider)
-                /*
-                 TODO: - Replace with MenuBarExtra on new macOS
-                    https://developer.apple.com/documentation/SwiftUI/MenuBarExtra
-                 */
-
             }
-            .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-                styleWindow()
-            }
-            .background(WindowAccessor(window: $window))
     }
 
-    private func styleWindow() {
-        window?.standardWindowButton(.zoomButton)?.isHidden = true
-        window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
-        window?.collectionBehavior = .moveToActiveSpace
-        window?.backgroundColor = NSColor(Colors.factory.backgroundColor)
-    }
-
-    private func setupSettings(instanceProvider: InstanceProvider) {
+    private func setupSettings() {
         guard statusItem == nil else { return }
 
         let settingsView = instanceProvider.resolve(SettingsView.self)
@@ -56,6 +57,8 @@ struct ClipNinjaApp: App {
 
         view.frame = NSRect(x: 0, y: 0, width: 400, height: 200)
 
+        // TODO: - Replace with MenuBarExtra on new macOS
+        // https://developer.apple.com/documentation/SwiftUI/MenuBarExtra
         let menuItem = NSMenuItem()
         menuItem.view = view
 

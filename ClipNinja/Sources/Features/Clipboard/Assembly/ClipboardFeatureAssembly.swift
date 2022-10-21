@@ -2,10 +2,6 @@ import Swinject
 import SwinjectAutoregistration
 import SwiftUI
 
-public enum AssemblyKeys: String {
-    case clipboardView
-}
-
 struct ClipboardFeatureAssembly: Assembly {
 
     init() { }

@@ -13,16 +13,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Swinject/Swinject.git", .upToNextMajor(from: "2.8.2")),
-        .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMajor(from: "2.8.1")),
-        .package(url: "https://github.com/sindresorhus/KeyboardShortcuts", .upToNextMajor(from: "1.3.0")),
+        .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMajor(from: "2.8.1"))
     ],
     targets: [
         .target(
             name: "ClipNinja",
             dependencies: [
                 "Swinject",
-                "SwinjectAutoregistration",
-                "KeyboardShortcuts",
+                "SwinjectAutoregistration"
             ],
             path: "Sources"
         ),

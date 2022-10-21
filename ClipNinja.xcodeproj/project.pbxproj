@@ -7,16 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C57FE2C28E8301700CCFB1D /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C57FE2B28E8301700CCFB1D /* WindowAccessor.swift */; };
+		2CA021DA2902DE0C00BE2F32 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA021D92902DE0C00BE2F32 /* KeyboardController.swift */; };
+		2CA021E12902E06600BE2F32 /* SystemShortcutObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA021E02902E06600BE2F32 /* SystemShortcutObserver.swift */; };
+		2CA021E72902E2ED00BE2F32 /* KeyboardHandlingAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA021E62902E2ED00BE2F32 /* KeyboardHandlingAssembly.swift */; };
+		2CA021EA2902E36100BE2F32 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 2CA021E92902E36100BE2F32 /* KeyboardShortcuts */; };
+		2CA021EB2902E53C00BE2F32 /* RecordShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA021E32902E0C000BE2F32 /* RecordShortcutView.swift */; };
+		2CB443C429029A6800EE07CE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB443C329029A6800EE07CE /* main.swift */; };
 		2CBC809328D8F1BD00490E80 /* ClipNinja in Frameworks */ = {isa = PBXBuildFile; productRef = 2CBC809228D8F1BD00490E80 /* ClipNinja */; };
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2C57FE2B28E8301700CCFB1D /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
 		2C91E41A2722B43A00CD2418 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClipNinja-Info.plist"; sourceTree = "<group>"; };
+		2CA021D92902DE0C00BE2F32 /* KeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
+		2CA021E02902E06600BE2F32 /* SystemShortcutObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemShortcutObserver.swift; sourceTree = "<group>"; };
+		2CA021E32902E0C000BE2F32 /* RecordShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordShortcutView.swift; sourceTree = "<group>"; };
+		2CA021E62902E2ED00BE2F32 /* KeyboardHandlingAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandlingAssembly.swift; sourceTree = "<group>"; };
+		2CB443C329029A6800EE07CE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2CBC809128D8F1B100490E80 /* ClipNinja */ = {isa = PBXFileReference; lastKnownFileType = text; path = ClipNinja; sourceTree = SOURCE_ROOT; };
 		2CE346522722B0F6000AAEC9 /* ClipNinjaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinjaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
@@ -30,6 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CBC809328D8F1BD00490E80 /* ClipNinja in Frameworks */,
+				2CA021EA2902E36100BE2F32 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +54,41 @@
 				2C91E41B2722BE2900CD2418 /* ClipNinja-Info.plist */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		2CA021DB2902DE2600BE2F32 /* Keyboard Handling */ = {
+			isa = PBXGroup;
+			children = (
+				2CA021E52902E2DC00BE2F32 /* Assembly */,
+				2CA021E22902E0C000BE2F32 /* View */,
+				2CA021E42902E2A100BE2F32 /* System */,
+			);
+			path = "Keyboard Handling";
+			sourceTree = "<group>";
+		};
+		2CA021E22902E0C000BE2F32 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2CA021E32902E0C000BE2F32 /* RecordShortcutView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2CA021E42902E2A100BE2F32 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				2CA021E02902E06600BE2F32 /* SystemShortcutObserver.swift */,
+				2CA021D92902DE0C00BE2F32 /* KeyboardController.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		2CA021E52902E2DC00BE2F32 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				2CA021E62902E2ED00BE2F32 /* KeyboardHandlingAssembly.swift */,
+			);
+			path = Assembly;
 			sourceTree = "<group>";
 		};
 		2CE346492722B0F6000AAEC9 = {
@@ -68,8 +113,9 @@
 		2CE346542722B0F6000AAEC9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				2CA021DB2902DE2600BE2F32 /* Keyboard Handling */,
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
-				2C57FE2B28E8301700CCFB1D /* WindowAccessor.swift */,
+				2CB443C329029A6800EE07CE /* main.swift */,
 				2C91E4202722EF8F00CD2418 /* Assets */,
 			);
 			path = App;
@@ -100,6 +146,7 @@
 			name = ClipNinjaApp;
 			packageProductDependencies = (
 				2CBC809228D8F1BD00490E80 /* ClipNinja */,
+				2CA021E92902E36100BE2F32 /* KeyboardShortcuts */,
 			);
 			productName = ClipNinja;
 			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinjaApp.app */;
@@ -129,6 +176,9 @@
 				Base,
 			);
 			mainGroup = 2CE346492722B0F6000AAEC9;
+			packageReferences = (
+				2CA021E82902E36100BE2F32 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+			);
 			productRefGroup = 2CE346532722B0F6000AAEC9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -154,8 +204,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C57FE2C28E8301700CCFB1D /* WindowAccessor.swift in Sources */,
+				2CA021E12902E06600BE2F32 /* SystemShortcutObserver.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
+				2CA021DA2902DE0C00BE2F32 /* KeyboardController.swift in Sources */,
+				2CA021EB2902E53C00BE2F32 /* RecordShortcutView.swift in Sources */,
+				2CA021E72902E2ED00BE2F32 /* KeyboardHandlingAssembly.swift in Sources */,
+				2CB443C429029A6800EE07CE /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +424,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		2CA021E82902E36100BE2F32 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = exactVersion;
+				version = 1.7.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		2CA021E92902E36100BE2F32 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CA021E82902E36100BE2F32 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
 		2CBC809228D8F1BD00490E80 /* ClipNinja */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ClipNinja;
