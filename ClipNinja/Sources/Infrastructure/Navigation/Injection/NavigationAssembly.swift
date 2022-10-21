@@ -10,5 +10,7 @@ struct NavigationAssembly: Assembly {
         container.autoregister(HideAppUseCase.self, initializer: HideAppUseCaseImpl.init)
         container.autoregister(Navigation.self, initializer: AppKitNavigation.init)
             .inObjectScope(.container)
+        container.autoregister(ViewPortRepository.self, initializer: InMemoryViewPortRepository.init)
+            .inObjectScope(.container)
     }
 }
