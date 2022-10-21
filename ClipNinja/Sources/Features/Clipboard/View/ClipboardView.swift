@@ -15,13 +15,16 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
     }
 
     var body: some View {
-        clipboardContent
-            .padding(10)
-            .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
+        content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onReceive(keyboardNotifier.keyPress, perform: { keyPress in
                 viewModel.onEvent(.keyboard(keyPress))
             })
+            .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
+    }
+
+    private var content: some View {
+        viewModel.clipPreviews.isEmpty ? AnyView(EmptyClipboardView()) : AnyView(clipboardContent)
     }
 
     private var clipboardContent: some View  {
@@ -36,10 +39,10 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
             }
             Spacer()
 
-
             pages.padding(.top).padding(.bottom)
         }
         .background(Colors.backgroundColor)
+        .padding(10)
     }
 
     private var pages: some View {

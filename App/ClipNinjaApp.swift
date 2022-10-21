@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         window = ClipboardWindow(
             keyboardController: keyboardController,
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
+            contentRect: NSRect(x: 0, y: 0, width: 650, height: 600),
             styleMask: [.titled],
             backing: .buffered,
             defer: true
