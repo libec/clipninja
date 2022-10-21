@@ -15,37 +15,42 @@ public enum Colors {
     }
 
     static func shouldUseDarkMode() -> Bool {
-        return true
-//        if #available(OSX 10.14, *) {
-//            return NSApp.effectiveAppearance.name == .darkAqua
-//        } else {
-//            return false
-//        }
+        if #available(OSX 10.14, *) {
+            return NSApp.effectiveAppearance.name == .darkAqua
+        } else {
+            return false
+        }
     }
 
-    fileprivate static let pastelBlue = Color(red: 181/255, green: 225/255, blue: 253/255)
-    fileprivate static let pastelYellow = Color(red: 255/255, green: 255/255, blue: 191/255)
-    fileprivate static let pastelRed = Color(red: 220/255, green: 76/255, blue: 94/255)
-    fileprivate static let darkPastelRed = Color(red: 202/255, green: 58/255, blue: 43/255)
-    fileprivate static let pastelGreen = Color(red: 223/255, green: 255/255, blue: 237/255)
+    fileprivate static let pastelBlue = Color(r: 181, g: 225, b: 253)
+    fileprivate static let pastelYellow = Color(r: 255, g: 255, b: 191)
+    fileprivate static let pastelRed = Color(r: 220, g: 76, b: 94)
+    fileprivate static let darkPastelRed = Color(r: 202, g: 58, b: 43)
+    fileprivate static let pastelGreen = Color(r: 223, g: 255, b: 237)
 }
 
 class DarkModeColorFactory: ColorFactory {
     let clear = Color.clear
     let prominent = Colors.pastelRed
-    let defaultTextColor = Color(red: 133/255, green: 139/255, blue: 152/255, opacity: 1.0)
-    let selectedTextColor = Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 1.0)
-    let backgroundColor = Color(red: 38/255, green: 41/255, blue: 44/255, opacity: 1)
-    let selectedBackgroundColor = Color(red: 235/255, green: 235/255, blue: 235/255, opacity: 0.2)
+    let defaultTextColor = Color(r: 133, g: 139, b: 152)
+    let selectedTextColor = Color(r: 204, g: 204, b: 204)
+    let backgroundColor = Color(r: 38, g: 41, b: 44)
+    let selectedBackgroundColor = Color(r: 77, g: 80, b: 82)
 }
 
 class LightModeColorFactory: ColorFactory {
     let clear = Color.clear
     let prominent = Colors.darkPastelRed
-    let defaultTextColor = Color(red: 13/255, green: 13/255, blue: 15/255, opacity: 1.0)
-    let selectedTextColor = Color(red: 230/255, green: 230/255, blue: 230/255, opacity: 1.0)
-    let backgroundColor = Color(red: 38/255, green: 41/255, blue: 44/255, opacity: 1)
-    let selectedBackgroundColor = Color(red: 38/255, green: 41/255, blue: 44/255, opacity: 0.7)
+    let defaultTextColor = Color(r: 29, g: 29, b: 32)
+    let selectedTextColor = Color(r: 235, g: 235, b: 235)
+    let backgroundColor = Color(r: 227, g: 226, b: 226)
+    let selectedBackgroundColor = Color(r: 103, g: 105, b: 107)
+}
+
+fileprivate extension Color {
+    init(r: Double, g: Double, b: Double) {
+        self.init(red: r / 255, green: g / 255, blue: b / 255)
+    }
 }
 
 public protocol ColorFactory {
