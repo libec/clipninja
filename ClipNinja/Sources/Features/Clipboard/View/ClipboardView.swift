@@ -1,23 +1,27 @@
 import SwiftUI
 import Combine
-import KeyboardShortcuts
 
 struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
     @StateObject var viewModel: ViewModel
+    private let keyboardNotifier: KeyboardNotifier
 
     init(
-        viewModel: ViewModel
+        viewModel: ViewModel,
+        keyboardNotifier: KeyboardNotifier
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+        self.keyboardNotifier = keyboardNotifier
     }
 
     var body: some View {
         clipboardContent
             .padding(10)
-            .background(KeyEventHandling(onKeyPress: onKeyPress(keyPress:)))
             .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onReceive(keyboardNotifier.keyPress, perform: { keyPress in
+                viewModel.onEvent(.keyboard(keyPress))
+            })
     }
 
     private var clipboardContent: some View  {
@@ -46,47 +50,6 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
                         .clipShape(Capsule())
 
             }
-        }
-    }
-
-    private func onKeyPress(keyPress: KeyboardShortcuts.Key) {
-        switch keyPress {
-        case .downArrow:
-            viewModel.onEvent(.keyboard(.down))
-        case .upArrow:
-            viewModel.onEvent(.keyboard(.up))
-        case .rightArrow:
-            viewModel.onEvent(.keyboard(.right))
-        case .leftArrow:
-            viewModel.onEvent(.keyboard(.left))
-        case .delete:
-            viewModel.onEvent(.keyboard(.delete))
-        case .keypadEnter, .`return`:
-            viewModel.onEvent(.keyboard(.enter))
-        case .space:
-            viewModel.onEvent(.keyboard(.space))
-        case .escape:
-            viewModel.onEvent(.keyboard(.escape))
-        case .keypad1, .one:
-            viewModel.onEvent(.keyboard(.number(number: 1)))
-        case .keypad2, .two:
-            viewModel.onEvent(.keyboard(.number(number: 2)))
-        case .keypad3, .three:
-            viewModel.onEvent(.keyboard(.number(number: 3)))
-        case .keypad4, .four:
-            viewModel.onEvent(.keyboard(.number(number: 4)))
-        case .keypad5, .five:
-            viewModel.onEvent(.keyboard(.number(number: 5)))
-        case .keypad6, .six:
-            viewModel.onEvent(.keyboard(.number(number: 6)))
-        case .keypad7, .seven:
-            viewModel.onEvent(.keyboard(.number(number: 7)))
-        case .keypad8, .eight:
-            viewModel.onEvent(.keyboard(.number(number: 8)))
-        case .keypad9, .nine:
-            viewModel.onEvent(.keyboard(.number(number: 9)))
-        default:
-            log(message: "unhandled key press: \(keyPress)")
         }
     }
 }
@@ -127,13 +90,22 @@ struct ClipboardView_Previews: PreviewProvider {
         func subscribe() { }
     }
 
+    class KeyboardNotifierDummy: KeyboardNotifier {
+        var keyPress: AnyPublisher<KeyboardEvent, Never> {
+            Just(.enter)
+                .eraseToAnyPublisher()
+        }
+    }
+
     static var previews: some View {
         ClipboardView(
-            viewModel: ClipboardViewModelPreview()
+            viewModel: ClipboardViewModelPreview(),
+            keyboardNotifier: KeyboardNotifierDummy()
         ).preferredColorScheme(.light)
 
         ClipboardView(
-            viewModel: ClipboardViewModelPreview()
+            viewModel: ClipboardViewModelPreview(),
+            keyboardNotifier: KeyboardNotifierDummy()
         ).preferredColorScheme(.dark)
     }
 

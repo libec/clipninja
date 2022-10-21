@@ -2,7 +2,11 @@ import SwiftUI
 
 public struct SettingsView: View {
 
-    init() { }
+    private let recordShortcutView: AnyView
+
+    init(recordShortcutView: AnyView) {
+        self.recordShortcutView = recordShortcutView
+    }
 
     private var accessibilityUrl: URL? {
         let privacyUrlString = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
@@ -20,7 +24,7 @@ public struct SettingsView: View {
                     NSWorkspace.shared.open(url)
                 }
             }
-            RecordShortcutView()
+            recordShortcutView
             Button("Quit") {
                 exit(0)
             }
