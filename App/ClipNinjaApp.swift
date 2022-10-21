@@ -21,21 +21,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
-        window = KeyboardEventWindow(
+        window = ClipboardWindow(
             keyboardController: keyboardController,
             contentRect: NSRect(x: 0, y: 0, width: 600, height: 600),
-            styleMask: [.closable, .titled],
+            styleMask: [.titled],
             backing: .buffered,
             defer: true
         )
         setupSettings()
         instanceProvider.resolve(Navigation.self).subscribe()
+        window.contentView = NSHostingView(rootView: clipsView)
         window.makeKeyAndOrderFront(nil)
         window.center()
-        window.backgroundColor = NSColor(Colors.factory.backgroundColor)
-        window.contentView = NSHostingView(rootView: clipsView)
-        window.backgroundColor = NSColor(Colors.factory.backgroundColor)
-        window.collectionBehavior = .moveToActiveSpace
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
