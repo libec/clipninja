@@ -4,7 +4,25 @@ import ClipNinjaPackage
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    private var window: NSWindow!
+    private lazy var clipboardWindow: NSWindow = {
+        let window = ClipboardWindow(keyboardController: keyboardController)
+        let clipsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
+            .onAppear {
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        window.contentView = NSHostingView(rootView: clipsView)
+        return window
+    }()
+
+    private lazy var settingsWindow: NSWindow = {
+        let window = SettingsWindow()
+        let settingsView = instanceProvider.resolve(
+            AnyView.self,
+            name: AssemblyKeys.settingsView.rawValue
+        )
+        window.contentView = NSHostingView(rootView: settingsView)
+        return window
+    }()
 
     private var statusItem: NSStatusItem?
     private let keyboardController: KeyboardController
@@ -24,54 +42,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
-        window = ClipboardWindow(
-            keyboardController: keyboardController,
-            contentRect: NSRect(x: 0, y: 0, width: 650, height: 600),
-            styleMask: [.titled],
-            backing: .buffered,
-            defer: true
-        )
         setupSettings()
         setupNavigation()
-        window.contentView = NSHostingView(rootView: clipsView)
-        activate(window: window)
-        window.center()
+        activate(window: clipboardWindow)
+        clipboardWindow.center()
     }
 
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
+
     private func setupNavigation() {
-        navigation.navigationEvent.sink { event in
+        navigation.navigationEvent
+            .receive(on: DispatchQueue.main)
+            .sink { event in
             switch event {
             case .hideApp:
                 NSApp.hide(nil)
             case .showClipboard:
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.windows.filter { $0 is SettingsWindow }.forEach { $0.close() }
+                self.activate(window: self.clipboardWindow)
             case .showSettings:
-                print("show settings")
+                NSApp.windows.filter { $0 is ClipboardWindow }.forEach { $0.close() }
+                self.activate(window: self.settingsWindow)
             }
         }.store(in: &subscriptions)
     }
 
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return false
-    }
-
-    var clipsView: some View {
-        instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
-            .onAppear {
-                NSApp.activate(ignoringOtherApps: true)
-            }
-    }
-
     func activate(window: NSWindow) {
         window.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     private func setupSettings() {
         guard statusItem == nil else { return }
 
         let clipboardsItem = NSMenuItem(title: "Clipboards", action: #selector(showClipboards), keyEquivalent: "")
-        let settingsItem = NSMenuItem(title: "🚧 Settings 🚧", action: #selector(showSettings), keyEquivalent: "")
+        let settingsItem = NSMenuItem(title: "Settings", action: #selector(showSettings), keyEquivalent: "")
         let tutorialItem = NSMenuItem(title: "🚧 Tutorial 🚧", action: #selector(showTutorial), keyEquivalent: "")
         let quitItem = NSMenuItem(title: "Quit", action: #selector(exitApp), keyEquivalent: "")
 

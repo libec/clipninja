@@ -1,16 +1,22 @@
 import AppKit
 import ClipNinjaPackage
+import Combine
+import KeyboardShortcuts
 
-class ClipboardWindow: KeyboardEventWindow {
+class ClipboardWindow: NSWindow {
 
-    override init(
-        keyboardController: KeyboardController,
-        contentRect: NSRect,
-        styleMask style: NSWindow.StyleMask,
-        backing backingStoreType: NSWindow.BackingStoreType,
-        defer flag: Bool
-    ) {
-        super.init(keyboardController: keyboardController, contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
+    let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()
+
+    private let keyboardController: KeyboardController
+
+    init(keyboardController: KeyboardController) {
+        self.keyboardController = keyboardController
+        super.init(
+            contentRect: NSRect(x: 0, y: 0, width: 650, height: 600),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: true
+        )
         titlebarAppearsTransparent = true
         isOpaque = false
         hasShadow = false
@@ -18,5 +24,12 @@ class ClipboardWindow: KeyboardEventWindow {
         collectionBehavior = .moveToActiveSpace
         isMovableByWindowBackground = true
         setFrameAutosaveName("ClipboardWindow")
+        hidesOnDeactivate = true
+        isReleasedWhenClosed = false
+    }
+
+    override func keyDown(with event: NSEvent) {
+        let keyboardShortcut = KeyboardShortcuts.Key(rawValue: Int(event.keyCode))
+        keyboardController.send(keyboardShortcut: keyboardShortcut)
     }
 }

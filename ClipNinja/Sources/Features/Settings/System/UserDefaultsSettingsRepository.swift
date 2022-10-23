@@ -1,7 +1,7 @@
 import Foundation
 import ApplicationServices
 
-class UserDefaultsSettingsRepository: SettingsRepository {
+final class UserDefaultsSettingsRepository: SettingsRepository {
 
     private let userDefaults: UserDefaults
 
