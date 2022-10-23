@@ -53,15 +53,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupNavigation() {
         navigation.navigationEvent
             .receive(on: DispatchQueue.main)
-            .sink { event in
+            .sink { [unowned self] event in
             switch event {
             case .hideApp:
                 NSApp.hide(nil)
             case .showClipboard:
-                NSApp.windows.filter { $0 is SettingsWindow }.forEach { $0.close() }
+                self.settingsWindow.close()
                 self.activate(window: self.clipboardWindow)
             case .showSettings:
-                NSApp.windows.filter { $0 is ClipboardWindow }.forEach { $0.close() }
+                self.clipboardWindow.close()
                 self.activate(window: self.settingsWindow)
             }
         }.store(in: &subscriptions)
