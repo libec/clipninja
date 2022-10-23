@@ -31,3 +31,19 @@ public struct SettingsView: View {
         }
     }
 }
+
+public struct SettingsView_Previews: PreviewProvider {
+
+    static var recordShortcutView: AnyView {
+        AnyView(
+            Color.green
+                .frame(width: 200, height: 80)
+        )
+    }
+
+    public static var previews: some View {
+        SettingsView(recordShortcutView: recordShortcutView)
+            .frame(width: 400, height: 200)
+            .preferredColorScheme(.dark)
+    }
+}

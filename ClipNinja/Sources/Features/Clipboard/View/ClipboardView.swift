@@ -104,12 +104,16 @@ struct ClipboardView_Previews: PreviewProvider {
         ClipboardView(
             viewModel: ClipboardViewModelPreview(),
             keyboardNotifier: KeyboardNotifierDummy()
-        ).preferredColorScheme(.light)
+        )
+        .frame(width: 650, height: 550)
+        .preferredColorScheme(.light)
 
         ClipboardView(
             viewModel: ClipboardViewModelPreview(),
             keyboardNotifier: KeyboardNotifierDummy()
-        ).preferredColorScheme(.dark)
+        )
+        .frame(width: 650, height: 550)
+        .preferredColorScheme(.dark)
     }
 
 }

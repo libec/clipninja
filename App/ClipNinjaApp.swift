@@ -49,20 +49,40 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupSettings() {
         guard statusItem == nil else { return }
 
-        let settingsView = instanceProvider.resolve(SettingsView.self)
-        let view = NSHostingView(rootView: settingsView)
-
-        view.frame = NSRect(x: 0, y: 0, width: 400, height: 200)
-
-        // TODO: - Replace with MenuBarExtra on new macOS
-        // https://developer.apple.com/documentation/SwiftUI/MenuBarExtra
-        let menuItem = NSMenuItem()
-        menuItem.view = view
+        let clipboardsItem = NSMenuItem(title: "Clipboards", action: #selector(showClipboards), keyEquivalent: "")
+        let settingsItem = NSMenuItem(title: "🚧 Settings 🚧", action: #selector(showSettings), keyEquivalent: "")
+        let tutorialItem = NSMenuItem(title: "🚧 Tutorial 🚧", action: #selector(showTutorial), keyEquivalent: "")
+        let quitItem = NSMenuItem(title: "Quit", action: #selector(exitApp), keyEquivalent: "")
 
         let menu = NSMenu()
-        menu.addItem(menuItem)
+        menu.addItem(clipboardsItem)
+        menu.addItem(settingsItem)
+        menu.addItem(tutorialItem)
+        menu.addItem(.separator())
+        menu.addItem(quitItem)
+
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusItem?.menu = menu
         self.statusItem?.button?.image = NSImage(named: "MenuIcon")
+    }
+
+    @objc
+    func showClipboards() {
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    @objc
+    func exitApp() {
+        NSApp.terminate(self)
+    }
+
+    @objc
+    func showSettings() {
+        print("🚧🚧: Show settings")
+    }
+
+    @objc
+    func showTutorial() {
+        print("🚧🚧: Show settings")
     }
 }
