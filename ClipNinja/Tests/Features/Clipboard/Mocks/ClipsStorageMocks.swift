@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 import Combine
 
 typealias ClipsStorageDummy = ClipsStorageSpy

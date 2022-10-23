@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 
 class SettingsRepositoryStub: SettingsRepository {
     let shouldPasteDirectly: Bool

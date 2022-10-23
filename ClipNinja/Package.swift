@@ -3,12 +3,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "ClipNinja",
+    name: "ClipNinjaPackage",
     platforms: [.macOS(.v12)],
     products: [
         .library(
-            name: "ClipNinja",
-            targets: ["ClipNinja"]
+            name: "ClipNinjaPackage",
+            targets: ["ClipNinjaPackage"]
         ),
     ],
     dependencies: [
@@ -17,7 +17,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ClipNinja",
+            name: "ClipNinjaPackage",
             dependencies: [
                 "Swinject",
                 "SwinjectAutoregistration"
@@ -25,8 +25,8 @@ let package = Package(
             path: "Sources"
         ),
         .testTarget(
-            name: "ClipNinjaTests",
-            dependencies: ["ClipNinja"],
+            name: "ClipNinjaPackageTests",
+            dependencies: ["ClipNinjaPackage"],
             path: "Tests"
         )
     ]

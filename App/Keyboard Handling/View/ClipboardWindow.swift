@@ -1,5 +1,5 @@
 import AppKit
-import ClipNinja
+import ClipNinjaPackage
 
 class ClipboardWindow: KeyboardEventWindow {
 

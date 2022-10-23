@@ -1,4 +1,4 @@
-import ClipNinja
+import ClipNinjaPackage
 import Swinject
 import SwinjectAutoregistration
 import SwiftUI

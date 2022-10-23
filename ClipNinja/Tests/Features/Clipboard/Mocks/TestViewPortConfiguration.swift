@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 
 struct TestViewPortConfiguration: ViewPortConfiguration {
     var totalPages: Int = 9

@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 
 typealias HideAppUseCaseDummy = HideAppUseCaseSpy
 class HideAppUseCaseSpy: HideAppUseCase {

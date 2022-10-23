@@ -1,6 +1,6 @@
 import SwiftUI
 import Combine
-import ClipNinja
+import ClipNinjaPackage
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 

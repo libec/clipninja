@@ -1,6 +1,6 @@
 import KeyboardShortcuts
 import Combine
-import ClipNinja
+import ClipNinjaPackage
 
 final class KeyboardController: KeyboardNotifier {
 

@@ -1,5 +1,5 @@
 import Combine
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 import XCTest
 
 final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {

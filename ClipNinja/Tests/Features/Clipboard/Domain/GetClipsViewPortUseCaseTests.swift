@@ -1,6 +1,6 @@
 import Combine
 import XCTest
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 
 class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
 

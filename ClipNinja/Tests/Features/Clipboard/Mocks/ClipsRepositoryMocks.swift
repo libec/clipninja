@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 import Combine
 
 class ClipsRepositoryStub: ClipsRepository {

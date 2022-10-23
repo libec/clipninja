@@ -1,5 +1,5 @@
 import XCTest
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 import Combine
 
 class PasteUseCaseTests: XCTestCase {

@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 
 extension Clip {
     static func numberStubs(range: Range<Int>) -> [Clip] {

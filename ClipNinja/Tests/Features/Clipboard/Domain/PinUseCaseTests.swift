@@ -1,4 +1,4 @@
-@testable import ClipNinja
+@testable import ClipNinjaPackage
 import XCTest
 
 class PinUseCaseTests: XCTestCase {
