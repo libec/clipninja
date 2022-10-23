@@ -16,6 +16,7 @@
 		2CA021F02902F41800BE2F32 /* ClipboardWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA021EF2902F41800BE2F32 /* ClipboardWindow.swift */; };
 		2CB443C429029A6800EE07CE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB443C329029A6800EE07CE /* main.swift */; };
 		2CCBB17529033FBA00C20C66 /* ClipNinjaPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */; };
+		2CCBB178290532AA00C20C66 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCBB177290532AA00C20C66 /* LaunchAtLogin */; };
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CCBB178290532AA00C20C66 /* LaunchAtLogin in Frameworks */,
 				2CCBB17529033FBA00C20C66 /* ClipNinjaPackage in Frameworks */,
 				2CA021EA2902E36100BE2F32 /* KeyboardShortcuts in Frameworks */,
 			);
@@ -137,9 +139,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2CE346512722B0F6000AAEC9 /* ClipNinjaApp */ = {
+		2CE346512722B0F6000AAEC9 /* ClipNinja */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinjaApp" */;
+			buildConfigurationList = 2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinja" */;
 			buildPhases = (
 				2CE3464E2722B0F6000AAEC9 /* Sources */,
 				2CE3464F2722B0F6000AAEC9 /* Frameworks */,
@@ -149,10 +151,11 @@
 			);
 			dependencies = (
 			);
-			name = ClipNinjaApp;
+			name = ClipNinja;
 			packageProductDependencies = (
 				2CA021E92902E36100BE2F32 /* KeyboardShortcuts */,
 				2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */,
+				2CCBB177290532AA00C20C66 /* LaunchAtLogin */,
 			);
 			productName = ClipNinja;
 			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinja_Dev.app */;
@@ -184,12 +187,13 @@
 			mainGroup = 2CE346492722B0F6000AAEC9;
 			packageReferences = (
 				2CA021E82902E36100BE2F32 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				2CCBB176290532AA00C20C66 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 			);
 			productRefGroup = 2CE346532722B0F6000AAEC9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2CE346512722B0F6000AAEC9 /* ClipNinjaApp */,
+				2CE346512722B0F6000AAEC9 /* ClipNinja */,
 			);
 		};
 /* End PBXProject section */
@@ -423,7 +427,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinjaApp" */ = {
+		2CE346772722B0F8000AAEC9 /* Build configuration list for PBXNativeTarget "ClipNinja" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2CE346782722B0F8000AAEC9 /* Debug */,
@@ -443,6 +447,14 @@
 				version = 1.7.2;
 			};
 		};
+		2CCBB176290532AA00C20C66 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -454,6 +466,11 @@
 		2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ClipNinjaPackage;
+		};
+		2CCBB177290532AA00C20C66 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCBB176290532AA00C20C66 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
+			productName = LaunchAtLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
