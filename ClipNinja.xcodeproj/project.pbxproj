@@ -16,9 +16,9 @@
 		2CA021F02902F41800BE2F32 /* ClipboardWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA021EF2902F41800BE2F32 /* ClipboardWindow.swift */; };
 		2CB443C429029A6800EE07CE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB443C329029A6800EE07CE /* main.swift */; };
 		2CCBB17529033FBA00C20C66 /* ClipNinjaPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */; };
-		2CCBB178290532AA00C20C66 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCBB177290532AA00C20C66 /* LaunchAtLogin */; };
 		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
+		2CF63AA529053BEB0006C94A /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF63AA429053BEB0006C94A /* SettingsWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +36,7 @@
 		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipNinja.entitlements; sourceTree = "<group>"; };
+		2CF63AA429053BEB0006C94A /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +44,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CCBB178290532AA00C20C66 /* LaunchAtLogin in Frameworks */,
 				2CCBB17529033FBA00C20C66 /* ClipNinjaPackage in Frameworks */,
 				2CA021EA2902E36100BE2F32 /* KeyboardShortcuts in Frameworks */,
 			);
@@ -75,8 +75,6 @@
 		2CA021E22902E0C000BE2F32 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2CA021EC2902F3C100BE2F32 /* KeyboardEventWindow.swift */,
-				2CA021EF2902F41800BE2F32 /* ClipboardWindow.swift */,
 				2CA021E32902E0C000BE2F32 /* RecordShortcutView.swift */,
 			);
 			path = View;
@@ -121,6 +119,7 @@
 		2CE346542722B0F6000AAEC9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				2CF63AA32905382D0006C94A /* Windows */,
 				2CA021DB2902DE2600BE2F32 /* Keyboard Handling */,
 				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
 				2CB443C329029A6800EE07CE /* main.swift */,
@@ -134,6 +133,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CF63AA32905382D0006C94A /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				2CA021EC2902F3C100BE2F32 /* KeyboardEventWindow.swift */,
+				2CA021EF2902F41800BE2F32 /* ClipboardWindow.swift */,
+				2CF63AA429053BEB0006C94A /* SettingsWindow.swift */,
+			);
+			path = Windows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,7 +164,6 @@
 			packageProductDependencies = (
 				2CA021E92902E36100BE2F32 /* KeyboardShortcuts */,
 				2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */,
-				2CCBB177290532AA00C20C66 /* LaunchAtLogin */,
 			);
 			productName = ClipNinja;
 			productReference = 2CE346522722B0F6000AAEC9 /* ClipNinja_Dev.app */;
@@ -187,7 +195,6 @@
 			mainGroup = 2CE346492722B0F6000AAEC9;
 			packageReferences = (
 				2CA021E82902E36100BE2F32 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
-				2CCBB176290532AA00C20C66 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 			);
 			productRefGroup = 2CE346532722B0F6000AAEC9 /* Products */;
 			projectDirPath = "";
@@ -215,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CA021F02902F41800BE2F32 /* ClipboardWindow.swift in Sources */,
+				2CF63AA529053BEB0006C94A /* SettingsWindow.swift in Sources */,
 				2CA021E12902E06600BE2F32 /* SystemShortcutObserver.swift in Sources */,
 				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
 				2CA021DA2902DE0C00BE2F32 /* KeyboardController.swift in Sources */,
@@ -349,7 +357,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = App/Assets/ClipNinja.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
@@ -384,7 +391,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = App/Assets/ClipNinja.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
@@ -447,14 +453,6 @@
 				version = 1.7.2;
 			};
 		};
-		2CCBB176290532AA00C20C66 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -466,11 +464,6 @@
 		2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ClipNinjaPackage;
-		};
-		2CCBB177290532AA00C20C66 /* LaunchAtLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2CCBB176290532AA00C20C66 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
-			productName = LaunchAtLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

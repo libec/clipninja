@@ -3,10 +3,6 @@ import ClipNinjaPackage
 
 class ClipboardWindow: KeyboardEventWindow {
 
-    override var frameAutosaveName: NSWindow.FrameAutosaveName {
-        "ClipboardWindow"
-    }
-
     override init(
         keyboardController: KeyboardController,
         contentRect: NSRect,
@@ -20,5 +16,7 @@ class ClipboardWindow: KeyboardEventWindow {
         hasShadow = false
         backgroundColor = NSColor(Colors.backgroundColor)
         collectionBehavior = .moveToActiveSpace
+        isMovableByWindowBackground = true
+        setFrameAutosaveName("ClipboardWindow")
     }
 }

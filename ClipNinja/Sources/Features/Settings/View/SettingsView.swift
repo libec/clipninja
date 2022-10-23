@@ -32,7 +32,7 @@ public struct SettingsView: View {
     }
 }
 
-public struct SettingsView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
 
     static var recordShortcutView: AnyView {
         AnyView(

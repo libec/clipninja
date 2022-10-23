@@ -16,7 +16,7 @@ final class HideAppUseCaseImpl: HideAppUseCase {
     }
 
     func hide() {
-        navigation.hide()
+        navigation.handle(navigationEvent: .hideApp)
         viewPortRepository.update(position: 0)
     }
 }

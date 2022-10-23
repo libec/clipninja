@@ -1,12 +1,12 @@
 import Combine
 import AppKit
-import SwiftUI
 
+// TODO: - Abstract app kit and test
 final class AppKitNavigation: Navigation {
 
     private let shortcutObserver: ShortcutObserver
 
-    private let hideSubject = PassthroughSubject<Void, Never>()
+    private let navigationSubject = PassthroughSubject<NavigationEvent, Never>()
     private var subscriptions = Set<AnyCancellable>()
 
     init(
@@ -15,39 +15,25 @@ final class AppKitNavigation: Navigation {
         self.shortcutObserver = shortcutObserver
     }
 
-    private var showClipboard: AnyPublisher<Bool, Never> {
-        let resign = NotificationCenter.default
+    public var navigationEvent: AnyPublisher<NavigationEvent, Never> {
+        let resign: AnyPublisher<NavigationEvent, Never> = NotificationCenter.default
             .publisher(
                 for: NSApplication.didResignActiveNotification,
                 object: nil
             )
-            .map { _ in false }
+            .map { _ in .hideApp }
             .eraseToAnyPublisher()
 
-        let shortcut = shortcutObserver.showClipboard
-            .map { _ in true }
-            .eraseToAnyPublisher()
-
-        let hide = hideSubject.map { _ in false }
+        let shortcut: AnyPublisher<NavigationEvent, Never>  = shortcutObserver.showClipboard
+            .map { _ in .showClipboard }
             .eraseToAnyPublisher()
 
         return resign.merge(with: shortcut)
-            .merge(with: hide)
+            .merge(with: navigationSubject)
             .eraseToAnyPublisher()
     }
 
-    func hide() {
-        hideSubject.send(())
-    }
-
-    func subscribe() {
-        showClipboard.receive(on: DispatchQueue.main)
-            .sink { [weak self] show in
-                if show {
-                    NSApp.activate(ignoringOtherApps: true)
-                } else {
-                    NSApp.hide(self)
-                }
-            }.store(in: &subscriptions)
+    func handle(navigationEvent: NavigationEvent) {
+        navigationSubject.send(navigationEvent)
     }
 }

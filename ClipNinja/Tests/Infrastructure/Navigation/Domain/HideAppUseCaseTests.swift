@@ -1,3 +1,4 @@
+import Combine
 import XCTest
 @testable import ClipNinjaPackage
 
@@ -12,7 +13,7 @@ class HideAppUseCaseTests: XCTestCase {
 
         sut.hide()
 
-        try XCTAssertTrue(XCTUnwrap(navigation.hideCalled))
+        try XCTAssertEqual(XCTUnwrap(navigation.handledEvent), .hideApp)
     }
 
     func test_hiding_app_moves_view_port_to_beginning() {
@@ -32,13 +33,13 @@ class HideAppUseCaseTests: XCTestCase {
 typealias NavigationDummy = NavigationSpy
 class NavigationSpy: Navigation {
 
-    var hideCalled: Bool?
+    var handledEvent: NavigationEvent?
 
-    func hide() {
-        hideCalled = true
+    var navigationEvent: AnyPublisher<NavigationEvent, Never> {
+        fatalError()
     }
 
-    func subscribe() {
-
+    func handle(navigationEvent: NavigationEvent) {
+        self.handledEvent = navigationEvent
     }
 }

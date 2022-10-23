@@ -6,16 +6,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var window: NSWindow!
 
-    private let applicationAssembly: ApplicationAssembly
-    private let instanceProvider: InstanceProvider
     private var statusItem: NSStatusItem?
     private let keyboardController: KeyboardController
+    private var subscriptions = Set<AnyCancellable>()
+
+    private let applicationAssembly: ApplicationAssembly
+    private let instanceProvider: InstanceProvider
+    private let navigation: Navigation
 
     override init() {
         self.keyboardController = KeyboardController()
         let keyboardHandlingAssembly = KeyboardHandlingAssembly(keyboardNotifier: keyboardController)
         self.applicationAssembly = ApplicationAssembly(systemAssemblies: [keyboardHandlingAssembly])
         self.instanceProvider = applicationAssembly.resolveDependencyGraph()
+        self.navigation = instanceProvider.resolve(Navigation.self)
         super.init()
     }
 
@@ -29,10 +33,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: true
         )
         setupSettings()
-        instanceProvider.resolve(Navigation.self).subscribe()
+        setupNavigation()
         window.contentView = NSHostingView(rootView: clipsView)
-        window.makeKeyAndOrderFront(nil)
+        activate(window: window)
         window.center()
+    }
+
+    private func setupNavigation() {
+        navigation.navigationEvent.sink { event in
+            switch event {
+            case .hideApp:
+                NSApp.hide(nil)
+            case .showClipboard:
+                NSApp.activate(ignoringOtherApps: true)
+            case .showSettings:
+                print("show settings")
+            }
+        }.store(in: &subscriptions)
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -44,6 +61,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .onAppear {
                 NSApp.activate(ignoringOtherApps: true)
             }
+    }
+
+    func activate(window: NSWindow) {
+        window.makeKeyAndOrderFront(nil)
     }
 
     private func setupSettings() {
@@ -68,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc
     func showClipboards() {
-        NSApp.activate(ignoringOtherApps: true)
+        navigation.handle(navigationEvent: .showClipboard)
     }
 
     @objc
@@ -78,11 +99,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc
     func showSettings() {
-        print("🚧🚧: Show settings")
+        navigation.handle(navigationEvent: .showSettings)
     }
 
     @objc
     func showTutorial() {
-        print("🚧🚧: Show settings")
+        print("🚧🚧: Show onboarding")
     }
 }
