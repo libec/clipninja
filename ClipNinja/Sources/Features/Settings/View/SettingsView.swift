@@ -5,7 +5,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
     @StateObject var viewModel: ViewModel
 
     private let recordShortcutView: AnyView
-    @State private var pasteDirectly: Bool = false
     @State private var launchAtLogin: Bool = false
 
     init(viewModel: ViewModel, recordShortcutView: AnyView) {
@@ -24,7 +23,11 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     var body: some View {
         VStack(spacing: 15) {
-            Toggle("Paste Directly", isOn: $pasteDirectly)
+            Toggle("Paste Directly", isOn: Binding(get: {
+                viewModel.pasteDirectlySettings
+            }, set: { _, _ in
+                viewModel.onEvent(.settingsEvent(.togglePasteDirectly))
+            }))
             Text("Process is trusted \(isTrustedToPasteDirecly ? "true" : "false")")
             Button("Open Privacy Settings") {
                 if let url = accessibilityUrl {
@@ -38,6 +41,7 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         .padding()
         .background(Colors.backgroundColor)
         .foregroundColor(Colors.defaultTextColor)
+        .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
     }
 }
 
@@ -51,8 +55,11 @@ struct SettingsView_Previews: PreviewProvider {
     }
 
     class ViewModelStub: SettingsViewModel {
+
         let pasteDirectlySettings = true
         let allowedToPaste = false
+
+        func onEvent(_ event: SettingsViewModelEvent) { }
     }
 
     private static var settingsView: some View {
