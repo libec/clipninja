@@ -19,7 +19,6 @@ class ClipboardWindow: NSWindow {
         )
         titlebarAppearsTransparent = true
         isOpaque = false
-        hasShadow = false
         backgroundColor = NSColor(Colors.backgroundColor)
         collectionBehavior = .moveToActiveSpace
         isMovableByWindowBackground = true
