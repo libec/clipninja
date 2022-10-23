@@ -32,10 +32,10 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
                 }
             }
             recordShortcutView
-            Toggle("Launch at login", isOn: $launchAtLogin)
+            Toggle("🚧🚧🚧 Launch at login", isOn: $launchAtLogin)
         }
-        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .background(Colors.backgroundColor)
         .foregroundColor(Colors.defaultTextColor)
     }
@@ -55,9 +55,16 @@ struct SettingsView_Previews: PreviewProvider {
         let allowedToPaste = false
     }
 
-    static var previews: some View {
+    private static var settingsView: some View {
         SettingsView(viewModel: ViewModelStub(), recordShortcutView: recordShortcutView)
-            .frame(width: 400, height: 200)
+            .frame(width: 400, height: 250)
+    }
+
+    static var previews: some View {
+        settingsView
+            .preferredColorScheme(.light)
+
+        settingsView
             .preferredColorScheme(.dark)
     }
 }

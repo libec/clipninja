@@ -7,7 +7,7 @@ struct RecordShortcutView: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Shortcut to show clipboards:")
+            Text("Open ClipNinja Shortcut")
             KeyboardShortcuts.Recorder(for: .toggleClipNinja) { shortcut in
             }
         }
