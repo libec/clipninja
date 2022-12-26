@@ -3,9 +3,10 @@ import SwiftUI
 struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     @StateObject var viewModel: ViewModel
-
     private let recordShortcutView: AnyView
     @State private var launchAtLogin: Bool = false
+
+    private typealias L11n = R.Settings
 
     init(viewModel: ViewModel, recordShortcutView: AnyView) {
         self.recordShortcutView = recordShortcutView
@@ -13,8 +14,7 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
     }
 
     private var accessibilityUrl: URL? {
-        let privacyUrlString = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
-        return URL(string: privacyUrlString)
+        URL(string: L11n.accessibilityUrl)
     }
 
     private var isTrustedToPasteDirecly: Bool {
@@ -23,19 +23,19 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     var body: some View {
         VStack(spacing: 15) {
-            Toggle("Paste Directly", isOn: Binding(get: {
+            Toggle(L11n.pasteDirectly, isOn: Binding(get: {
                 viewModel.pasteDirectlySettings
             }, set: { _, _ in
                 viewModel.onEvent(.settingsEvent(.togglePasteDirectly))
             }))
-            Text("Process is trusted \(isTrustedToPasteDirecly ? "true" : "false")")
-            Button("Open Privacy Settings") {
+            Text("\(L11n.accesibilityPermission) \(isTrustedToPasteDirecly ? "👍" : "👎")")
+            Button(L11n.openAccessibilitySettings) {
                 if let url = accessibilityUrl {
                     NSWorkspace.shared.open(url)
                 }
             }
             recordShortcutView
-            Toggle("🚧🚧🚧 Launch at login", isOn: $launchAtLogin)
+            Toggle("\(L11n.wip) \(L11n.launchAtLogin)", isOn: $launchAtLogin)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()

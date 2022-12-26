@@ -1,3 +1,4 @@
+import ClipNinjaPackage
 import SwiftUI
 import KeyboardShortcuts
 
@@ -7,7 +8,7 @@ struct RecordShortcutView: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Open ClipNinja Shortcut")
+            Text(Strings.Settings.openAppShortcut)
             KeyboardShortcuts.Recorder(for: .toggleClipNinja) { shortcut in
             }
         }
