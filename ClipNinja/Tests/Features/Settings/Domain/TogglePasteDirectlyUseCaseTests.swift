@@ -9,6 +9,6 @@ class TogglePasteDirectlyUseCaseTests: XCTestCase {
 
         sut.toggle()
 
-        try XCTAssertTrue(XCTUnwrap(settingsRepository.toggleCalled))
+        try XCTAssertTrue(XCTUnwrap(settingsRepository.togglePasteDirectlyCalled))
     }
 }

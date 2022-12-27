@@ -11,7 +11,7 @@ public enum Strings {
         static let pasteDirectly = "Paste Directly"
         static let openAccessibilitySettings = "Open Accesibility Settings"
         static let launchAtLogin = "Launch at login"
-        static let accesibilityPermission = "App has permission to paste directly"
+        static let accessibilityPermission = "App has permission to paste directly"
         public static let openAppShortcut = "Open ClipNinja Shortcut"
         public static let wip = Strings.Generic.wip
     }

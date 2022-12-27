@@ -5,9 +5,9 @@ import XCTest
 final class GetSettingsUseCaseTests: XCTestCase {
 
     func test_it_notifies_about_new_settings() {
-        let expectedSettings = Settings(pasteDirectly: false)
+        let expectedSettings = Settings(pasteDirectly: false, launchAtLogin: false)
         let settingsRepository = SettingsRepositoryStub(lastSettings: expectedSettings)
-        let sut = GetSettingsUseCaseImpl(settingsRespository: settingsRepository)
+        let sut = GetSettingsUseCaseImpl(settingsRepository: settingsRepository)
         var subscriptions = Set<AnyCancellable>()
 
         sut.settings
@@ -17,4 +17,3 @@ final class GetSettingsUseCaseTests: XCTestCase {
             .store(in: &subscriptions)
     }
 }
-

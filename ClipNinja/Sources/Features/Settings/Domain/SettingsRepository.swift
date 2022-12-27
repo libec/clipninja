@@ -7,4 +7,5 @@ protocol SettingsRepository {
     var lastSettings: Settings { get }
 
     func togglePasteDirectly()
+    func toggleLaunchAtLogin()
 }

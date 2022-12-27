@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 
 enum SettingsViewModelEvent: Equatable {
     case lifecycle(LifecycleEvent)
@@ -6,32 +7,36 @@ enum SettingsViewModelEvent: Equatable {
 
     enum SettingsEvent: Equatable {
         case togglePasteDirectly
+        case toggleLaunchAtLogin
     }
 }
 
 
 protocol SettingsViewModel: ObservableObject {
-    var pasteDirectlySettings: Bool { get }
-    var allowedToPaste: Bool { get }
+    var pasteDirectly: Bool { get }
+    var launchAtLogin: Bool { get }
 
     func onEvent(_ event: SettingsViewModelEvent)
 }
 
 final class SettingsViewModelImpl: SettingsViewModel {
 
-    @Published var pasteDirectlySettings: Bool = true
-    @Published var allowedToPaste: Bool = false
+    @Published var pasteDirectly = false
+    @Published var launchAtLogin = false
 
     private var subscriptions = Set<AnyCancellable>()
 
     private let togglePasteDirectlyUseCase: TogglePasteDirectlyUseCase
+    private let toggleLaunchAtLoginUseCase: ToggleLaunchAtLoginUseCase
     private let getSettingsUseCase: GetSettingsUseCase
 
     init(
         togglePasteDirectlyUseCase: TogglePasteDirectlyUseCase,
+        toggleLaunchAtLoginUseCase: ToggleLaunchAtLoginUseCase,
         getSettingsUseCase: GetSettingsUseCase
     ) {
         self.togglePasteDirectlyUseCase = togglePasteDirectlyUseCase
+        self.toggleLaunchAtLoginUseCase = toggleLaunchAtLoginUseCase
         self.getSettingsUseCase = getSettingsUseCase
     }
 
@@ -39,15 +44,19 @@ final class SettingsViewModelImpl: SettingsViewModel {
         switch event {
         case .settingsEvent(.togglePasteDirectly):
             togglePasteDirectlyUseCase.toggle()
+        case .settingsEvent(.toggleLaunchAtLogin):
+            launchAtLogin.toggle()
+            toggleLaunchAtLoginUseCase.toggle()
         case .lifecycle(.appear):
             subscribe()
         }
     }
 
-    func subscribe() {
+    private func subscribe() {
         getSettingsUseCase.settings
             .sink { [unowned self] newSettings in
-                self.pasteDirectlySettings = newSettings.pasteDirectly
+                self.pasteDirectly = newSettings.pasteDirectly
+                self.launchAtLogin = newSettings.launchAtLogin
             }
             .store(in: &subscriptions)
     }

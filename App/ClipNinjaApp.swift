@@ -54,21 +54,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         navigation.navigationEvent
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] event in
-            switch event {
-            case .hideApp:
-                NSApp.hide(nil)
-            case .showClipboard:
-                self.settingsWindow.close()
-                self.activate(window: self.clipboardWindow)
-            case .showSettings:
-                self.clipboardWindow.close()
-                self.activate(window: self.settingsWindow)
-            }
-        }.store(in: &subscriptions)
+                switch event {
+                case .hideApp:
+                    NSApp.hide(nil)
+                case .showClipboard:
+                    self.settingsWindow.close()
+                    self.activate(window: self.clipboardWindow)
+                case .showSettings:
+                    self.clipboardWindow.close()
+                    self.activate(window: self.settingsWindow)
+                }
+            }.store(in: &subscriptions)
     }
 
     func activate(window: NSWindow) {
         window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
 

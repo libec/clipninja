@@ -2,15 +2,21 @@
 import Combine
 
 class SettingsRepositorySpy: SettingsRepository {
+
     var shouldPasteDirectly: Bool = true
 
     var settings: AnyPublisher<Settings, Never> = Just(.default).eraseToAnyPublisher()
     var lastSettings: Settings = .default
 
-    var toggleCalled: Bool?
+    var togglePasteDirectlyCalled: Bool?
+    var toggleLaunchAtLoginCalled: Bool?
 
     func togglePasteDirectly() {
-        toggleCalled = true
+        togglePasteDirectlyCalled = true
+    }
+
+    func toggleLaunchAtLogin() {
+        toggleLaunchAtLoginCalled = true
     }
 }
 
@@ -37,6 +43,10 @@ class SettingsRepositoryStub: SettingsRepository {
     }
 
     func togglePasteDirectly() {
+
+    }
+
+    func toggleLaunchAtLogin() {
 
     }
 }

@@ -6,13 +6,13 @@ protocol GetSettingsUseCase {
 
 final class GetSettingsUseCaseImpl: GetSettingsUseCase {
 
-    private let settingsRespository: SettingsRepository
+    private let settingsRepository: SettingsRepository
 
-    init(settingsRespository: SettingsRepository) {
-        self.settingsRespository = settingsRespository
+    init(settingsRepository: SettingsRepository) {
+        self.settingsRepository = settingsRepository
     }
 
     var settings: AnyPublisher<Settings, Never> {
-        settingsRespository.settings
+        settingsRepository.settings
     }
 }

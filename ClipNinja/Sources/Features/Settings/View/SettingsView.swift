@@ -4,7 +4,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     @StateObject var viewModel: ViewModel
     private let recordShortcutView: AnyView
-    @State private var launchAtLogin: Bool = false
 
     private typealias L11n = R.Settings
 
@@ -17,25 +16,32 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         URL(string: L11n.accessibilityUrl)
     }
 
-    private var isTrustedToPasteDirecly: Bool {
+    private var isTrustedToPasteDirectly: Bool {
         AXIsProcessTrusted()
     }
 
     var body: some View {
         VStack(spacing: 15) {
             Toggle(L11n.pasteDirectly, isOn: Binding(get: {
-                viewModel.pasteDirectlySettings
+                viewModel.pasteDirectly
             }, set: { _, _ in
                 viewModel.onEvent(.settingsEvent(.togglePasteDirectly))
             }))
-            Text("\(L11n.accesibilityPermission) \(isTrustedToPasteDirecly ? "👍" : "👎")")
+            Text("\(L11n.accessibilityPermission) \(isTrustedToPasteDirectly ? "👍" : "👎")")
             Button(L11n.openAccessibilitySettings) {
                 if let url = accessibilityUrl {
                     NSWorkspace.shared.open(url)
                 }
             }
             recordShortcutView
-            Toggle("\(L11n.wip) \(L11n.launchAtLogin)", isOn: $launchAtLogin)
+            Toggle("\(L11n.launchAtLogin)", isOn: Binding(
+                get: {
+                    viewModel.launchAtLogin
+                },
+                set: { _, _ in
+                    viewModel.onEvent(.settingsEvent(.toggleLaunchAtLogin))
+                }
+            ))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
@@ -56,8 +62,8 @@ struct SettingsView_Previews: PreviewProvider {
 
     class ViewModelStub: SettingsViewModel {
 
-        let pasteDirectlySettings = true
-        let allowedToPaste = false
+        let pasteDirectly = true
+        let launchAtLogin = false
 
         func onEvent(_ event: SettingsViewModelEvent) { }
     }
