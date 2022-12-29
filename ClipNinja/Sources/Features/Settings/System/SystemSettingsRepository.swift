@@ -1,11 +1,11 @@
 import Foundation
 import ApplicationServices
 import Combine
-import ServiceManagement
 
 final class SystemSettingsRepository: SettingsRepository {
 
     private let userDefaults: UserDefaults
+    private let launchAtLoginService: LaunchAtLoginService
 
     private let pasteDirectlyKey = "SettingsPasteDirectly"
     private var currentSettingsSubject: CurrentValueSubject<Settings, Never>
@@ -17,9 +17,11 @@ final class SystemSettingsRepository: SettingsRepository {
     private var subscriptions = Set<AnyCancellable>()
 
     init(
-        userDefaults: UserDefaults
+        userDefaults: UserDefaults,
+        launchAtLoginService: LaunchAtLoginService
     ) {
         self.userDefaults = userDefaults
+        self.launchAtLoginService = launchAtLoginService
         self.currentSettingsSubject = CurrentValueSubject(Settings.default)
         self.currentSettingsSubject.send(makeSettings())
     }
@@ -38,19 +40,11 @@ final class SystemSettingsRepository: SettingsRepository {
     }
 
     func toggleLaunchAtLogin() {
-        let appService = SMAppService.mainApp
-
-        do {
-            if appService.status == .enabled {
-                try appService.unregister()
-            } else {
-                try appService.register()
-            }
-        } catch {
-            log(message: "Launch at login error: \(error.localizedDescription)")
+        if launchAtLoginService.enabled {
+            launchAtLoginService.disable()
+        } else {
+            launchAtLoginService.enable()
         }
-
-        log(message: "Launch at login new status: \(appService.status.description)")
 
         currentSettingsSubject.send(makeSettings())
     }
@@ -58,24 +52,8 @@ final class SystemSettingsRepository: SettingsRepository {
     private func makeSettings() -> Settings {
         Settings(
            pasteDirectly: userDefaults.bool(forKey: pasteDirectlyKey),
-           launchAtLogin: SMAppService.mainApp.status == .enabled
+           launchAtLogin: launchAtLoginService.enabled
        )
     }
 }
 
-fileprivate extension SMAppService.Status {
-    var description: String {
-        switch self {
-        case .enabled:
-            return "enabled"
-        case .requiresApproval:
-            return "requiresApproval"
-        case .notFound:
-            return "not found"
-        case .notRegistered:
-            return "not registered"
-        @unknown default:
-            return "unknown"
-        }
-    }
-}

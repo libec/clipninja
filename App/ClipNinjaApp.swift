@@ -2,6 +2,7 @@ import SwiftUI
 import Combine
 import ClipNinjaPackage
 
+@main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     private lazy var clipboardWindow: NSWindow = {
@@ -35,13 +36,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     override init() {
         self.keyboardController = KeyboardController()
         let keyboardHandlingAssembly = KeyboardHandlingAssembly(keyboardNotifier: keyboardController)
-        self.applicationAssembly = ApplicationAssembly(systemAssemblies: [keyboardHandlingAssembly])
+        self.applicationAssembly = ApplicationAssembly(systemAssemblies: [keyboardHandlingAssembly, LaunchAtLoginAssembly()])
         self.instanceProvider = applicationAssembly.resolveDependencyGraph()
         self.navigation = instanceProvider.resolve(Navigation.self)
         super.init()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        launch()
+    }
+
+    func launch() {
         setupSettings()
         setupNavigation()
         activate(window: clipboardWindow)
@@ -111,5 +116,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc
     func showTutorial() {
         print("🚧🚧: Show onboarding")
+    }
+
+    static func main() {
+        log(message: "Main invoked")
+        defer {
+            log(message: "Main finished")
+        }
+        let app = NSApplication.shared
+        let delegate = AppDelegate()
+        app.delegate = delegate
+        app.run()
     }
 }
