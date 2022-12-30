@@ -1,15 +1,20 @@
+import os
+
 protocol Logger {
     func log(message: String)
 }
 
-class PrintLogger: Logger {
+class SystemLogger: Logger {
+
+    private let systemLogger = os.Logger(subsystem: "clipninja", category: "main")
+    
     func log(message: String) {
-        print(message)
+        systemLogger.log("\(message)")
     }
 }
 
 struct LoggerHolder {
-    static let logger: Logger = PrintLogger()
+    static let logger: Logger = SystemLogger()
 }
 
 public func log(message: String) {

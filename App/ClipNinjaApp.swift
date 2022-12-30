@@ -115,7 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc
     func showTutorial() {
-        print("🚧🚧: Show onboarding")
+        log(message: "🚧🚧: Show onboarding")
     }
 
     static func main() {
