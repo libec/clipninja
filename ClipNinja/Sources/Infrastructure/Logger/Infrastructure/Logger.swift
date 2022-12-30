@@ -1,22 +1,41 @@
 import os
+import Foundation
 
-protocol Logger {
-    func log(message: String)
+private protocol Logger {
+    func log(message: String, category: LogCategory)
 }
 
-class SystemLogger: Logger {
+public enum LogCategory {
+    case main
+    case storage
+}
 
-    private let systemLogger = os.Logger(subsystem: "clipninja", category: "main")
+private final class SystemLogger: Logger {
+
+    private let subsystem = Bundle.main.bundleIdentifier!
+
+    private let systemLogger: os.Logger
+    private let storageLogger: os.Logger
+
+    fileprivate init() {
+        self.systemLogger = os.Logger(subsystem: subsystem, category: "system")
+        self.storageLogger = os.Logger(subsystem: subsystem, category: "storage")
+    }
     
-    func log(message: String) {
-        systemLogger.log("\(message)")
+    fileprivate func log(message: String, category: LogCategory) {
+        switch category {
+        case .main:
+            systemLogger.log("\(message)")
+        case .storage:
+            storageLogger.log("\(message)")
+        }
     }
 }
 
-struct LoggerHolder {
-    static let logger: Logger = SystemLogger()
+private struct LoggerWrapper {
+    fileprivate static let logger: Logger = SystemLogger()
 }
 
-public func log(message: String) {
-    LoggerHolder.logger.log(message: message)
+public func log(message: String, category: LogCategory = .main) {
+    LoggerWrapper.logger.log(message: message, category: category)
 }

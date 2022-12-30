@@ -29,7 +29,7 @@ final class ProtectedClipsStorage: ClipsStorage {
             let data = try jsonEncoder.encode(clips)
             try data.write(to: url, options: [.atomic, .completeFileProtection])
         } catch {
-            log(message: "Cant encode clips: \(error)")
+            log(message: "Cant encode clips: \(error)", category: .storage)
         }
     }
 
@@ -40,18 +40,18 @@ final class ProtectedClipsStorage: ClipsStorage {
             let clips = try jsonDecoder.decode([Clip].self, from: data)
             return clips
         } catch {
-            log(message: "Failed to decode clips: \(error)")
+            log(message: "Failed to decode clips: \(error)", category: .storage)
             return []
         }
     }
 
     private func makeStorage() -> URL {
         guard let url = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            log(message: "Failed to make URL to store data")
+            log(message: "Failed to make URL to store data", category: .storage)
             fatalError()
         }
         let clipsUrl = url.appending(path: "clips")
-        log(message: clipsUrl.path)
+        log(message: clipsUrl.path, category: .storage)
         return clipsUrl
     }
 }
