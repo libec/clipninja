@@ -20,8 +20,8 @@ class SettingsViewModelTests: XCTestCase {
 
         sut.onEvent(.lifecycle(.appear))
 
-        sut.$pasteDirectly.sink { allowedToPaste in
-            XCTAssertEqual(allowedToPaste, true)
+        sut.$pasteDirectly.sink { pasteDirectlySetting in
+            XCTAssertEqual(pasteDirectlySetting, true)
         }.store(in: &subscriptions)
 
         sut.$launchAtLogin.sink { launchAtLogin in

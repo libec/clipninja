@@ -24,7 +24,6 @@ struct EmptyClipboardView: View {
                     .font(.custom("Courier New", size: 25))
                     .fontWeight(.bold)
                     .foregroundColor(Colors.defaultTextColor)
-
             }
             HStack {
                 Text("（╯°□°）╯︵ ┻━┻ ")

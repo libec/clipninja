@@ -4,16 +4,20 @@ public enum Strings {
 
     public enum Generic {
         public static let wip = "🚧🚧🚧"
+        public static let appName = "ClipNinja"
     }
 
     public enum Settings {
-        static let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
-        static let pasteDirectly = "Paste Directly"
-        static let openAccessibilitySettings = "Open Accesibility Settings"
         static let launchAtLogin = "Launch at login"
-        static let accessibilityPermission = "App has permission to paste directly"
-        public static let openAppShortcut = "Open ClipNinja Shortcut"
+        public static let openAppShortcut = "Shortcut"
         public static let wip = Strings.Generic.wip
+
+        public enum PasteDirectly {
+            static let settingLabel = "Paste Directly"
+            static let featureDescription = "\(Strings.Generic.appName) pastes selected clip directly to the underlying app."
+            static let permissionDescription = "In order to paste directly, you need to allow"
+            static let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+        }
     }
 
     enum Clipboard {

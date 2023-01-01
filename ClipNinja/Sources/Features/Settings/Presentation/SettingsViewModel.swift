@@ -11,17 +11,16 @@ enum SettingsViewModelEvent: Equatable {
     }
 }
 
-
 protocol SettingsViewModel: ObservableObject {
-    var pasteDirectly: Bool { get }
     var launchAtLogin: Bool { get }
+    var pasteDirectly: Bool { get }
 
     func onEvent(_ event: SettingsViewModelEvent)
 }
 
 final class SettingsViewModelImpl: SettingsViewModel {
 
-    @Published var pasteDirectly = false
+    @Published var pasteDirectly: Bool = false
     @Published var launchAtLogin = false
 
     private var subscriptions = Set<AnyCancellable>()
