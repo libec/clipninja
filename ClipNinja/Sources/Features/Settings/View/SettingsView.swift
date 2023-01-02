@@ -2,10 +2,11 @@ import SwiftUI
 
 struct SettingsView<ViewModel: SettingsViewModel>: View {
 
-    @StateObject var viewModel: ViewModel
     private let recordShortcutView: AnyView
-
     private typealias L11n = R.Settings
+
+    @StateObject var viewModel: ViewModel
+    @State private var pasteDirectlySheetShown = false
 
     init(viewModel: ViewModel, recordShortcutView: AnyView) {
         self.recordShortcutView = recordShortcutView
@@ -23,15 +24,28 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         .background(Colors.backgroundColor)
         .foregroundColor(Colors.defaultTextColor)
         .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
+        .popover(isPresented: $pasteDirectlySheetShown, content: {
+            PasteDirectlyView()
+        })
+//        .sheet(isPresented: $pasteDirectlySheetShown) {
+//        }
     }
 
     var pasteDirectly: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Toggle(L11n.PasteDirectly.settingLabel, isOn: Binding(get: {
-                viewModel.pasteDirectly
-            }, set: { _, _ in
-                viewModel.onEvent(.settingsEvent(.togglePasteDirectly))
-            }))
+            HStack {
+                Toggle(L11n.PasteDirectly.settingLabel, isOn: Binding(get: {
+                    viewModel.pasteDirectly
+                }, set: { _, _ in
+                    viewModel.onEvent(.settingsEvent(.togglePasteDirectly))
+                }))
+
+                Image(systemName: "info.circle.fill")
+                    .onTapGesture {
+                        pasteDirectlySheetShown.toggle()
+                    }
+
+            }
             Text(L11n.PasteDirectly.featureDescription)
                 .font(.callout)
                 .foregroundStyle(.gray)

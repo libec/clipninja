@@ -15,7 +15,11 @@ public enum Strings {
         public enum PasteDirectly {
             static let settingLabel = "Paste Directly"
             static let featureDescription = "\(Strings.Generic.appName) pastes selected clip directly to the underlying app."
-            static let permissionDescription = "In order to paste directly, you need to allow"
+
+            static let permissionDescription = "\(Strings.Generic.wip) This feature requires permissions from the system."
+            static let howToAllowPermission = "\(Strings.Generic.wip) You can enable ClipNinja in system preferences > privacy > accessibility."
+            static let addPermissionButton = "\(Strings.Generic.wip) Enable directly"
+            static let showSettingsButton = "\(Strings.Generic.wip) Enable directly"
             static let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
         }
     }
