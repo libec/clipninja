@@ -13,8 +13,7 @@ class SettingsViewModelTests: XCTestCase {
             )
         )
         let sut = SettingsViewModelImpl(
-            togglePasteDirectlyUseCase: TogglePasteDirectlyUseCaseDummy(),
-            toggleLaunchAtLoginUseCase: ToggleLaunchAtLoginUseCaseDummy(),
+            toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
             getSettingsUseCase: getSettingsUseCase
         )
 
@@ -30,27 +29,25 @@ class SettingsViewModelTests: XCTestCase {
     }
 
     func test_it_toggles_paste_directly() {
-        let togglePasteDirectlyUseCase = TogglePasteDirectlyUseCaseSpy()
+        let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
         let sut = SettingsViewModelImpl(
-            togglePasteDirectlyUseCase: togglePasteDirectlyUseCase,
-            toggleLaunchAtLoginUseCase: ToggleLaunchAtLoginUseCaseDummy(),
+            toggleSettingsUseCase: toggleSettingsUseCase,
             getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: Settings.default)
         )
         sut.onEvent(.settingsEvent(.togglePasteDirectly))
 
-        try XCTAssertTrue(XCTUnwrap(togglePasteDirectlyUseCase.toggleCalled))
+        try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .pasteDirectly)
     }
 
     func test_it_toggles_launch_at_login() {
-        let toggleLaunchAtLoginUseCase = ToggleLaunchAtLoginUseCaseSpy()
+        let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
         let sut = SettingsViewModelImpl(
-            togglePasteDirectlyUseCase: TogglePasteDirectlyUseCaseDummy(),
-            toggleLaunchAtLoginUseCase: toggleLaunchAtLoginUseCase,
+            toggleSettingsUseCase: toggleSettingsUseCase,
             getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: Settings.default)
         )
         sut.onEvent(.settingsEvent(.toggleLaunchAtLogin))
 
-        try XCTAssertTrue(XCTUnwrap(toggleLaunchAtLoginUseCase.toggleCalled))
+        try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .launchAtLogin)
     }
 }
 
@@ -68,22 +65,12 @@ class GetSettingsUseCaseStub: GetSettingsUseCase {
     }
 }
 
-typealias ToggleLaunchAtLoginUseCaseDummy = ToggleLaunchAtLoginUseCaseSpy
-class ToggleLaunchAtLoginUseCaseSpy: ToggleLaunchAtLoginUseCase {
+typealias ToggleSettingsUseCaseDummy = ToggleSettingsUseCaseSpy
+class ToggleSettingsUseCaseSpy: ToggleSettingsUseCase {
 
-    var toggleCalled: Bool?
+    var toggledSetting: ToggleSetting?
 
-    func toggle() {
-        toggleCalled = true
-    }
-}
-
-typealias TogglePasteDirectlyUseCaseDummy = TogglePasteDirectlyUseCaseSpy
-class TogglePasteDirectlyUseCaseSpy: TogglePasteDirectlyUseCase {
-
-    var toggleCalled: Bool?
-
-    func toggle() {
-        toggleCalled = true
+    func toggle(setting: ToggleSetting) {
+        toggledSetting = setting
     }
 }

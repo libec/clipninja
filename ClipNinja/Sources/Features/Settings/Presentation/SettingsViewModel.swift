@@ -25,27 +25,23 @@ final class SettingsViewModelImpl: SettingsViewModel {
 
     private var subscriptions = Set<AnyCancellable>()
 
-    private let togglePasteDirectlyUseCase: TogglePasteDirectlyUseCase
-    private let toggleLaunchAtLoginUseCase: ToggleLaunchAtLoginUseCase
+    private let toggleSettingsUseCase: ToggleSettingsUseCase
     private let getSettingsUseCase: GetSettingsUseCase
 
     init(
-        togglePasteDirectlyUseCase: TogglePasteDirectlyUseCase,
-        toggleLaunchAtLoginUseCase: ToggleLaunchAtLoginUseCase,
+        toggleSettingsUseCase: ToggleSettingsUseCase,
         getSettingsUseCase: GetSettingsUseCase
     ) {
-        self.togglePasteDirectlyUseCase = togglePasteDirectlyUseCase
-        self.toggleLaunchAtLoginUseCase = toggleLaunchAtLoginUseCase
+        self.toggleSettingsUseCase = toggleSettingsUseCase
         self.getSettingsUseCase = getSettingsUseCase
     }
 
     func onEvent(_ event: SettingsViewModelEvent) {
         switch event {
         case .settingsEvent(.togglePasteDirectly):
-            togglePasteDirectlyUseCase.toggle()
+            toggleSettingsUseCase.toggle(setting: .pasteDirectly)
         case .settingsEvent(.toggleLaunchAtLogin):
-            launchAtLogin.toggle()
-            toggleLaunchAtLoginUseCase.toggle()
+            toggleSettingsUseCase.toggle(setting: .launchAtLogin)
         case .lifecycle(.appear):
             subscribe()
         }
