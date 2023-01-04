@@ -2,7 +2,7 @@ import Combine
 @testable import ClipNinjaPackage
 import XCTest
 
-final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
+final class ClipsRepositoryStorageAndPasteboardTests: XCTestCase {
     var sut: ClipsRepository!
 
     override func tearDown() {
@@ -13,17 +13,17 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
     func test_it_loads_clips_from_storage_on_init() {
         let clipStrings = ["a236x", "clipninja", "repostitoaer"]
         let initialClips: [Clip] = clipStrings.map { Clip(text: $0, pinned: false) }
-        let clipsStorage = ClipsStorageStub(clips: initialClips)
+        let clipsResource = ClipsResourceStub(clips: initialClips)
 
-        setupSut(clipsStorage: clipsStorage)
+        setupSut(clipsResource: clipsResource)
 
         XCTAssertEqual(sut.lastClips, initialClips)
     }
 
     func test_it_stores_clips_when_they_change() {
-        let clipsStorage = ClipsStorageSpy()
+        let clipsResource = ClipsResourceSpy()
         let pasteboardObserver = PasteboardObserverStub()
-        setupSut(pasteboardObserver: pasteboardObserver, clipsStorage: clipsStorage)
+        setupSut(pasteboardObserver: pasteboardObserver, clipsResource: clipsResource)
 
         pasteboardObserver.subject.send("Foo")
         pasteboardObserver.subject.send("Bar")
@@ -34,16 +34,16 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
             .init(text: "Bar", pinned: false),
             .init(text: "Foo", pinned: false),
         ]
-        try XCTAssertEqual(XCTUnwrap(clipsStorage.persistedClips), expectedClips)
+        try XCTAssertEqual(XCTUnwrap(clipsResource.persistedClips), expectedClips)
     }
 
     func test_it_stores_new_clips_from_pasteboard_to_top() {
         let clips: [Clip] = [
             .init(text: "foo", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
+        let clipsResource = ClipsResourceStub(clips: clips)
         let pasteboardObserver = PasteboardObserverStub()
-        setupSut(pasteboardObserver: pasteboardObserver, clipsStorage: clipsStorage)
+        setupSut(pasteboardObserver: pasteboardObserver, clipsResource: clipsResource)
 
         pasteboardObserver.subject.send("atom,slack,bear")
         pasteboardObserver.subject.send("import foobar")
@@ -64,14 +64,14 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
             .init(text: "heyclipninja", pinned: true),
             .init(text: "waerfawef", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
+        let clipsResource = ClipsResourceStub(clips: clips)
         let pasteboardObserver = PasteboardObserverStub()
-        setupSut(pasteboardObserver: pasteboardObserver, clipsStorage: clipsStorage)
+        setupSut(pasteboardObserver: pasteboardObserver, clipsResource: clipsResource)
 
         pasteboardObserver.subject.send("foo")
         pasteboardObserver.subject.send("heyclipninja")
 
-        try XCTAssertEqual(XCTUnwrap(clipsStorage.persistedClips), clips)
+        try XCTAssertEqual(XCTUnwrap(clipsResource.persistedClips), clips)
     }
 
     func test_it_moves_duplicated_unpinned_clips_after_pins() {
@@ -82,9 +82,9 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
             .init(text: "waerfawef", pinned: false),
             .init(text: "heyclipninja", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
+        let clipsResource = ClipsResourceStub(clips: clips)
         let pasteboardObserver = PasteboardObserverStub()
-        setupSut(pasteboardObserver: pasteboardObserver, clipsStorage: clipsStorage)
+        setupSut(pasteboardObserver: pasteboardObserver, clipsResource: clipsResource)
 
         pasteboardObserver.subject.send("heyclipninja")
 
@@ -95,7 +95,7 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
             .init(text: "import AppKit", pinned: false),
             .init(text: "waerfawef", pinned: false),
         ]
-        try XCTAssertEqual(XCTUnwrap(clipsStorage.persistedClips), expectedClips)
+        try XCTAssertEqual(XCTUnwrap(clipsResource.persistedClips), expectedClips)
     }
 
     func test_it_trims_max_clips() {
@@ -107,11 +107,11 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
             .init(text: "clipninja", pinned: false),
             .init(text: "__1231__", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
+        let clipsResource = ClipsResourceStub(clips: clips)
         let pasteboardObserver = PasteboardObserverStub()
         setupSut(
             pasteboardObserver: pasteboardObserver,
-            clipsStorage: clipsStorage,
+            clipsResource: clipsResource,
             viewPortConfiguration: ViewPortConfigurationStub(
                 totalPages: 2,
                 clipsPerPage: 3
@@ -128,17 +128,17 @@ final class ClipsRespotoryStorageAndPasteboardTests: XCTestCase {
             .init(text: "waerfawef", pinned: false),
             .init(text: "clipninja", pinned: false),
         ]
-        try XCTAssertEqual(XCTUnwrap(clipsStorage.persistedClips), expectedClips)
+        try XCTAssertEqual(XCTUnwrap(clipsResource.persistedClips), expectedClips)
     }
 
     private func setupSut(
         pasteboardObserver: PasteboardObserver = PasteboardObserverDummy(),
-        clipsStorage: ClipsStorage = ClipsStorageDummy(),
+        clipsResource: ClipsResource = ClipsResourceDummy(),
         viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration()
     ) {
         self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
-            clipsStorage: clipsStorage,
+            clipsResource: clipsResource,
             viewPortConfiguration: viewPortConfiguration
         )
     }

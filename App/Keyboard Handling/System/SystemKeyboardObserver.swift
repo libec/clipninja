@@ -2,7 +2,7 @@ import KeyboardShortcuts
 import Combine
 import ClipNinjaPackage
 
-final class KeyboardController: KeyboardNotifier {
+final class SystemKeyboardObserver: KeyboardObserver {
 
     private let keyPressSubject = PassthroughSubject<KeyboardEvent, Never>()
 

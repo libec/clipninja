@@ -1,9 +1,9 @@
 @testable import ClipNinjaPackage
 import Combine
 
-typealias ClipsStorageDummy = ClipsStorageSpy
+typealias ClipsResourceDummy = ClipsResourceSpy
 
-class ClipsStorageSpy: ClipsStorage {
+class ClipsResourceSpy: ClipsResource {
 
     var clips: [Clip] = []
     var persistedClips: [Clip]? = nil
@@ -14,7 +14,7 @@ class ClipsStorageSpy: ClipsStorage {
 }
 
 
-class ClipsStorageStub: ClipsStorageSpy {
+class ClipsResourceStub: ClipsResourceSpy {
 
     init(clips: [Clip]) {
         super.init()

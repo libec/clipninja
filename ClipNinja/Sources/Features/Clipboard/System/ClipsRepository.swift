@@ -21,19 +21,19 @@ final class ClipsRepositoryImpl: ClipsRepository {
     private let clipsSubject: CurrentValueSubject<[Clip], Never>
 
     private let pasteboardObserver: PasteboardObserver
-    private let clipsStorage: ClipsStorage
+    private let clipsResource: ClipsResource
     private let viewPortConfiguration: ViewPortConfiguration
     private var subscriptions = Set<AnyCancellable>()
 
     init(
         pasteboardObserver: PasteboardObserver,
-        clipsStorage: ClipsStorage,
+        clipsResource: ClipsResource,
         viewPortConfiguration: ViewPortConfiguration
     ) {
         self.pasteboardObserver = pasteboardObserver
-        self.clipsStorage = clipsStorage
+        self.clipsResource = clipsResource
         self.viewPortConfiguration = viewPortConfiguration
-        self.clipsSubject = .init(clipsStorage.clips)
+        self.clipsSubject = .init(clipsResource.clips)
         observePasteboard()
         setupPersistency()
     }
@@ -93,6 +93,6 @@ final class ClipsRepositoryImpl: ClipsRepository {
     }
 
     private func persist(clips: [Clip]) {
-        clipsStorage.persist(clips: clips)
+        clipsResource.persist(clips: clips)
     }
 }

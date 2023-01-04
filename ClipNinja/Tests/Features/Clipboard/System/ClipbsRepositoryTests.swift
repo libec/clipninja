@@ -2,7 +2,7 @@ import Combine
 @testable import ClipNinjaPackage
 import XCTest
 
-final class ClipsRespotoryTests: XCTestCase {
+final class ClipsRepositoryTests: XCTestCase {
 
     var sut: ClipsRepository!
 
@@ -17,8 +17,8 @@ final class ClipsRespotoryTests: XCTestCase {
             .init(text: "3841", pinned: true),
             .init(text: "import AppKit", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.delete(at: 2)
 
@@ -33,8 +33,8 @@ final class ClipsRespotoryTests: XCTestCase {
         let clips: [Clip] = [
             .init(text: "foo", pinned: true),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.delete(at: 2)
 
@@ -50,8 +50,8 @@ final class ClipsRespotoryTests: XCTestCase {
             .init(text: "3841", pinned: false),
             .init(text: "import AppKit", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.togglePin(at: 2)
 
@@ -70,8 +70,8 @@ final class ClipsRespotoryTests: XCTestCase {
             .init(text: "3841", pinned: true),
             .init(text: "import AppKit", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.togglePin(at: 0)
 
@@ -88,8 +88,8 @@ final class ClipsRespotoryTests: XCTestCase {
         let clips: [Clip] = [
             .init(text: "foo", pinned: true),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.togglePin(at: 1)
 
@@ -106,8 +106,8 @@ final class ClipsRespotoryTests: XCTestCase {
             .init(text: "3841", pinned: false),
             .init(text: "import AppKit", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.moveAfterPins(index: 3)
 
@@ -125,8 +125,8 @@ final class ClipsRespotoryTests: XCTestCase {
             .init(text: "foo", pinned: true),
             .init(text: "bar_a31934", pinned: false),
         ]
-        let clipsStorage = ClipsStorageStub(clips: clips)
-        setupSut(clipsStorage: clipsStorage)
+        let clipsResource = ClipsResourceStub(clips: clips)
+        setupSut(clipsResource: clipsResource)
 
         sut.moveAfterPins(index: 2)
 
@@ -139,12 +139,12 @@ final class ClipsRespotoryTests: XCTestCase {
 
     private func setupSut(
         pasteboardObserver: PasteboardObserver = PasteboardObserverDummy(),
-        clipsStorage: ClipsStorage = ClipsStorageDummy(),
+        clipsResource: ClipsResource = ClipsResourceDummy(),
         viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration()
     ) {
         self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
-            clipsStorage: clipsStorage,
+            clipsResource: clipsResource,
             viewPortConfiguration: viewPortConfiguration
         )
     }

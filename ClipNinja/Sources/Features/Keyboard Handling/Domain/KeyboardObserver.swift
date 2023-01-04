@@ -1,5 +1,5 @@
 import Combine
 
-public protocol KeyboardNotifier {
+public protocol KeyboardObserver {
     var keyPress: AnyPublisher<KeyboardEvent, Never> { get }
 }

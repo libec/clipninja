@@ -5,10 +5,10 @@ import SwiftUI
 
 struct KeyboardHandlingAssembly: Assembly {
 
-    private let keyboardNotifier: KeyboardNotifier
+    private let keyboardObserver: KeyboardObserver
 
-    init(keyboardNotifier: KeyboardNotifier) {
-        self.keyboardNotifier = keyboardNotifier
+    init(keyboardObserver: KeyboardObserver) {
+        self.keyboardObserver = keyboardObserver
     }
 
     func assemble(container: Container) {
@@ -17,7 +17,7 @@ struct KeyboardHandlingAssembly: Assembly {
         }
         container.autoregister(ShortcutObserver.self, initializer: SystemShortcutObserver.init)
             .inObjectScope(.container)
-        container.register(KeyboardNotifier.self) { _ in keyboardNotifier }
+        container.register(KeyboardObserver.self) { _ in keyboardObserver }
     }
 
     func loaded(resolver: Resolver) {

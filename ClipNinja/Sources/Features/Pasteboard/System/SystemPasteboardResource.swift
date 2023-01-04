@@ -1,6 +1,6 @@
 import AppKit
 
-final class SystemPaseboardService: PasteboardService {
+final class SystemPasteboardResource: PasteboardResource {
 
     let systemPasteboard: NSPasteboard
 

@@ -6,7 +6,7 @@ import ClipNinjaPackage
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     private lazy var clipboardWindow: NSWindow = {
-        let window = ClipboardWindow(keyboardController: keyboardController)
+        let window = ClipboardWindow(keyboardController: keyboardObserver)
         let clipsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
             .onAppear {
                 NSApp.activate(ignoringOtherApps: true)
@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
 
     private var statusItem: NSStatusItem?
-    private let keyboardController: KeyboardController
+    private let keyboardObserver: SystemKeyboardObserver
     private var subscriptions = Set<AnyCancellable>()
 
     private let applicationAssembly: ApplicationAssembly
@@ -34,8 +34,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let navigation: Navigation
 
     override init() {
-        self.keyboardController = KeyboardController()
-        let keyboardHandlingAssembly = KeyboardHandlingAssembly(keyboardNotifier: keyboardController)
+        self.keyboardObserver = SystemKeyboardObserver()
+        let keyboardHandlingAssembly = KeyboardHandlingAssembly(keyboardObserver: keyboardObserver)
         self.applicationAssembly = ApplicationAssembly(systemAssemblies: [keyboardHandlingAssembly, LaunchAtLoginAssembly()])
         self.instanceProvider = applicationAssembly.resolveDependencyGraph()
         self.navigation = instanceProvider.resolve(Navigation.self)

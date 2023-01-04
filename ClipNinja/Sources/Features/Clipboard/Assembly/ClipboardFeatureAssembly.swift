@@ -35,7 +35,7 @@ struct ClipboardFeatureAssembly: Assembly {
 
     func assembleSystem(container: Container) {
         container.autoregister(ClipsRepository.self, initializer: ClipsRepositoryImpl.init)
-        container.autoregister(ClipsStorage.self, initializer: ProtectedClipsStorage.init)
+        container.autoregister(ClipsResource.self, initializer: ProtectedLocalClipsResource.init)
         container.register(FileManager.self) { _ in FileManager.default }.inObjectScope(.container)
     }
 }

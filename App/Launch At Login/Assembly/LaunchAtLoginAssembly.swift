@@ -4,7 +4,7 @@ import SwinjectAutoregistration
 
 struct LaunchAtLoginAssembly: Assembly {
     func assemble(container: Container) {
-        container.autoregister(LaunchAtLoginService.self, initializer: LaunchAtLoginServiceImpl.init)
+        container.autoregister(LaunchAtLoginResource.self, initializer: LaunchAtLoginSystemResource.init)
             .inObjectScope(.container)
     }
 }

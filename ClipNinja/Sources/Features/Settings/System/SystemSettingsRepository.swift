@@ -5,7 +5,7 @@ import Combine
 final class SystemSettingsRepository: SettingsRepository {
 
     private let userDefaults: UserDefaults
-    private let launchAtLoginService: LaunchAtLoginService
+    private let launchAtLoginResource: LaunchAtLoginResource
 
     private let pasteDirectlyKey = "SettingsPasteDirectly"
     private var currentSettingsSubject: CurrentValueSubject<Settings, Never>
@@ -18,10 +18,10 @@ final class SystemSettingsRepository: SettingsRepository {
 
     init(
         userDefaults: UserDefaults,
-        launchAtLoginService: LaunchAtLoginService
+        launchAtLoginResource: LaunchAtLoginResource
     ) {
         self.userDefaults = userDefaults
-        self.launchAtLoginService = launchAtLoginService
+        self.launchAtLoginResource = launchAtLoginResource
         self.currentSettingsSubject = CurrentValueSubject(Settings.default)
         self.currentSettingsSubject.send(makeSettings())
     }
@@ -40,10 +40,10 @@ final class SystemSettingsRepository: SettingsRepository {
     }
 
     func toggleLaunchAtLogin() {
-        if launchAtLoginService.enabled {
-            launchAtLoginService.disable()
+        if launchAtLoginResource.enabled {
+            launchAtLoginResource.disable()
         } else {
-            launchAtLoginService.enable()
+            launchAtLoginResource.enable()
         }
 
         currentSettingsSubject.send(makeSettings())
@@ -52,7 +52,7 @@ final class SystemSettingsRepository: SettingsRepository {
     private func makeSettings() -> Settings {
         Settings(
            pasteDirectly: userDefaults.bool(forKey: pasteDirectlyKey),
-           launchAtLogin: launchAtLoginService.enabled
+           launchAtLogin: launchAtLoginResource.enabled
        )
     }
 }

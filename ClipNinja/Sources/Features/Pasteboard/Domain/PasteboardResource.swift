@@ -1,3 +1,3 @@
-protocol PasteboardService {
+protocol PasteboardResource {
     func insert(text: String)
 }

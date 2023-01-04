@@ -1,11 +1,11 @@
 import Foundation
 
-protocol ClipsStorage {
+protocol ClipsResource {
     func persist(clips: [Clip])
     var clips: [Clip] { get }
 }
 
-final class ProtectedClipsStorage: ClipsStorage {
+final class ProtectedLocalClipsResource: ClipsResource {
 
     private let clipboardsStorageKey = "Clipboards"
 
@@ -24,7 +24,7 @@ final class ProtectedClipsStorage: ClipsStorage {
     }
 
     func persist(clips: [Clip]) {
-        let url = makeStorage()
+        let url = makeClipsURL()
         do {
             let data = try jsonEncoder.encode(clips)
             try data.write(to: url, options: [.atomic, .completeFileProtection])
@@ -34,7 +34,7 @@ final class ProtectedClipsStorage: ClipsStorage {
     }
 
     var clips: [Clip] {
-        let url = makeStorage()
+        let url = makeClipsURL()
         do {
             let data = try Data(contentsOf: url, options: [])
             let clips = try jsonDecoder.decode([Clip].self, from: data)
@@ -45,7 +45,7 @@ final class ProtectedClipsStorage: ClipsStorage {
         }
     }
 
-    private func makeStorage() -> URL {
+    private func makeClipsURL() -> URL {
         guard let url = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             log(message: "Failed to make URL to store data", category: .storage)
             fatalError()

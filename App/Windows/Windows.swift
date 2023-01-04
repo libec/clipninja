@@ -32,9 +32,9 @@ class ClipboardWindow: StyledWindow {
 
     let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()
 
-    private let keyboardController: KeyboardController
+    private let keyboardController: SystemKeyboardObserver
 
-    init(keyboardController: KeyboardController) {
+    init(keyboardController: SystemKeyboardObserver) {
         self.keyboardController = keyboardController
         super.init(contentRect: NSRect(x: 0, y: 0, width: 650, height: 600))
         title = "ClipNinja"

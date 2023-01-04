@@ -1,7 +1,7 @@
 import ServiceManagement
 import ClipNinjaPackage
 
-final class LaunchAtLoginServiceImpl: LaunchAtLoginService {
+final class LaunchAtLoginSystemResource: LaunchAtLoginResource {
 
     private let appService: SMAppService
 

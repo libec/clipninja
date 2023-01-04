@@ -4,22 +4,24 @@ protocol PasteTextUseCase {
 
 final class PasteTextUseCaseImpl: PasteTextUseCase {
 
-    let pasteboardService: PasteboardService
+    let pasteboardResource: PasteboardResource
     let settingsRepository: SettingsRepository
     let pasteCommand: PasteCommand
 
     init(
-        pasteboardService: PasteboardService,
+        pasteboardResource: PasteboardResource,
         settingsRepository: SettingsRepository,
         pasteCommand: PasteCommand
     ) {
-        self.pasteboardService = pasteboardService
+        self.pasteboardResource = pasteboardResource
         self.settingsRepository = settingsRepository
         self.pasteCommand = pasteCommand
     }
 
     func paste(text: String) {
-        pasteboardService.insert(text: text)
+        pasteboardResource.insert(text: text)
+        // check settings
+        // check permissions
         if settingsRepository.shouldPasteDirectly {
             pasteCommand.paste()
         }
