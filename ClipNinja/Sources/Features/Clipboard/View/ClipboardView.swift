@@ -4,20 +4,20 @@ import Combine
 struct ClipboardView<ViewModel: ClipboardViewModel>: View {
 
     @StateObject var viewModel: ViewModel
-    private let keyboardNotifier: KeyboardNotifier
-
+    private let keyboardObserver: KeyboardObserver
+    
     init(
         viewModel: ViewModel,
-        keyboardNotifier: KeyboardNotifier
+        keyboardNotifier: KeyboardObserver
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self.keyboardNotifier = keyboardNotifier
+        self.keyboardObserver = keyboardNotifier
     }
 
     var body: some View {
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .onReceive(keyboardNotifier.keyPress, perform: { keyPress in
+            .onReceive(keyboardObserver.keyPress, perform: { keyPress in
                 viewModel.onEvent(.keyboard(keyPress))
             })
             .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
@@ -93,7 +93,7 @@ struct ClipboardView_Previews: PreviewProvider {
         func subscribe() { }
     }
 
-    class KeyboardNotifierDummy: KeyboardNotifier {
+    class KeyboardNotifierDummy: KeyboardObserver {
         var keyPress: AnyPublisher<KeyboardEvent, Never> {
             Just(.enter)
                 .eraseToAnyPublisher()

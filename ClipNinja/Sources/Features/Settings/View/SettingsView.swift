@@ -21,14 +21,15 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+        .sheet(isPresented: $pasteDirectlySheetShown) {
+            ZStack {
+                Colors.backgroundColor
+                PasteDirectlyView()
+            }
+        }
         .background(Colors.backgroundColor)
         .foregroundColor(Colors.defaultTextColor)
         .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
-        .popover(isPresented: $pasteDirectlySheetShown, content: {
-            PasteDirectlyView()
-        })
-//        .sheet(isPresented: $pasteDirectlySheetShown) {
-//        }
     }
 
     var pasteDirectly: some View {

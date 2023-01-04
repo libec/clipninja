@@ -1,8 +1,17 @@
 import SwiftUI
 
 struct PasteDirectlyView: View {
+
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
+            Image(systemName: "xmark")
+                .onTapGesture {
+                    dismiss()
+                }
+                .padding(.bottom)
+
             Text(R.Settings.PasteDirectly.settingLabel)
                 .font(.headline)
             Text(R.Settings.PasteDirectly.featureDescription)
@@ -21,7 +30,11 @@ struct PasteDirectlyView: View {
                 }
             }
         }
+        .ignoresSafeArea()
         .padding()
+        .background(Colors.backgroundColor)
+        .foregroundColor(Colors.defaultTextColor)
+        .frame(maxWidth: 400, maxHeight: .infinity)
     }
 }
 
