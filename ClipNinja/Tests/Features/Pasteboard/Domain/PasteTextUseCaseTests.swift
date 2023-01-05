@@ -52,14 +52,6 @@ class PasteTextUseCaseTests: XCTestCase {
     }
 }
 
-class PermissionsResourceStub: PermissionsResource {
-    var pastingAllowed: Bool
-
-    init(pastingAllowed: Bool) {
-        self.pastingAllowed = pastingAllowed
-    }
-}
-
 class PasteboardResourceSpy: PasteboardResource {
 
     var insertedText: String?

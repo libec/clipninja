@@ -5,7 +5,8 @@ class ToggleSettingsUseCaseTests: XCTestCase {
 
     func test_it_toggles_launch_at_login_setting() {
         let settingsRepository = SettingsRepositorySpy()
-        let sut = ToggleSettingsUseCaseImpl(settingsRepository: settingsRepository)
+        let permissionsResource = PermissionsResourceDummy()
+        let sut = ToggleSettingsUseCaseImpl(settingsRepository: settingsRepository, permissionsResource: permissionsResource)
 
         sut.toggle(setting: .launchAtLogin)
 
@@ -14,11 +15,21 @@ class ToggleSettingsUseCaseTests: XCTestCase {
 
     func test_it_toggles_paste_directly_setting() {
         let settingsRepository = SettingsRepositorySpy()
-        let sut = ToggleSettingsUseCaseImpl(settingsRepository: settingsRepository)
+        let permissionsResource = PermissionsResourceStub(pastingAllowed: true)
+        let sut = ToggleSettingsUseCaseImpl(settingsRepository: settingsRepository, permissionsResource: permissionsResource)
 
         sut.toggle(setting: .pasteDirectly)
 
         try XCTAssertTrue(XCTUnwrap(settingsRepository.togglePasteDirectlyCalled))
     }
 
+    func test_toggling_paste_directly_on_fails_when_permissions_are_not_granted() throws {
+        let permissionsResource = PermissionsResourceStub(pastingAllowed: false)
+        let settingsRepository = SettingsRepositorySpy()
+        let sut = ToggleSettingsUseCaseImpl(settingsRepository: settingsRepository, permissionsResource: permissionsResource)
+
+        let result = sut.toggle(setting: .pasteDirectly)
+
+        try XCTAssertEqual(XCTUnwrap(result.error()), ToggleSettingsError.permissionNotGranted)
+    }
 }

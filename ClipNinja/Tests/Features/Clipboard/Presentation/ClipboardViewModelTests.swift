@@ -66,7 +66,6 @@ class ClipboardViewModelTests: XCTestCase {
         }
         let clipboards = ClipboardsStub()
         let factory = ClipboardPreviewFactoryImpl()
-        var subscriptions = Set<AnyCancellable>()
 
         let sut = ClipboardViewModelImpl(
             clipboards: clipboards,
@@ -86,17 +85,9 @@ class ClipboardViewModelTests: XCTestCase {
             )
         )
 
-        sut.$clipPreviews.sink { value in
-            XCTAssertEqual(value, clipsPreviews)
-        }.store(in: &subscriptions)
-
-        sut.$totalPages.sink { tabs in
-            XCTAssertEqual(tabs, 7)
-        }.store(in: &subscriptions)
-
-        sut.$shownPage.sink { tabs in
-            XCTAssertEqual(tabs, 3)
-        }.store(in: &subscriptions)
+        XCTAssertEqual(sut.clipPreviews, clipsPreviews)
+        XCTAssertEqual(sut.totalPages, 7)
+        XCTAssertEqual(sut.shownPage, 3)
     }
 
     func test_is_hides_app_on_escape_event() throws {

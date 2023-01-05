@@ -8,20 +8,23 @@ enum SettingsViewModelEvent: Equatable {
     enum SettingsEvent: Equatable {
         case togglePasteDirectly
         case toggleLaunchAtLogin
+        case showPasteDirectlyHint
     }
 }
 
 protocol SettingsViewModel: ObservableObject {
     var launchAtLogin: Bool { get }
     var pasteDirectly: Bool { get }
+    var showPasteDirectlyHint: Bool { get }
 
     func onEvent(_ event: SettingsViewModelEvent)
 }
 
 final class SettingsViewModelImpl: SettingsViewModel {
 
-    @Published var pasteDirectly: Bool = false
+    @Published var pasteDirectly = false
     @Published var launchAtLogin = false
+    @Published var showPasteDirectlyHint = false
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -39,9 +42,14 @@ final class SettingsViewModelImpl: SettingsViewModel {
     func onEvent(_ event: SettingsViewModelEvent) {
         switch event {
         case .settingsEvent(.togglePasteDirectly):
-            toggleSettingsUseCase.toggle(setting: .pasteDirectly)
+            let toggleResult = toggleSettingsUseCase.toggle(setting: .pasteDirectly)
+            if toggleResult.error() == .permissionNotGranted {
+                showPasteDirectlyHint = true
+            }
         case .settingsEvent(.toggleLaunchAtLogin):
             toggleSettingsUseCase.toggle(setting: .launchAtLogin)
+        case .settingsEvent(.showPasteDirectlyHint):
+            showPasteDirectlyHint.toggle()
         case .lifecycle(.appear):
             subscribe()
         }

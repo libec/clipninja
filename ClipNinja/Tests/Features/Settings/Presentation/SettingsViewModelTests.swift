@@ -5,7 +5,6 @@ import Combine
 class SettingsViewModelTests: XCTestCase {
 
     func test_it_notifies_about_new_settings() {
-        var subscriptions = Set<AnyCancellable>()
         let getSettingsUseCase = GetSettingsUseCaseStub(
             storedSettings: Settings(
                 pasteDirectly: true,
@@ -19,20 +18,15 @@ class SettingsViewModelTests: XCTestCase {
 
         sut.onEvent(.lifecycle(.appear))
 
-        sut.$pasteDirectly.sink { pasteDirectlySetting in
-            XCTAssertEqual(pasteDirectlySetting, true)
-        }.store(in: &subscriptions)
-
-        sut.$launchAtLogin.sink { launchAtLogin in
-            XCTAssertEqual(launchAtLogin, false)
-        }.store(in: &subscriptions)
+        XCTAssertEqual(sut.pasteDirectly, true)
+        XCTAssertEqual(sut.launchAtLogin, false)
     }
 
     func test_it_toggles_paste_directly() {
         let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: toggleSettingsUseCase,
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: Settings.default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
         )
         sut.onEvent(.settingsEvent(.togglePasteDirectly))
 
@@ -43,11 +37,46 @@ class SettingsViewModelTests: XCTestCase {
         let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: toggleSettingsUseCase,
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: Settings.default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
         )
         sut.onEvent(.settingsEvent(.toggleLaunchAtLogin))
 
         try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .launchAtLogin)
+    }
+
+    func test_it_shows_paste_directly_hint_on_paste_directly_event() {
+        let sut = SettingsViewModelImpl(
+            toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+        )
+
+        sut.onEvent(.settingsEvent(.showPasteDirectlyHint))
+
+        XCTAssertEqual(sut.showPasteDirectlyHint, true)
+    }
+
+    func test_it_hides_paste_directly_hint_on_paste_directly_event_when_already_shown() {
+        let sut = SettingsViewModelImpl(
+            toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+        )
+        sut.onEvent(.settingsEvent(.showPasteDirectlyHint))
+
+        sut.onEvent(.settingsEvent(.showPasteDirectlyHint))
+
+        XCTAssertEqual(sut.showPasteDirectlyHint, false)
+    }
+
+    func test_it_shows_paste_directly_hint_when_toggling_paste_directly_returns_error() {
+        let toggleSettingsUseCase = ToggleSettingsUseCaseStub(result: .failure(.permissionNotGranted))
+        let sut = SettingsViewModelImpl(
+            toggleSettingsUseCase: toggleSettingsUseCase,
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+        )
+
+        sut.onEvent(.settingsEvent(.togglePasteDirectly))
+
+        XCTAssertEqual(sut.showPasteDirectlyHint, true)
     }
 }
 
@@ -70,7 +99,20 @@ class ToggleSettingsUseCaseSpy: ToggleSettingsUseCase {
 
     var toggledSetting: ToggleSetting?
 
-    func toggle(setting: ToggleSetting) {
+    func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
         toggledSetting = setting
+        return .success(())
+    }
+}
+
+class ToggleSettingsUseCaseStub: ToggleSettingsUseCase {
+    let result: Result<Void, ToggleSettingsError>
+
+    init(result: Result<Void, ToggleSettingsError>) {
+        self.result = result
+    }
+
+    func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
+        result
     }
 }

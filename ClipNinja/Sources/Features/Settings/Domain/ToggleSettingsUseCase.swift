@@ -4,23 +4,40 @@ enum ToggleSetting {
 }
 
 protocol ToggleSettingsUseCase {
-    func toggle(setting: ToggleSetting)
+    @discardableResult
+    func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError>
+}
+
+enum ToggleSettingsError: Error {
+    case permissionNotGranted
 }
 
 final class ToggleSettingsUseCaseImpl: ToggleSettingsUseCase {
 
     private let settingsRepository: SettingsRepository
+    private let permissionsResource: PermissionsResource
 
-    init(settingsRepository: SettingsRepository) {
+    init(
+        settingsRepository: SettingsRepository,
+        permissionsResource: PermissionsResource
+    ) {
         self.settingsRepository = settingsRepository
+        self.permissionsResource = permissionsResource
     }
 
-    func toggle(setting: ToggleSetting) {
+    @discardableResult
+    func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
         switch setting {
         case .launchAtLogin:
             settingsRepository.toggleLaunchAtLogin()
+            return .success(())
         case .pasteDirectly:
-            settingsRepository.togglePasteDirectly()
+            if permissionsResource.pastingAllowed {
+                settingsRepository.togglePasteDirectly()
+                return .success(())
+            } else {
+                return .failure(.permissionNotGranted)
+            }
         }
     }
 }

@@ -3,10 +3,9 @@ import SwiftUI
 struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     private let recordShortcutView: AnyView
-    private typealias L11n = R.Settings
 
     @StateObject var viewModel: ViewModel
-    @State private var pasteDirectlySheetShown = false
+
 
     init(viewModel: ViewModel, recordShortcutView: AnyView) {
         self.recordShortcutView = recordShortcutView
@@ -21,47 +20,42 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
-        .sheet(isPresented: $pasteDirectlySheetShown) {
+        .background(Colors.backgroundColor)
+        .foregroundColor(Colors.defaultTextColor)
+        .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
+        .sheet(isPresented: viewModel.showPasteDirectlyHint.binding {
+            viewModel.onEvent(.settingsEvent(.showPasteDirectlyHint))
+        }) {
             ZStack {
                 Colors.backgroundColor
                 PasteDirectlyView()
             }
         }
-        .background(Colors.backgroundColor)
-        .foregroundColor(Colors.defaultTextColor)
-        .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
     }
 
     var pasteDirectly: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
-                Toggle(L11n.PasteDirectly.settingLabel, isOn: Binding(get: {
-                    viewModel.pasteDirectly
-                }, set: { _, _ in
+                Toggle(R.Settings.PasteDirectly.settingLabel, isOn: viewModel.pasteDirectly.binding {
                     viewModel.onEvent(.settingsEvent(.togglePasteDirectly))
-                }))
+                })
 
                 Image(systemName: "info.circle.fill")
                     .onTapGesture {
-                        pasteDirectlySheetShown.toggle()
+                        viewModel.onEvent(.settingsEvent(.showPasteDirectlyHint))
                     }
 
             }
-            Text(L11n.PasteDirectly.featureDescription)
+            Text(R.Settings.PasteDirectly.featureDescription)
                 .font(.callout)
                 .foregroundStyle(.gray)
         }
     }
 
     var launchAtLogin: some View {
-        Toggle("\(L11n.launchAtLogin)", isOn: Binding(
-            get: {
-                viewModel.launchAtLogin
-            },
-            set: { _, _ in
-                viewModel.onEvent(.settingsEvent(.toggleLaunchAtLogin))
-            }
-        ))
+        Toggle(R.Settings.launchAtLogin, isOn: viewModel.launchAtLogin.binding {
+            viewModel.onEvent(.settingsEvent(.toggleLaunchAtLogin))
+        })
     }
 }
 
@@ -77,6 +71,7 @@ struct SettingsView_Previews: PreviewProvider {
     class ViewModelStub: SettingsViewModel {
         let pasteDirectly = false
         let launchAtLogin = false
+        let showPasteDirectlyHint = false
 
         func onEvent(_ event: SettingsViewModelEvent) { }
     }
