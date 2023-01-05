@@ -9,6 +9,8 @@ enum SettingsViewModelEvent: Equatable {
         case togglePasteDirectly
         case toggleLaunchAtLogin
         case showPasteDirectlyHint
+        case showAccessibilitySettings
+        case enableAccessibilitySettings
     }
 }
 
@@ -30,28 +32,42 @@ final class SettingsViewModelImpl: SettingsViewModel {
 
     private let toggleSettingsUseCase: ToggleSettingsUseCase
     private let getSettingsUseCase: GetSettingsUseCase
+    private let navigation: Navigation
 
     init(
         toggleSettingsUseCase: ToggleSettingsUseCase,
-        getSettingsUseCase: GetSettingsUseCase
+        getSettingsUseCase: GetSettingsUseCase,
+        navigation: Navigation
     ) {
         self.toggleSettingsUseCase = toggleSettingsUseCase
         self.getSettingsUseCase = getSettingsUseCase
+        self.navigation = navigation
     }
 
     func onEvent(_ event: SettingsViewModelEvent) {
         switch event {
-        case .settingsEvent(.togglePasteDirectly):
+        case .settingsEvent(let settingsEvent):
+            onEvent(settingsEvent)
+        case .lifecycle(.appear):
+            subscribe()
+        }
+    }
+
+    private func onEvent(_ event: SettingsViewModelEvent.SettingsEvent) {
+        switch event {
+        case .togglePasteDirectly:
             let toggleResult = toggleSettingsUseCase.toggle(setting: .pasteDirectly)
             if toggleResult.error() == .permissionNotGranted {
                 showPasteDirectlyHint = true
             }
-        case .settingsEvent(.toggleLaunchAtLogin):
+        case .toggleLaunchAtLogin:
             toggleSettingsUseCase.toggle(setting: .launchAtLogin)
-        case .settingsEvent(.showPasteDirectlyHint):
+        case .showPasteDirectlyHint:
             showPasteDirectlyHint.toggle()
-        case .lifecycle(.appear):
-            subscribe()
+        case .showAccessibilitySettings:
+            navigation.handle(navigationEvent: .showSystemAccessibilitySettings)
+        case .enableAccessibilitySettings:
+            navigation.handle(navigationEvent: .enableAccessibilitySettings)
         }
     }
 

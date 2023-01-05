@@ -4,6 +4,14 @@ struct PasteDirectlyView: View {
 
     @Environment(\.dismiss) var dismiss
 
+    private let showSettings: () -> Void
+    private let addPermissions: () -> Void
+
+    init(showSettings: @escaping () -> Void, addPermissions: @escaping () -> Void) {
+        self.showSettings = showSettings
+        self.addPermissions = addPermissions
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Image(systemName: "xmark")
@@ -18,15 +26,11 @@ struct PasteDirectlyView: View {
             Text(R.Settings.PasteDirectly.howToAllowPermission)
             HStack {
                 Button(R.Settings.PasteDirectly.showSettingsButton) {
-                    guard let url = URL(string: R.Settings.PasteDirectly.accessibilityUrl) else {
-                        log(message: "Failed to create accessibility URL")
-                        return
-                    }
-                    NSWorkspace.shared.open(url)
+                    showSettings()
                 }
                 
                 Button(R.Settings.PasteDirectly.addPermissionButton) {
-
+                    addPermissions()
                 }
             }
         }
@@ -41,7 +45,7 @@ struct PasteDirectlyView: View {
 struct PasteDirectlyView_Previews: PreviewProvider {
 
     static var previews: some View {
-        PasteDirectlyView()
+        PasteDirectlyView(showSettings: {}, addPermissions: {})
             .frame(width: 400, height: 250)
     }
 }

@@ -13,7 +13,8 @@ class SettingsViewModelTests: XCTestCase {
         )
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
-            getSettingsUseCase: getSettingsUseCase
+            getSettingsUseCase: getSettingsUseCase,
+            navigation: NavigationDummy()
         )
 
         sut.onEvent(.lifecycle(.appear))
@@ -26,7 +27,8 @@ class SettingsViewModelTests: XCTestCase {
         let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: toggleSettingsUseCase,
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
         )
         sut.onEvent(.settingsEvent(.togglePasteDirectly))
 
@@ -37,7 +39,8 @@ class SettingsViewModelTests: XCTestCase {
         let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: toggleSettingsUseCase,
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
         )
         sut.onEvent(.settingsEvent(.toggleLaunchAtLogin))
 
@@ -47,7 +50,8 @@ class SettingsViewModelTests: XCTestCase {
     func test_it_shows_paste_directly_hint_on_paste_directly_event() {
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
         )
 
         sut.onEvent(.settingsEvent(.showPasteDirectlyHint))
@@ -58,7 +62,8 @@ class SettingsViewModelTests: XCTestCase {
     func test_it_hides_paste_directly_hint_on_paste_directly_event_when_already_shown() {
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
         )
         sut.onEvent(.settingsEvent(.showPasteDirectlyHint))
 
@@ -71,12 +76,35 @@ class SettingsViewModelTests: XCTestCase {
         let toggleSettingsUseCase = ToggleSettingsUseCaseStub(result: .failure(.permissionNotGranted))
         let sut = SettingsViewModelImpl(
             toggleSettingsUseCase: toggleSettingsUseCase,
-            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default)
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
         )
 
         sut.onEvent(.settingsEvent(.togglePasteDirectly))
 
         XCTAssertEqual(sut.showPasteDirectlyHint, true)
+    }
+
+    func test_it_passes_navigation_events() {
+        let navigation = NavigationSpy()
+        let sut = SettingsViewModelImpl(
+            toggleSettingsUseCase: ToggleSettingsUseCaseDummy(),
+            getSettingsUseCase: GetSettingsUseCaseDummy(),
+            navigation: navigation
+        )
+
+        sut.onEvent(.settingsEvent(.showAccessibilitySettings))
+        XCTAssertEqual(navigation.handledEvent, .showSystemAccessibilitySettings)
+
+        sut.onEvent(.settingsEvent(.enableAccessibilitySettings))
+        XCTAssertEqual(navigation.handledEvent, .enableAccessibilitySettings)
+    }
+}
+
+class GetSettingsUseCaseDummy: GetSettingsUseCase {
+    var settings: AnyPublisher<Settings, Never> {
+        Just(Settings(pasteDirectly: false, launchAtLogin: false))
+            .eraseToAnyPublisher()
     }
 }
 

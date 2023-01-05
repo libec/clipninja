@@ -28,7 +28,13 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         }) {
             ZStack {
                 Colors.backgroundColor
-                PasteDirectlyView()
+                PasteDirectlyView(
+                    showSettings: {
+                        viewModel.onEvent(.settingsEvent(.showAccessibilitySettings))
+                    }, addPermissions: {
+                        viewModel.onEvent(.settingsEvent(.enableAccessibilitySettings))
+                    }
+                )
             }
         }
     }
