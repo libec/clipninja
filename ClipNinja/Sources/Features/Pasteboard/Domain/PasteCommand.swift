@@ -1,3 +1,3 @@
-protocol PasteCommand {
+public protocol PasteCommand {
     func paste()
 }

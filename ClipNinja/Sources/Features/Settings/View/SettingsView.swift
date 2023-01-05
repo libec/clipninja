@@ -23,20 +23,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         .background(Colors.backgroundColor)
         .foregroundColor(Colors.defaultTextColor)
         .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
-        .sheet(isPresented: viewModel.showPasteDirectlyHint.binding {
-            viewModel.onEvent(.settingsEvent(.showPasteDirectlyHint))
-        }) {
-            ZStack {
-                Colors.backgroundColor
-                PasteDirectlyView(
-                    showSettings: {
-                        viewModel.onEvent(.settingsEvent(.showAccessibilitySettings))
-                    }, addPermissions: {
-                        viewModel.onEvent(.settingsEvent(.enableAccessibilitySettings))
-                    }
-                )
-            }
-        }
     }
 
     var pasteDirectly: some View {
@@ -50,6 +36,20 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
                     .onTapGesture {
                         viewModel.onEvent(.settingsEvent(.showPasteDirectlyHint))
                     }
+                    .popover(isPresented: viewModel.showPasteDirectlyHint.binding {
+                        viewModel.onEvent(.settingsEvent(.showPasteDirectlyHint))
+                    }, content: {
+                        ZStack {
+                            Colors.backgroundColor
+                            PasteDirectlyView(
+                                showSettings: {
+                                    viewModel.onEvent(.settingsEvent(.showAccessibilitySettings))
+                                }, addPermissions: {
+                                    viewModel.onEvent(.settingsEvent(.enableAccessibilitySettings))
+                                }
+                            )
+                        }
+                    })
 
             }
             Text(R.Settings.PasteDirectly.featureDescription)

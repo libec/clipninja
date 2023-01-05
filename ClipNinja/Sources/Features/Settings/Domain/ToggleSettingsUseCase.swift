@@ -32,7 +32,7 @@ final class ToggleSettingsUseCaseImpl: ToggleSettingsUseCase {
             settingsRepository.toggleLaunchAtLogin()
             return .success(())
         case .pasteDirectly:
-            if permissionsResource.pastingAllowed {
+            if permissionsResource.pastingAllowed || settingsRepository.lastSettings.pasteDirectly {
                 settingsRepository.togglePasteDirectly()
                 return .success(())
             } else {

@@ -76,8 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                     NSWorkspace.shared.open(url)
                 case .enableAccessibilitySettings:
-                    // TODO:
-                    log(message: "Enabling accessibility settings directly")
+                    instanceProvider.resolve(PasteCommand.self).paste()
                 }
             }.store(in: &subscriptions)
     }

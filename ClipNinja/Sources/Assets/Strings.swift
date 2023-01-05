@@ -16,7 +16,7 @@ public enum Strings {
             static let settingLabel = "Paste Directly"
             static let featureDescription = "\(Strings.Generic.appName) pastes selected clip directly to the underlying app."
 
-            static let permissionDescription = "\(Strings.Generic.wip) This feature requires permissions from the system."
+            static let permissionDescription = "\(Strings.Generic.wip) The feature requires permissions from the system."
             static let howToAllowPermission = "\(Strings.Generic.wip) You can enable ClipNinja in system preferences > privacy > accessibility."
             static let addPermissionButton = "\(Strings.Generic.wip) Enable directly"
             static let showSettingsButton = "\(Strings.Generic.wip) Show settings"
