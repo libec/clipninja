@@ -6,7 +6,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     @StateObject var viewModel: ViewModel
 
-
     init(viewModel: ViewModel, recordShortcutView: AnyView) {
         self.recordShortcutView = recordShortcutView
         self._viewModel = StateObject(wrappedValue: viewModel)

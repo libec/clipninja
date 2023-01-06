@@ -12,7 +12,6 @@ class StyledWindow: NSWindow {
             defer: true
         )
         backgroundColor = NSColor(Colors.backgroundColor)
-        hidesOnDeactivate = true
         isReleasedWhenClosed = false
         isMovableByWindowBackground = true
         titlebarAppearsTransparent = true
@@ -40,6 +39,7 @@ class ClipboardWindow: StyledWindow {
         title = "ClipNinja"
         setFrameAutosaveName("ClipboardWindow")
         collectionBehavior = .canJoinAllSpaces
+        hidesOnDeactivate = true
     }
 
     override func keyDown(with event: NSEvent) {
