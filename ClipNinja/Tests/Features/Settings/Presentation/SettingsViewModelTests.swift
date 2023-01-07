@@ -94,10 +94,7 @@ class SettingsViewModelTests: XCTestCase {
         )
 
         sut.onEvent(.settingsEvent(.showAccessibilitySettings))
-        XCTAssertEqual(navigation.handledEvent, .showSystemAccessibilitySettings)
-
-        sut.onEvent(.settingsEvent(.enableAccessibilitySettings))
-        XCTAssertEqual(navigation.handledEvent, .enableAccessibilitySettings)
+        XCTAssertEqual(navigation.handledEvent, .showSystemSettings)
     }
 }
 

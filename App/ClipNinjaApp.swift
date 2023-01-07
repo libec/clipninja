@@ -68,15 +68,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 case .showSettings:
                     self.clipboardWindow.close()
                     self.activate(window: self.settingsWindow)
-                case .showSystemAccessibilitySettings:
+                case .showSystemSettings:
                     let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
                     guard let url = URL(string: accessibilityUrl) else {
                         log(message: "Failed to create accessibility URL")
                         return
                     }
                     NSWorkspace.shared.open(url)
-                case .enableAccessibilitySettings:
-                    instanceProvider.resolve(PasteCommand.self).paste()
                 }
             }.store(in: &subscriptions)
     }

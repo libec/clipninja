@@ -4,8 +4,7 @@ public enum NavigationEvent {
     case showClipboard
     case showSettings
     case hideApp
-    case showSystemAccessibilitySettings
-    case enableAccessibilitySettings
+    case showSystemSettings
 }
 
 public protocol Navigation {

@@ -3,11 +3,9 @@ import SwiftUI
 struct PasteDirectlyView: View {
     
     private let showSettings: () -> Void
-    private let addPermissions: () -> Void
 
-    init(showSettings: @escaping () -> Void, addPermissions: @escaping () -> Void) {
+    init(showSettings: @escaping () -> Void) {
         self.showSettings = showSettings
-        self.addPermissions = addPermissions
     }
 
     var body: some View {
@@ -16,14 +14,8 @@ struct PasteDirectlyView: View {
                 .font(.headline)
             Text(R.Settings.PasteDirectly.permissionDescription)
             Text(R.Settings.PasteDirectly.howToAllowPermission)
-            HStack {
-                Button(R.Settings.PasteDirectly.showSettingsButton) {
-                    showSettings()
-                }
-                
-                Button(R.Settings.PasteDirectly.addPermissionButton) {
-                    addPermissions()
-                }
+            Button(R.Settings.PasteDirectly.showSettingsButton) {
+                showSettings()
             }
         }
         .padding()
@@ -35,7 +27,7 @@ struct PasteDirectlyView: View {
 struct PasteDirectlyView_Previews: PreviewProvider {
 
     static var previews: some View {
-        PasteDirectlyView(showSettings: {}, addPermissions: {})
+        PasteDirectlyView(showSettings: {})
             .frame(width: 400, height: 250)
     }
 }

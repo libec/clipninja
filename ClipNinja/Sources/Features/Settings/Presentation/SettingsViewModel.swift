@@ -10,7 +10,6 @@ enum SettingsViewModelEvent: Equatable {
         case toggleLaunchAtLogin
         case showPasteDirectlyHint
         case showAccessibilitySettings
-        case enableAccessibilitySettings
     }
 }
 
@@ -65,9 +64,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
         case .showPasteDirectlyHint:
             showPasteDirectlyHint.toggle()
         case .showAccessibilitySettings:
-            navigation.handle(navigationEvent: .showSystemAccessibilitySettings)
-        case .enableAccessibilitySettings:
-            navigation.handle(navigationEvent: .enableAccessibilitySettings)
+            navigation.handle(navigationEvent: .showSystemSettings)
         }
     }
 

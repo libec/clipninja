@@ -43,8 +43,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
                             PasteDirectlyView(
                                 showSettings: {
                                     viewModel.onEvent(.settingsEvent(.showAccessibilitySettings))
-                                }, addPermissions: {
-                                    viewModel.onEvent(.settingsEvent(.enableAccessibilitySettings))
                                 }
                             )
                         }
