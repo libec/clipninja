@@ -1,11 +1,11 @@
 import Combine
 import Foundation
 
-enum SettingsViewModelEvent: Equatable {
+enum SettingsEvent: Equatable {
     case lifecycle(LifecycleEvent)
-    case settingsEvent(SettingsEvent)
+    case settingsEvent(Settings)
 
-    enum SettingsEvent: Equatable {
+    enum Settings: Equatable {
         case togglePasteDirectly
         case toggleLaunchAtLogin
         case showPasteDirectlyHint
@@ -18,7 +18,7 @@ protocol SettingsViewModel: ObservableObject {
     var pasteDirectly: Bool { get }
     var showPasteDirectlyHint: Bool { get }
 
-    func onEvent(_ event: SettingsViewModelEvent)
+    func onEvent(_ event: SettingsEvent)
 }
 
 final class SettingsViewModelImpl: SettingsViewModel {
@@ -43,7 +43,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
         self.navigation = navigation
     }
 
-    func onEvent(_ event: SettingsViewModelEvent) {
+    func onEvent(_ event: SettingsEvent) {
         switch event {
         case .settingsEvent(let settingsEvent):
             onEvent(settingsEvent)
@@ -52,7 +52,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
         }
     }
 
-    private func onEvent(_ event: SettingsViewModelEvent.SettingsEvent) {
+    private func onEvent(_ event: SettingsEvent.Settings) {
         switch event {
         case .togglePasteDirectly:
             let toggleResult = toggleSettingsUseCase.toggle(setting: .pasteDirectly)

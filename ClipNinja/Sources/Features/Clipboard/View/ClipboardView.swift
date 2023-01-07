@@ -14,13 +14,39 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
         self.keyboardObserver = keyboardNotifier
     }
 
+    @State private var showOnboarding = false
+
     var body: some View {
-        content
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .onReceive(keyboardObserver.keyPress, perform: { keyPress in
-                viewModel.onEvent(.keyboard(keyPress))
-            })
-            .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
+        ZStack {
+            content
+                .onTapGesture {
+                    showOnboarding.toggle()
+                }
+            if showOnboarding {
+                ZStack {
+                    Rectangle()
+                        .background(Color.black)
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+
+                    OnboardingView(viewModel: ViewModelStub())
+                        .background(.ultraThickMaterial)
+                        .frame(maxWidth: 450, maxHeight: 400)
+                        .cornerRadius(15)
+                        .shadow(radius: 10)
+                }
+                .onTapGesture {
+                    showOnboarding.toggle()
+                }
+                .ignoresSafeArea()
+            }
+        }
+        .ignoresSafeArea()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onReceive(keyboardObserver.keyPress, perform: { keyPress in
+            viewModel.onEvent(.keyboard(keyPress))
+        })
+        .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
     }
 
     private var content: some View {
@@ -49,8 +75,8 @@ struct ClipboardView<ViewModel: ClipboardViewModel>: View {
         HStack {
             ForEach(0..<viewModel.totalPages, id: \.self) { index in
                 (index == viewModel.shownPage ? Colors.prominent : Colors.selectedBackgroundColor)
-                        .frame(width: 50, height: 5, alignment: .center)
-                        .clipShape(Capsule())
+                    .frame(width: 50, height: 5, alignment: .center)
+                    .clipShape(Capsule())
 
             }
         }

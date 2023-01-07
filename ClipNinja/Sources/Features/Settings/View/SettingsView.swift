@@ -76,7 +76,7 @@ struct SettingsView_Previews: PreviewProvider {
         let launchAtLogin = false
         let showPasteDirectlyHint = false
 
-        func onEvent(_ event: SettingsViewModelEvent) { }
+        func onEvent(_ event: SettingsEvent) { }
     }
 
     private static var settingsView: some View {
