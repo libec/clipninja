@@ -16,7 +16,11 @@
 		2CB4AB51295CB308009162B8 /* LaunchAtLoginSystemResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4AB50295CB308009162B8 /* LaunchAtLoginSystemResource.swift */; };
 		2CB4AB55295CB3D5009162B8 /* LaunchAtLoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4AB54295CB3D5009162B8 /* LaunchAtLoginAssembly.swift */; };
 		2CCBB17529033FBA00C20C66 /* ClipNinjaPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCBB17429033FBA00C20C66 /* ClipNinjaPackage */; };
-		2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */; };
+		2CCEA9402975B71500B54EF5 /* WindowsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCEA93F2975B71500B54EF5 /* WindowsController.swift */; };
+		2CCEA9442975B91400B54EF5 /* WindowsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCEA9432975B91400B54EF5 /* WindowsAssembly.swift */; };
+		2CCEA9462975C19400B54EF5 /* WindowsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCEA9452975C19400B54EF5 /* WindowsFactory.swift */; };
+		2CCEA9482975C39100B54EF5 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCEA9472975C39100B54EF5 /* MenuBarController.swift */; };
+		2CE346562722B0F6000AAEC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE346552722B0F6000AAEC9 /* AppDelegate.swift */; };
 		2CE3465A2722B0F7000AAEC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE346592722B0F7000AAEC9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +35,12 @@
 		2CB4AB50295CB308009162B8 /* LaunchAtLoginSystemResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginSystemResource.swift; sourceTree = "<group>"; };
 		2CB4AB54295CB3D5009162B8 /* LaunchAtLoginAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginAssembly.swift; sourceTree = "<group>"; };
 		2CBC809128D8F1B100490E80 /* ClipNinja */ = {isa = PBXFileReference; lastKnownFileType = text; path = ClipNinja; sourceTree = SOURCE_ROOT; };
+		2CCEA93F2975B71500B54EF5 /* WindowsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsController.swift; sourceTree = "<group>"; };
+		2CCEA9432975B91400B54EF5 /* WindowsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsAssembly.swift; sourceTree = "<group>"; };
+		2CCEA9452975C19400B54EF5 /* WindowsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsFactory.swift; sourceTree = "<group>"; };
+		2CCEA9472975C39100B54EF5 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
 		2CE346522722B0F6000AAEC9 /* ClipNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipNinjaApp.swift; sourceTree = "<group>"; };
+		2CE346552722B0F6000AAEC9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CE346592722B0F7000AAEC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CE3465E2722B0F7000AAEC9 /* ClipNinja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipNinja.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +128,25 @@
 			path = Assembly;
 			sourceTree = "<group>";
 		};
+		2CCEA9412975B71B00B54EF5 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				2C0354AF2905B32F002AC67D /* Windows.swift */,
+				2CCEA9472975C39100B54EF5 /* MenuBarController.swift */,
+				2CCEA93F2975B71500B54EF5 /* WindowsController.swift */,
+				2CCEA9452975C19400B54EF5 /* WindowsFactory.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		2CCEA9422975B8B700B54EF5 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				2CCEA9432975B91400B54EF5 /* WindowsAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		2CE346492722B0F6000AAEC9 = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +172,7 @@
 				2CB4AB52295CB3B2009162B8 /* Launch At Login */,
 				2CF63AA32905382D0006C94A /* Windows */,
 				2CA021DB2902DE2600BE2F32 /* Keyboard Handling */,
-				2CE346552722B0F6000AAEC9 /* ClipNinjaApp.swift */,
+				2CE346552722B0F6000AAEC9 /* AppDelegate.swift */,
 				2C91E4202722EF8F00CD2418 /* Assets */,
 			);
 			path = App;
@@ -161,7 +188,8 @@
 		2CF63AA32905382D0006C94A /* Windows */ = {
 			isa = PBXGroup;
 			children = (
-				2C0354AF2905B32F002AC67D /* Windows.swift */,
+				2CCEA9422975B8B700B54EF5 /* Assembly */,
+				2CCEA9412975B71B00B54EF5 /* System */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -243,13 +271,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C0354B02905B32F002AC67D /* Windows.swift in Sources */,
+				2CCEA9402975B71500B54EF5 /* WindowsController.swift in Sources */,
 				2CA021E12902E06600BE2F32 /* SystemShortcutObserver.swift in Sources */,
 				2CB4AB55295CB3D5009162B8 /* LaunchAtLoginAssembly.swift in Sources */,
-				2CE346562722B0F6000AAEC9 /* ClipNinjaApp.swift in Sources */,
+				2CCEA9482975C39100B54EF5 /* MenuBarController.swift in Sources */,
+				2CE346562722B0F6000AAEC9 /* AppDelegate.swift in Sources */,
 				2CA021DA2902DE0C00BE2F32 /* SystemKeyboardObserver.swift in Sources */,
 				2CA021EB2902E53C00BE2F32 /* RecordShortcutView.swift in Sources */,
+				2CCEA9442975B91400B54EF5 /* WindowsAssembly.swift in Sources */,
 				2CB4AB51295CB308009162B8 /* LaunchAtLoginSystemResource.swift in Sources */,
 				2CA021E72902E2ED00BE2F32 /* KeyboardHandlingAssembly.swift in Sources */,
+				2CCEA9462975C19400B54EF5 /* WindowsFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

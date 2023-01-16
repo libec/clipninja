@@ -5,19 +5,15 @@ import SwiftUI
 
 struct KeyboardHandlingAssembly: Assembly {
 
-    private let keyboardObserver: KeyboardObserver
-
-    init(keyboardObserver: KeyboardObserver) {
-        self.keyboardObserver = keyboardObserver
-    }
-
     func assemble(container: Container) {
+        container.autoregister(SystemKeyboardObserver.self, initializer: SystemKeyboardObserver.init)
+            .implements(KeyboardObserver.self)
+            .inObjectScope(.container)
         container.register(AnyView.self, name: AssemblyKeys.recordShortcutView.rawValue) { _ in
             AnyView(RecordShortcutView())
         }
         container.autoregister(ShortcutObserver.self, initializer: SystemShortcutObserver.init)
             .inObjectScope(.container)
-        container.register(KeyboardObserver.self) { _ in keyboardObserver }
     }
 
     func loaded(resolver: Resolver) {

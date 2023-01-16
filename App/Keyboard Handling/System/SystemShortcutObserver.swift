@@ -10,8 +10,7 @@ final class SystemShortcutObserver: ShortcutObserver {
 
     private let subject = PassthroughSubject<Void, Never>()
 
-    init() {
-    }
+    init() { }
 
     func observe() {
         KeyboardShortcuts.onKeyUp(for: .toggleClipNinja) { [self] in

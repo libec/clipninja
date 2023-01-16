@@ -38,7 +38,7 @@ class ClipboardWindow: StyledWindow {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 650, height: 600))
         title = "ClipNinja"
         setFrameAutosaveName("ClipboardWindow")
-        collectionBehavior = .canJoinAllSpaces
+        collectionBehavior = [.moveToActiveSpace]
         hidesOnDeactivate = true
     }
 
