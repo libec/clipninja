@@ -12,7 +12,6 @@ final class ProtectedLocalClipsResource: ClipsResource {
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder
     private let fileManager: FileManager
-    private lazy var clipsUrl: URL = makeClipsURL()
 
     init(
         jsonDecoder: JSONDecoder,
@@ -25,17 +24,19 @@ final class ProtectedLocalClipsResource: ClipsResource {
     }
 
     func persist(clips: [Clip]) {
+        let url = makeClipsURL()
         do {
             let data = try jsonEncoder.encode(clips)
-            try data.write(to: clipsUrl, options: [.atomic, .completeFileProtection])
+            try data.write(to: url, options: [.atomic, .completeFileProtection])
         } catch {
             log(message: "Cant encode clips: \(error)", category: .storage)
         }
     }
 
     var clips: [Clip] {
+        let url = makeClipsURL()
         do {
-            let data = try Data(contentsOf: clipsUrl, options: [])
+            let data = try Data(contentsOf: url, options: [])
             let clips = try jsonDecoder.decode([Clip].self, from: data)
             return clips
         } catch {
