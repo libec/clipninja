@@ -27,6 +27,15 @@ class SettingsWindow: StyledWindow {
     }
 }
 
+class TutorialWindow: StyledWindow {
+
+    init() {
+        super.init(contentRect: NSRect(x: 0, y: 0, width: 500, height: 400))
+        setFrameAutosaveName("TutorialWindow")
+    }
+}
+
+
 class ClipboardWindow: StyledWindow {
 
     let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()

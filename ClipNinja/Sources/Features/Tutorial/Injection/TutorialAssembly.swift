@@ -20,5 +20,8 @@ struct TutorialAssembly: Assembly {
         container.autoregister(TutorialViewModelImpl.self, initializer: TutorialViewModelImpl.init)
             .implements((any TutorialViewModel).self)
         container.autoregister(CheckTutorialUseCase.self, initializer: CheckTutorialUseCaseImpl.init)
+        container.autoregister(TutorialRepository.self, initializer: TutorialRepositoryImpl.init)
+            .inObjectScope(.container)
+        container.autoregister(TutorialResource.self, initializer: LocalTutorialResource.init)
     }
 }

@@ -22,6 +22,8 @@ final class WindowsFactoryImpl: WindowsFactory {
             return makeClipsWindow()
         case .settings:
             return makeSettingsWindow()
+        case .tutorial:
+            return makeTutorialWindow()
         }
     }
 
@@ -37,10 +39,14 @@ final class WindowsFactoryImpl: WindowsFactory {
 
     func makeSettingsWindow() -> NSWindow {
         let window = SettingsWindow()
-        let settingsView = instanceProvider.resolve(
-            AnyView.self,
-            name: AssemblyKeys.settingsView.rawValue
-        )
+        let settingsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.settingsView.rawValue)
+        window.contentView = NSHostingView(rootView: settingsView)
+        return window
+    }
+
+    func makeTutorialWindow() -> NSWindow {
+        let window = TutorialWindow()
+        let settingsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.tutorialView.rawValue)
         window.contentView = NSHostingView(rootView: settingsView)
         return window
     }

@@ -17,6 +17,7 @@ public enum Strings {
             static let settingLabel = "Paste Directly"
             static let featureDescription = "\(Strings.Generic.appName) pastes selected clip directly to the underlying app."
 
+            public static let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
             static let permissionDescription = "\(Strings.Generic.wip) The feature requires permissions from the system."
             static let howToAllowPermission = "\(Strings.Generic.wip) You can enable ClipNinja in system preferences > privacy > accessibility."
             static let showSettingsButton = "\(Strings.Generic.wip) Show settings"
@@ -32,7 +33,7 @@ public enum Strings {
     public enum MenuItems {
         public static let clips = "Clips"
         public static let settings = "Settings"
-        public static let tutorial = Generic.wip + "Tutorial" + Generic.wip
+        public static let tutorial = "Tutorial"
         public static let quit = "Quit"
     }
 }

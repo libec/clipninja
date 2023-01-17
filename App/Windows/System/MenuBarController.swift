@@ -49,5 +49,6 @@ final class MenuBarController: NSObject {
 
     @objc
     func showTutorial() {
+        navigation.handle(navigationEvent: .showTutorial)
     }
 }

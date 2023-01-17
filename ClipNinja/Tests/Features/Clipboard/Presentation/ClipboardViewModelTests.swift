@@ -146,7 +146,7 @@ extension ClipPreview {
 typealias CheckTutorialUseCaseDummy = CheckTutorialUseCaseSpy
 class CheckTutorialUseCaseSpy: CheckTutorialUseCase {
     var checkedPrompt: TutorialPrompt?
-    func check(for prompt: TutorialPrompt) {
+    func check(with prompt: TutorialPrompt) {
         checkedPrompt = prompt
     }
 }

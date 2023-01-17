@@ -5,6 +5,8 @@ public enum NavigationEvent {
     case showSettings
     case hideApp
     case showSystemSettings
+    case showTutorialOnClips
+    case showTutorial
 }
 
 public protocol Navigation {
