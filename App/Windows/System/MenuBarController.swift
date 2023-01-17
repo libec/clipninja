@@ -11,13 +11,13 @@ final class MenuBarController: NSObject {
     }
 
     func setupMenuBar() {
-        let clipboardsItem = NSMenuItem(title: "Clipboards", action: #selector(showClipboards), keyEquivalent: "")
+        let clipboardsItem = NSMenuItem(title: Strings.MenuItems.clips, action: #selector(showClipboards), keyEquivalent: "")
         clipboardsItem.target = self
-        let settingsItem = NSMenuItem(title: "Settings", action: #selector(showSettings), keyEquivalent: "")
+        let settingsItem = NSMenuItem(title: Strings.MenuItems.settings, action: #selector(showSettings), keyEquivalent: "")
         settingsItem.target = self
-        let tutorialItem = NSMenuItem(title: "🚧 Tutorial 🚧", action: #selector(showTutorial), keyEquivalent: "")
+        let tutorialItem = NSMenuItem(title: Strings.MenuItems.tutorial, action: #selector(showTutorial), keyEquivalent: "")
         tutorialItem.target = self
-        let quitItem = NSMenuItem(title: "Quit", action: #selector(exitApp), keyEquivalent: "")
+        let quitItem = NSMenuItem(title: Strings.MenuItems.quit, action: #selector(exitApp), keyEquivalent: "")
         quitItem.target = self
 
         let menu = NSMenu()
@@ -49,6 +49,5 @@ final class MenuBarController: NSObject {
 
     @objc
     func showTutorial() {
-        log(message: "🚧🚧: Show onboarding")
     }
 }

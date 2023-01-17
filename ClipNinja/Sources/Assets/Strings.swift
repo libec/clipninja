@@ -10,6 +10,7 @@ public enum Strings {
     public enum Settings {
         static let launchAtLogin = "Launch at login"
         public static let openAppShortcut = "Shortcut"
+        public static let windowName = Generic.appName + " Settings"
         public static let wip = Strings.Generic.wip
 
         public enum PasteDirectly {
@@ -29,6 +30,9 @@ public enum Strings {
     }
 
     public enum MenuItems {
-        
+        public static let clips = "Clips"
+        public static let settings = "Settings"
+        public static let tutorial = Generic.wip + "Tutorial" + Generic.wip
+        public static let quit = "Quit"
     }
 }
