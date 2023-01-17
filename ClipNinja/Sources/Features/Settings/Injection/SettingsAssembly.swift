@@ -2,7 +2,7 @@ import Swinject
 import SwinjectAutoregistration
 import SwiftUI
 
-struct SettingsFeatureAssembly: Assembly {
+struct SettingsAssembly: Assembly {
 
     init() { }
     

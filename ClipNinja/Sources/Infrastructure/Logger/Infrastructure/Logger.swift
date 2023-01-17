@@ -8,12 +8,14 @@ private protocol Logger {
 public enum LogCategory: CaseIterable {
     case main
     case storage
+    case tutorial
     case viewPort
 
     fileprivate var logDescription: String {
         switch self {
         case .main: return "system"
         case .storage: return "storage"
+        case .tutorial: return "tutorial"
         case .viewPort: return "view port"
         }
     }
@@ -46,7 +48,7 @@ private final class SystemLogger: Logger {
 
 private struct LoggerWrapper {
     fileprivate static let silentDebugCategories: [LogCategory] = [
-        .viewPort
+        .storage, .viewPort
     ]
     fileprivate static let logger: Logger = SystemLogger(silentCategories: silentDebugCategories)
 }

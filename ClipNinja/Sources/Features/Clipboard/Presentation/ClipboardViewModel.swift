@@ -18,16 +18,19 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
     private let clipboards: Clipboards
     private let hideAppUseCase: HideAppUseCase
     private let previewFactory: ClipboardPreviewFactory
+    private let checkTutorialUseCase: CheckTutorialUseCase
 
     init(
         clipboards: any Clipboards,
         previewFactory: ClipboardPreviewFactory,
         hideAppUseCase: HideAppUseCase,
-        viewPortConfiguration: ViewPortConfiguration
+        viewPortConfiguration: ViewPortConfiguration,
+        checkTutorialUseCase: CheckTutorialUseCase
     ) {
         self.clipboards = clipboards
         self.previewFactory = previewFactory
         self.hideAppUseCase = hideAppUseCase
+        self.checkTutorialUseCase = checkTutorialUseCase
         self.shownPage = viewPortConfiguration.defaultSelectedPage
         self.totalPages = viewPortConfiguration.totalPages
     }
@@ -59,6 +62,7 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
             switch lifecycleEvent {
             case .appear:
                 subscribe()
+                checkTutorialUseCase.check(for: .clipsAppear)
             }
         }
     }

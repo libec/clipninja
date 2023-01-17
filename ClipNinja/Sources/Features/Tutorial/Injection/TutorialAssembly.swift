@@ -1,0 +1,24 @@
+import Swinject
+import SwinjectAutoregistration
+import SwiftUI
+
+struct TutorialAssembly: Assembly {
+
+    init() { }
+
+    func assemble(container: Container) {
+        container.register(AnyView.self, name: AssemblyKeys.tutorialView.rawValue) { resolver in
+            AnyView(
+                resolver.resolve(TutorialView<TutorialViewModelImpl>.self)!
+            )
+        }
+        container.register(TutorialView<TutorialViewModelImpl>.self) { resolver in
+            TutorialView<TutorialViewModelImpl>(
+                viewModel: resolver.resolve(TutorialViewModelImpl.self)!
+            )
+        }
+        container.autoregister(TutorialViewModelImpl.self, initializer: TutorialViewModelImpl.init)
+            .implements((any TutorialViewModel).self)
+        container.autoregister(CheckTutorialUseCase.self, initializer: CheckTutorialUseCaseImpl.init)
+    }
+}

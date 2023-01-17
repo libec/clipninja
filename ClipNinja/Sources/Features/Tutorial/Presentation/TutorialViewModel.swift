@@ -12,3 +12,9 @@ enum TutorialEvent {
         case dismiss
     }
 }
+
+final class TutorialViewModelImpl: TutorialViewModel {
+    func onEvent(_ event: TutorialEvent) {
+        
+    }
+}

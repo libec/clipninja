@@ -11,7 +11,8 @@ class ClipboardViewModelTests: XCTestCase {
             clipboards: clipboards,
             previewFactory: factory,
             hideAppUseCase: HideAppUseCaseDummy(),
-            viewPortConfiguration: TestViewPortConfiguration()
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: CheckTutorialUseCaseDummy()
         )
 
         sut.onEvent(.keyboard(.up))
@@ -46,7 +47,8 @@ class ClipboardViewModelTests: XCTestCase {
             clipboards: clipboards,
             previewFactory: factory,
             hideAppUseCase: HideAppUseCaseDummy(),
-            viewPortConfiguration: TestViewPortConfiguration()
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: CheckTutorialUseCaseDummy()
         )
         
         sut.onEvent(.keyboard(.number(number: 7)))
@@ -71,7 +73,8 @@ class ClipboardViewModelTests: XCTestCase {
             clipboards: clipboards,
             previewFactory: factory,
             hideAppUseCase: HideAppUseCaseDummy(),
-            viewPortConfiguration: TestViewPortConfiguration()
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: CheckTutorialUseCaseDummy()
         )
 
         sut.onEvent(.lifecycle(.appear))
@@ -96,12 +99,28 @@ class ClipboardViewModelTests: XCTestCase {
             clipboards: ClipboardsDummy(),
             previewFactory: ClipboardPreviewFactoryDummy(),
             hideAppUseCase: hideAppUseCase,
-            viewPortConfiguration: TestViewPortConfiguration()
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: CheckTutorialUseCaseDummy()
         )
 
         sut.onEvent(.keyboard(.escape))
 
         XCTAssertTrue(try XCTUnwrap(hideAppUseCase.hideCalled))
+    }
+
+    func test_it_checks_for_tutorials_when_appearing() {
+        let checkTutorialUseCase = CheckTutorialUseCaseSpy()
+        let sut = ClipboardViewModelImpl(
+            clipboards: ClipboardsDummy(),
+            previewFactory: ClipboardPreviewFactoryDummy(),
+            hideAppUseCase: HideAppUseCaseDummy(),
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: checkTutorialUseCase
+        )
+
+        sut.onEvent(.lifecycle(.appear))
+
+        XCTAssertEqual(checkTutorialUseCase.checkedPrompt, .clipsAppear)
     }
 }
 
@@ -121,5 +140,13 @@ extension ClipPreview {
             pinned: false,
             shortcutNumber: "0"
         )
+    }
+}
+
+typealias CheckTutorialUseCaseDummy = CheckTutorialUseCaseSpy
+class CheckTutorialUseCaseSpy: CheckTutorialUseCase {
+    var checkedPrompt: TutorialPrompt?
+    func check(for prompt: TutorialPrompt) {
+        checkedPrompt = prompt
     }
 }
