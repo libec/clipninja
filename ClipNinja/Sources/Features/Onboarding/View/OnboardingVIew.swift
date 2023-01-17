@@ -47,7 +47,6 @@ class ViewModelStub: OnboardingViewModel {
 
 struct OnboardingView_Previews: PreviewProvider {
 
-
     static var previews: some View {
         OnboardingView(viewModel: ViewModelStub())
             .frame(width: 450, height: 400)

@@ -39,8 +39,8 @@ final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
                 let clipsUpperBound = min((selectedPage + 1) * clipsPerPage, clips.count)
                 let clipsInRange = clips[clipsLowerBound..<clipsUpperBound]
 
-                log(message: "Clips: (\(clipsLowerBound)..<\(clipsUpperBound), selectedIndex: \(selectedIndexRemainder)")
-                log(message: "Pages: (\(selectedPage)/\(numberOfPages))")
+                log(message: "Clips: (\(clipsLowerBound)..<\(clipsUpperBound)), selectedIndex: \(selectedIndexRemainder)", category: .viewPort)
+                log(message: "Pages: (\(selectedPage)/\(numberOfPages))", category: .viewPort)
 
                 return ClipboardViewPort(
                     clips: Array(clipsInRange),
