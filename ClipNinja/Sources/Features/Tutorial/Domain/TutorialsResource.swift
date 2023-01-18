@@ -1,3 +1,3 @@
 protocol TutorialResource {
-    func alreadyWentThroughTutorial() -> Bool
+    var userOnboard: Bool { get }
 }

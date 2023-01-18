@@ -29,21 +29,19 @@ final class CheckTutorialUseCaseTests: XCTestCase {
 
 class TutorialRepositorySpy: TutorialRepository {
     var checkedEvent: TutorialTriggeringEvent?
-    func checkTutorials(for event: TutorialTriggeringEvent) -> Tutorial? {
+    var currentTutorial: Tutorial?
+    func checkTutorials(for event: TutorialTriggeringEvent) {
         self.checkedEvent = event
-        return nil
     }
 }
 
 class TutorialRepositoryStub: TutorialRepository {
 
-    var tutorialToReturn: Tutorial
+    var currentTutorial: Tutorial?
 
     init(tutorialToReturn: Tutorial) {
-        self.tutorialToReturn = tutorialToReturn
+        self.currentTutorial = tutorialToReturn
     }
 
-    func checkTutorials(for event: TutorialTriggeringEvent) -> Tutorial? {
-        tutorialToReturn
-    }
+    func checkTutorials(for event: TutorialTriggeringEvent) { }
 }
