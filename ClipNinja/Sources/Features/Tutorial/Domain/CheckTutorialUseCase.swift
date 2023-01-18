@@ -15,7 +15,7 @@ protocol CheckTutorialUseCase {
 }
 
 protocol TutorialRepository {
-    func check(with prompt: TutorialPrompt)
+    func shouldShowFirstTimeTutorial() -> Bool
 }
 
 protocol TutorialResource {
@@ -34,7 +34,14 @@ final class CheckTutorialUseCaseImpl: CheckTutorialUseCase {
 
     func check(with prompt: TutorialPrompt) {
         log(message: "Prompt: \(prompt.logDescription)", category: .tutorial)
-        navigation.handle(navigationEvent: .showTutorialOnClips)
+        switch prompt {
+        case .user:
+            navigation.handle(navigationEvent: .showTutorial)
+        case .clipsAppear:
+            if tutorialRepository.shouldShowFirstTimeTutorial() {
+                navigation.handle(navigationEvent: .showTutorialOnClips)
+            }
+        }
     }
 }
 
@@ -46,7 +53,7 @@ final class TutorialRepositoryImpl: TutorialRepository {
         self.tutorialResource = tutorialResource
     }
 
-    func check(with prompt: TutorialPrompt) {
-
+    func shouldShowFirstTimeTutorial() -> Bool {
+        return !tutorialResource.alreadyWentThroughTutorial()
     }
 }

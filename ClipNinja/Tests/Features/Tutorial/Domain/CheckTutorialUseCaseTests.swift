@@ -24,6 +24,16 @@ final class CheckTutorialUseCaseTests: XCTestCase {
         XCTAssertEqual(navigation.handledEvent, .showTutorial)
     }
 
+    func test_it_doesnt_show_tutorial_for_already_onboarded_user() {
+        let navigation = NavigationSpy()
+        let resource = TutorialResourceStub(wentThrough: true)
+        let sut = makeSut(navigation: navigation, tutorialResource: resource)
+
+        sut.check(with: .clipsAppear)
+
+        XCTAssertNil(navigation.handledEvent)
+    }
+
     private func makeSut(navigation: Navigation, tutorialResource: TutorialResource) -> CheckTutorialUseCaseImpl {
         CheckTutorialUseCaseImpl(
             tutorialRepository: TutorialRepositoryImpl(tutorialResource: tutorialResource),
