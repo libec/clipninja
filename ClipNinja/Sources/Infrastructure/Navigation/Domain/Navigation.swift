@@ -5,7 +5,7 @@ public enum NavigationEvent {
     case showSettings
     case hideApp
     case showSystemSettings
-    case showTutorialOnClips
+    case showAppUsage
     case showTutorial
 }
 

@@ -24,24 +24,23 @@ class WindowsController {
         self.windowFactory = windowFactory
     }
 
-    private func activate(appWindow: AppWindow, modalWindow: AppWindow?) {
+    private func activate(appWindow: AppWindow) {
         let window = windowFactory.make(appWindow: appWindow)
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
-
-        if let modalWindow {
-            window.beginSheet(windowFactory.make(appWindow: modalWindow))
-        }
     }
 
     private func showModal(modalWindow: AppWindow) {
-        NSApp.keyWindow?.beginSheet(windowFactory.make(appWindow: modalWindow))
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: { [weak self] in
+            if let window = self?.windowFactory.make(appWindow: modalWindow) {
+                NSApp.keyWindow?.beginSheet(window)
+            }
+        })
     }
 
     func openFirstWindow() {
-        // TODO: - Setup onboarding stuff and whatnot
-        activate(appWindow: .clips, modalWindow: nil)
+        activate(appWindow: .clips)
     }
 
     func startNavigation() {
@@ -54,18 +53,15 @@ class WindowsController {
                     self.closeClipsWindows()
                 case .showClipboard:
                     self.closeClipsWindows()
-                    self.activate(appWindow: .clips, modalWindow: nil)
+                    self.activate(appWindow: .clips)
                 case .showSettings:
                     self.closeClipsWindows()
-                    self.activate(appWindow: .settings, modalWindow: nil)
-                case .showTutorialOnClips:
-                    // TODO: - Find some other non-hacky way
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
-                        self.showModal(modalWindow: .tutorial)
-                    })
-                case .showTutorial:
+                    self.activate(appWindow: .settings)
+                case .showAppUsage:
                     self.closeClipsWindows()
-                    self.activate(appWindow: .tutorial, modalWindow: nil)
+                    self.activate(appWindow: .tutorial)
+                case .showTutorial:
+                    self.showModal(modalWindow: .tutorial)
                 case .showSystemSettings:
                     let accessibilityUrl = Strings.Settings.PasteDirectly.accessibilityUrl
                     guard let url = URL(string: accessibilityUrl) else {

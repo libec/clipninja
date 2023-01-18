@@ -62,7 +62,7 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
             switch lifecycleEvent {
             case .appear:
                 subscribe()
-                checkTutorialUseCase.check(with: .clipsAppear)
+                checkTutorialUseCase.checkTutorials(for: .clipsAppear)
             }
         }
     }

@@ -120,7 +120,7 @@ class ClipboardViewModelTests: XCTestCase {
 
         sut.onEvent(.lifecycle(.appear))
 
-        XCTAssertEqual(checkTutorialUseCase.checkedPrompt, .clipsAppear)
+        XCTAssertEqual(checkTutorialUseCase.checkedEvent, .clipsAppear)
     }
 }
 
@@ -145,8 +145,8 @@ extension ClipPreview {
 
 typealias CheckTutorialUseCaseDummy = CheckTutorialUseCaseSpy
 class CheckTutorialUseCaseSpy: CheckTutorialUseCase {
-    var checkedPrompt: TutorialPrompt?
-    func check(with prompt: TutorialPrompt) {
-        checkedPrompt = prompt
+    var checkedEvent: TutorialTriggeringEvent?
+    func checkTutorials(for event: TutorialTriggeringEvent) {
+        checkedEvent = event
     }
 }

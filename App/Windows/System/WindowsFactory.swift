@@ -30,9 +30,6 @@ final class WindowsFactoryImpl: WindowsFactory {
     func makeClipsWindow() -> NSWindow {
         let window = ClipboardWindow(keyboardController: keyboardObserver)
         let clipsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
-            .onAppear {
-                NSApp.activate(ignoringOtherApps: true)
-            }
         window.contentView = NSHostingView(rootView: clipsView)
         return window
     }

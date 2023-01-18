@@ -37,3 +37,4 @@ public enum Strings {
         public static let quit = "Quit"
     }
 }
+

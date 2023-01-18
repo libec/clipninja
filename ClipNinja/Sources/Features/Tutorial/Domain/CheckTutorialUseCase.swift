@@ -1,25 +1,22 @@
-enum TutorialPrompt {
+enum TutorialTriggeringEvent: CaseIterable {
     case clipsAppear
-    case user
+    case pasteText
 
     fileprivate var logDescription: String {
         switch self {
-        case .clipsAppear: return "Clips Appeared"
-        case .user: return "User Prompt"
+        case .clipsAppear: return "Clips appeared"
+        case .pasteText: return "Paste text"
         }
     }
 }
 
+enum Tutorial {
+    case welcome
+    case pasting
+}
+
 protocol CheckTutorialUseCase {
-    func check(with prompt: TutorialPrompt)
-}
-
-protocol TutorialRepository {
-    func shouldShowFirstTimeTutorial() -> Bool
-}
-
-protocol TutorialResource {
-    func alreadyWentThroughTutorial() -> Bool
+    func checkTutorials(for event: TutorialTriggeringEvent)
 }
 
 final class CheckTutorialUseCaseImpl: CheckTutorialUseCase {
@@ -32,28 +29,10 @@ final class CheckTutorialUseCaseImpl: CheckTutorialUseCase {
         self.navigation = navigation
     }
 
-    func check(with prompt: TutorialPrompt) {
-        log(message: "Prompt: \(prompt.logDescription)", category: .tutorial)
-        switch prompt {
-        case .user:
+    func checkTutorials(for event: TutorialTriggeringEvent) {
+        log(message: "Prompt: \(event.logDescription)", category: .tutorial)
+        if tutorialRepository.checkTutorials(for: event) != nil {
             navigation.handle(navigationEvent: .showTutorial)
-        case .clipsAppear:
-            if tutorialRepository.shouldShowFirstTimeTutorial() {
-                navigation.handle(navigationEvent: .showTutorialOnClips)
-            }
         }
-    }
-}
-
-final class TutorialRepositoryImpl: TutorialRepository {
-
-    private let tutorialResource: TutorialResource
-
-    init(tutorialResource: TutorialResource) {
-        self.tutorialResource = tutorialResource
-    }
-
-    func shouldShowFirstTimeTutorial() -> Bool {
-        return !tutorialResource.alreadyWentThroughTutorial()
     }
 }

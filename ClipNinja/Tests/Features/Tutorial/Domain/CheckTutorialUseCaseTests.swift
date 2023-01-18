@@ -4,40 +4,46 @@ import XCTest
 
 final class CheckTutorialUseCaseTests: XCTestCase {
 
-    func test_it_shows_tutorial_when_clips_appear_for_the_first_time() {
-        let navigation = NavigationSpy()
-        let resource = TutorialResourceStub(wentThrough: false)
-        let sut = makeSut(navigation: navigation, tutorialResource: resource)
+    func test_it_checks_tutorial_repository_for_events() {
+        let repository = TutorialRepositorySpy()
+        let navigation = NavigationDummy()
+        let sut = CheckTutorialUseCaseImpl(tutorialRepository: repository, navigation: navigation)
 
-        sut.check(with: .clipsAppear)
+        TutorialTriggeringEvent.allCases.forEach { event in
+            sut.checkTutorials(for: event)
 
-        XCTAssertEqual(navigation.handledEvent, .showTutorialOnClips)
+            XCTAssertEqual(repository.checkedEvent, event)
+        }
     }
 
-    func test_it_shows_tutorial_when_user_asks_for_one() {
+    func test_it_navigates_to_tutorials_when_repository_returns_tutorial() {
+        let repository = TutorialRepositoryStub(tutorialToReturn: .welcome)
         let navigation = NavigationSpy()
-        let resource = TutorialResourceStub(wentThrough: false)
-        let sut = makeSut(navigation: navigation, tutorialResource: resource)
+        let sut = CheckTutorialUseCaseImpl(tutorialRepository: repository, navigation: navigation)
 
-        sut.check(with: .user)
+        sut.checkTutorials(for: .pasteText)
 
         XCTAssertEqual(navigation.handledEvent, .showTutorial)
     }
+}
 
-    func test_it_doesnt_show_tutorial_for_already_onboarded_user() {
-        let navigation = NavigationSpy()
-        let resource = TutorialResourceStub(wentThrough: true)
-        let sut = makeSut(navigation: navigation, tutorialResource: resource)
+class TutorialRepositorySpy: TutorialRepository {
+    var checkedEvent: TutorialTriggeringEvent?
+    func checkTutorials(for event: TutorialTriggeringEvent) -> Tutorial? {
+        self.checkedEvent = event
+        return nil
+    }
+}
 
-        sut.check(with: .clipsAppear)
+class TutorialRepositoryStub: TutorialRepository {
 
-        XCTAssertNil(navigation.handledEvent)
+    var tutorialToReturn: Tutorial
+
+    init(tutorialToReturn: Tutorial) {
+        self.tutorialToReturn = tutorialToReturn
     }
 
-    private func makeSut(navigation: Navigation, tutorialResource: TutorialResource) -> CheckTutorialUseCaseImpl {
-        CheckTutorialUseCaseImpl(
-            tutorialRepository: TutorialRepositoryImpl(tutorialResource: tutorialResource),
-            navigation: navigation
-        )
+    func checkTutorials(for event: TutorialTriggeringEvent) -> Tutorial? {
+        tutorialToReturn
     }
 }
