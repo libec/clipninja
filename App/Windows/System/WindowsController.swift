@@ -36,13 +36,9 @@ class WindowsController {
     }
 
     private func showModal(modalWindow: AppWindow) {
-        hideModal()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: { [weak self] in
-            if let window = self?.windowFactory.make(appWindow: modalWindow) {
-                self?.modalWindow = window
-                NSApp.keyWindow?.beginSheet(window)
-            }
-        })
+        let modalWindow = self.windowFactory.make(appWindow: modalWindow)
+        self.modalWindow = modalWindow
+        activeWindow?.beginSheet(modalWindow)
     }
 
     func openFirstWindow() {
@@ -57,7 +53,15 @@ class WindowsController {
     }
 
     func startNavigation() {
-        navigation.navigationEvent
+
+        let delayedEvents = navigation.navigationEvent
+            .filter(\.delayedEvent)
+            .throttle(for: 0.3, scheduler: RunLoop.main, latest: true)
+
+        let immediateEvents = navigation.navigationEvent
+            .filter(\.immediateEvent)
+
+        delayedEvents.merge(with: immediateEvents)
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] event in
                 switch event {
