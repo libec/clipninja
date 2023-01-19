@@ -35,7 +35,6 @@ class TutorialWindow: StyledWindow {
     }
 }
 
-
 class ClipboardWindow: StyledWindow {
 
     let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()

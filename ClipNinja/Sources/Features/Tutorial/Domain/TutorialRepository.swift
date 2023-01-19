@@ -17,17 +17,22 @@ final class TutorialRepositoryImpl: TutorialRepository {
     }
 
     func checkTutorials(for event: TutorialTriggeringEvent) {
-        if !tutorialResource.userOnboard {
-            currentTutorial = .welcome
-        } else {
-            currentTutorial = nil
+        switch event {
+        case .clipsAppear:
+            if !tutorialResource.contains(flag: .onboard) {
+                currentTutorial = .welcome
+            }
+        case .clipsMovement:
+            break
+        case .pasteText:
+            break
         }
     }
 
     func finishCurrentTutorial() {
         switch currentTutorial {
         case .welcome:
-            tutorialResource.store(flag: .userOnboard)
+            tutorialResource.set(flag: .onboard)
         case .pasting:
             break
         case .none:
