@@ -30,8 +30,12 @@ final class CheckTutorialUseCaseTests: XCTestCase {
 class TutorialRepositorySpy: TutorialRepository {
     var checkedEvent: TutorialTriggeringEvent?
     var currentTutorial: Tutorial?
+    var finishCurrentTutorialCalled = false
     func checkTutorials(for event: TutorialTriggeringEvent) {
         self.checkedEvent = event
+    }
+    func finishCurrentTutorial() {
+        finishCurrentTutorialCalled = true
     }
 }
 
@@ -39,9 +43,10 @@ class TutorialRepositoryStub: TutorialRepository {
 
     var currentTutorial: Tutorial?
 
-    init(tutorialToReturn: Tutorial) {
+    init(tutorialToReturn: Tutorial?) {
         self.currentTutorial = tutorialToReturn
     }
 
     func checkTutorials(for event: TutorialTriggeringEvent) { }
+    func finishCurrentTutorial() { }
 }

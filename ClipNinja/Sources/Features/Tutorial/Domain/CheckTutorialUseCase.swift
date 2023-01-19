@@ -10,7 +10,7 @@ enum TutorialTriggeringEvent: CaseIterable {
     }
 }
 
-enum Tutorial {
+enum Tutorial: CaseIterable {
     case welcome
     case pasting
 }
@@ -31,7 +31,8 @@ final class CheckTutorialUseCaseImpl: CheckTutorialUseCase {
 
     func checkTutorials(for event: TutorialTriggeringEvent) {
         log(message: "Prompt: \(event.logDescription)", category: .tutorial)
-        if tutorialRepository.checkTutorials(for: event) != nil {
+        tutorialRepository.checkTutorials(for: event)
+        if tutorialRepository.currentTutorial != nil {
             navigation.handle(navigationEvent: .showTutorial)
         }
     }

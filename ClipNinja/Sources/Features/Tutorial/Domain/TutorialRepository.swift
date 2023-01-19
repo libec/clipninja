@@ -3,6 +3,7 @@ import Foundation
 protocol TutorialRepository {
     var currentTutorial: Tutorial? { get }
     func checkTutorials(for event: TutorialTriggeringEvent)
+    func finishCurrentTutorial()
 }
 
 final class TutorialRepositoryImpl: TutorialRepository {
@@ -21,5 +22,9 @@ final class TutorialRepositoryImpl: TutorialRepository {
         } else {
             currentTutorial = nil
         }
+    }
+
+    func finishCurrentTutorial() {
+        
     }
 }
