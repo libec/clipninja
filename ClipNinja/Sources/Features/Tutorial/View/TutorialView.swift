@@ -10,16 +10,36 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("This is where some serious shit will unravel")
+            tutorialView
                 .font(.title)
+            Spacer()
+            Button {
+                viewModel.onEvent(.tutorial(.dismiss))
+            } label: {
+                Text("OKay")
+            }
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding()
+        .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
+    }
+
+    private var tutorialView: some View {
+        switch viewModel.tutorial {
+        case .welcome:
+            return Text("Welcome to this app!")
+        case .pasting:
+            return Text("Paste stuff and see what what, YO!")
+        case .none:
+            return Text("")
+        }
     }
 }
 
 class ViewModelStub: TutorialViewModel {
     func onEvent(_ event: TutorialEvent) { }
+    var tutorial: Tutorial? = .welcome
 }
 
 struct TutorialView_Previews: PreviewProvider {

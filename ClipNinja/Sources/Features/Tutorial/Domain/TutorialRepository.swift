@@ -25,6 +25,13 @@ final class TutorialRepositoryImpl: TutorialRepository {
     }
 
     func finishCurrentTutorial() {
-        
+        switch currentTutorial {
+        case .welcome:
+            tutorialResource.store(flag: .userOnboard)
+        case .pasting:
+            break
+        case .none:
+            break
+        }
     }
 }

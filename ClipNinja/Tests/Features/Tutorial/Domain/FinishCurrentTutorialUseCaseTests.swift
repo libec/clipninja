@@ -3,12 +3,14 @@ import XCTest
 
 final class FinishCurrentTutorialUseCaseTests: XCTestCase {
 
-    func test_it_checks_with_repository_for_current_tutorial() {
+    func test_it_uses_repository_to_finish_and_navigates_to_hide_tutorials() {
         let repository = TutorialRepositorySpy()
-        let sut = FinishCurrentTutorialUseCaseImpl(repository: repository)
+        let navigation = NavigationSpy()
+        let sut = FinishCurrentTutorialUseCaseImpl(repository: repository, navigation: navigation)
 
         sut.finish()
 
         XCTAssertTrue(repository.finishCurrentTutorialCalled)
+        XCTAssertEqual(navigation.handledEvent, .hideTutorial)
     }
 }
