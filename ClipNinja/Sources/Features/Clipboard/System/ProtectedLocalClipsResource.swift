@@ -12,6 +12,7 @@ final class ProtectedLocalClipsResource: ClipsResource {
     private let jsonDecoder: JSONDecoder
     private let jsonEncoder: JSONEncoder
     private let fileManager: FileManager
+    private lazy var url = makeClipsURL()
 
     init(
         jsonDecoder: JSONDecoder,
@@ -24,7 +25,6 @@ final class ProtectedLocalClipsResource: ClipsResource {
     }
 
     func persist(clips: [Clip]) {
-        let url = makeClipsURL()
         do {
             let data = try jsonEncoder.encode(clips)
             try data.write(to: url, options: [.atomic, .completeFileProtection])
@@ -34,7 +34,6 @@ final class ProtectedLocalClipsResource: ClipsResource {
     }
 
     var clips: [Clip] {
-        let url = makeClipsURL()
         do {
             let data = try Data(contentsOf: url, options: [])
             let clips = try jsonDecoder.decode([Clip].self, from: data)
@@ -51,7 +50,7 @@ final class ProtectedLocalClipsResource: ClipsResource {
             fatalError()
         }
         let clipsUrl = url.appending(path: "clips")
-        log(message: clipsUrl.path, category: .storage)
+        log(message: "Clips path: \(clipsUrl.path)", category: .storage)
         return clipsUrl
     }
 }

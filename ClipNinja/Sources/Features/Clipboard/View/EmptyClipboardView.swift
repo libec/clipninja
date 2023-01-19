@@ -20,6 +20,7 @@ struct EmptyClipboardView: View {
     private var heading: some View {
         VStack(spacing: 30) {
             HStack {
+                // TODO: - Localize this screen, move everything to Strings.swift
                 Text("You have empty clipboard history!")
                     .font(.custom("Courier New", size: 25))
                     .fontWeight(.bold)

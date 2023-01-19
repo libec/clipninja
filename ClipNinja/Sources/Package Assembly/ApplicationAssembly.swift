@@ -4,12 +4,13 @@ public struct ApplicationAssembly {
 
     private var assemblies: [Assembly] {
         [
+            ClipboardAssembly(),
             InstanceProviderAssembly(),
-            SettingsFeatureAssembly(),
-            ClipboardFeatureAssembly(),
+            NavigationAssembly(),
             PasteboardAssembly(),
+            SettingsAssembly(),
             SystemAssembly(),
-            NavigationAssembly()
+            TutorialAssembly()
         ]
     }
 

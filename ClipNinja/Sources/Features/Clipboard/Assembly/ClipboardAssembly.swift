@@ -2,7 +2,7 @@ import Swinject
 import SwinjectAutoregistration
 import SwiftUI
 
-struct ClipboardFeatureAssembly: Assembly {
+struct ClipboardAssembly: Assembly {
 
     init() { }
     

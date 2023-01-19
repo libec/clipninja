@@ -22,8 +22,16 @@ class SettingsWindow: StyledWindow {
 
     init() {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 300))
-        title = "ClipNinja Settings"
+        title = Strings.Settings.windowName
         setFrameAutosaveName("SettingsWindow")
+    }
+}
+
+class TutorialWindow: StyledWindow {
+
+    init() {
+        super.init(contentRect: NSRect(x: 0, y: 0, width: 500, height: 400))
+        setFrameAutosaveName("TutorialWindow")
     }
 }
 
@@ -36,7 +44,7 @@ class ClipboardWindow: StyledWindow {
     init(keyboardController: SystemKeyboardObserver) {
         self.keyboardController = keyboardController
         super.init(contentRect: NSRect(x: 0, y: 0, width: 650, height: 600))
-        title = "ClipNinja"
+        title = Strings.Generic.appName
         setFrameAutosaveName("ClipboardWindow")
         collectionBehavior = [.moveToActiveSpace]
         hidesOnDeactivate = true

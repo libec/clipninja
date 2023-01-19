@@ -5,6 +5,12 @@ import ClipNinjaPackage
 enum AppWindow {
     case clips
     case settings
+    case tutorial
+}
+
+enum AppModals {
+    case onboarding
+    case pasteDirectly
 }
 
 class WindowsController {
@@ -12,6 +18,9 @@ class WindowsController {
     private let navigation: Navigation
     private let windowFactory: WindowsFactory
     private var subscriptions = Set<AnyCancellable>()
+
+    private var activeWindow: NSWindow?
+    private var modalWindow: NSWindow?
 
     init(navigation: Navigation, windowFactory: WindowsFactory) {
         self.navigation = navigation
@@ -22,16 +31,37 @@ class WindowsController {
         let window = windowFactory.make(appWindow: appWindow)
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
+        activeWindow = window
         NSApp.activate(ignoringOtherApps: true)
     }
 
+    private func showModal(modalWindow: AppWindow) {
+        let modalWindow = self.windowFactory.make(appWindow: modalWindow)
+        self.modalWindow = modalWindow
+        activeWindow?.beginSheet(modalWindow)
+    }
+
     func openFirstWindow() {
-        // TODO: - Setup onboarding stuff and whatnot
         activate(appWindow: .clips)
     }
 
+    func hideModal() {
+        if let modalWindow {
+            activeWindow?.endSheet(modalWindow)
+            self.modalWindow = nil
+        }
+    }
+
     func startNavigation() {
-        navigation.navigationEvent
+
+        let delayedEvents = navigation.navigationEvent
+            .filter(\.delayedEvent)
+            .throttle(for: 0.3, scheduler: RunLoop.main, latest: true)
+
+        let immediateEvents = navigation.navigationEvent
+            .filter(\.immediateEvent)
+
+        delayedEvents.merge(with: immediateEvents)
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] event in
                 switch event {
@@ -44,10 +74,17 @@ class WindowsController {
                 case .showSettings:
                     self.closeClipsWindows()
                     self.activate(appWindow: .settings)
+                case .showAppUsage:
+                    self.closeClipsWindows()
+                    self.activate(appWindow: .tutorial)
+                case .showTutorial:
+                    self.showModal(modalWindow: .tutorial)
+                case .hideTutorial:
+                    self.hideModal()
                 case .showSystemSettings:
-                    let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+                    let accessibilityUrl = Strings.Settings.PasteDirectly.accessibilityUrl
                     guard let url = URL(string: accessibilityUrl) else {
-                        log(message: "Failed to create accessibility URL")
+                        log(message: "Failed to create accessibility URL", category: .main)
                         return
                     }
                     NSWorkspace.shared.open(url)

@@ -84,7 +84,7 @@ final class ClipsRepositoryTests: XCTestCase {
         XCTAssertEqual(sut.lastClips, expectedClips)
     }
 
-    func test_it_ignore_toggling_clip_out_of_bounds() {
+    func test_it_ignores_toggling_clip_out_of_bounds() {
         let clips: [Clip] = [
             .init(text: "foo", pinned: true),
         ]
