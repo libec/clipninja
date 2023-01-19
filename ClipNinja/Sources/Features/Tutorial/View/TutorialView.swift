@@ -28,11 +28,11 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
     private var tutorialView: some View {
         switch viewModel.tutorial {
         case .welcome:
-            return Text("Welcome to this app!")
+            return AnyView(WelcomeTutorial())
         case .pasting:
-            return Text("Paste stuff and see what what, YO!")
+            return AnyView(PasteDirectlyTutorial())
         case .none:
-            return Text("")
+            return AnyView(EmptyView())
         }
     }
 }
