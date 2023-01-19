@@ -33,5 +33,6 @@ final class TutorialRepositoryImpl: TutorialRepository {
         case .none:
             break
         }
+        currentTutorial = nil
     }
 }

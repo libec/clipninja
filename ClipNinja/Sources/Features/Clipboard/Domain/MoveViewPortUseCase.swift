@@ -16,15 +16,18 @@ class MoveViewPortUseCaseImpl: MoveViewPortUseCase {
     private let viewPortRepository: ViewPortRepository
     private let clipsRepository: ClipsRepository
     private let viewPortConfiguration: ViewPortConfiguration
+    private let checkTutorialUseCase: CheckTutorialUseCase
 
     init(
         viewPortRepository: ViewPortRepository,
         clipsRepository: ClipsRepository,
-        viewPortConfiguration: ViewPortConfiguration
+        viewPortConfiguration: ViewPortConfiguration,
+        checkTutorialUseCase: CheckTutorialUseCase
     ) {
         self.viewPortRepository = viewPortRepository
         self.clipsRepository = clipsRepository
         self.viewPortConfiguration = viewPortConfiguration
+        self.checkTutorialUseCase = checkTutorialUseCase
     }
 
     func move(to viewPort: ViewPortMovement) {
@@ -32,6 +35,7 @@ class MoveViewPortUseCaseImpl: MoveViewPortUseCase {
         let numberOfClips = clipsRepository.lastClips.count
         let newPosition = max(0, min(lastPosition + movementAmount(for: viewPort), numberOfClips - 1))
         viewPortRepository.update(position: newPosition)
+        checkTutorialUseCase.checkTutorials(for: .clipsMovement)
     }
 
     private func movementAmount(for viewPortMovement: ViewPortMovement) -> Int {

@@ -20,6 +20,26 @@ class MoveViewPortUseCaseTests: XCTestCase {
         runTests(numberOfClips: 20, position: 7, movement: .left, expectedPosition: 0)
     }
 
+    func test_it_checks_for_tutorials_for_all_events() {
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 0)
+        let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: 20)
+        let checkTutorialUseCase = CheckTutorialUseCaseSpy()
+        let sut = MoveViewPortUseCaseImpl(
+            viewPortRepository: viewPortRepository,
+            clipsRepository: clipsRepository,
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: checkTutorialUseCase
+        )
+
+        sut.move(to: .up)
+        sut.move(to: .down)
+        sut.move(to: .left)
+        sut.move(to: .right)
+
+        XCTAssertEqual(checkTutorialUseCase.allCheckedEvents, Array<TutorialTriggeringEvent>(repeating: .clipsMovement, count: 4))
+    }
+
     func runTests(
         numberOfClips: Int,
         position: Int,
@@ -32,7 +52,8 @@ class MoveViewPortUseCaseTests: XCTestCase {
         let sut = MoveViewPortUseCaseImpl(
             viewPortRepository: viewPortRepository,
             clipsRepository: clipsRepository,
-            viewPortConfiguration: TestViewPortConfiguration()
+            viewPortConfiguration: TestViewPortConfiguration(),
+            checkTutorialUseCase: CheckTutorialUseCaseDummy()
         )
 
         sut.move(to: movement)

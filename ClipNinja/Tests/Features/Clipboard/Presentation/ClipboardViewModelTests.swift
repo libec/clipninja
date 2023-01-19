@@ -146,7 +146,9 @@ extension ClipPreview {
 typealias CheckTutorialUseCaseDummy = CheckTutorialUseCaseSpy
 class CheckTutorialUseCaseSpy: CheckTutorialUseCase {
     var checkedEvent: TutorialTriggeringEvent?
+    var allCheckedEvents: [TutorialTriggeringEvent] = []
     func checkTutorials(for event: TutorialTriggeringEvent) {
         checkedEvent = event
+        allCheckedEvents.append(event)
     }
 }

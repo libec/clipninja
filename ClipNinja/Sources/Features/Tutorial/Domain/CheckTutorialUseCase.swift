@@ -1,12 +1,18 @@
 enum TutorialTriggeringEvent: CaseIterable {
     case clipsAppear
+    case clipsMovement
     case pasteText
 
-    fileprivate var logDescription: String {
+    fileprivate var eventDescription: String {
         switch self {
         case .clipsAppear: return "Clips appeared"
+        case .clipsMovement: return "Clips movement event"
         case .pasteText: return "Paste text"
         }
+    }
+
+    fileprivate var logDescription: String {
+        "tutorial event: \(eventDescription)"
     }
 }
 
