@@ -19,6 +19,9 @@ class WindowsController {
     private let windowFactory: WindowsFactory
     private var subscriptions = Set<AnyCancellable>()
 
+    private var activeWindow: NSWindow?
+    private var modalWindow: NSWindow?
+
     init(navigation: Navigation, windowFactory: WindowsFactory) {
         self.navigation = navigation
         self.windowFactory = windowFactory
@@ -28,12 +31,15 @@ class WindowsController {
         let window = windowFactory.make(appWindow: appWindow)
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
+        activeWindow = window
         NSApp.activate(ignoringOtherApps: true)
     }
 
     private func showModal(modalWindow: AppWindow) {
+        hideModal()
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: { [weak self] in
             if let window = self?.windowFactory.make(appWindow: modalWindow) {
+                self?.modalWindow = window
                 NSApp.keyWindow?.beginSheet(window)
             }
         })
@@ -41,6 +47,13 @@ class WindowsController {
 
     func openFirstWindow() {
         activate(appWindow: .clips)
+    }
+
+    func hideModal() {
+        if let modalWindow {
+            activeWindow?.endSheet(modalWindow)
+            self.modalWindow = nil
+        }
     }
 
     func startNavigation() {
@@ -62,6 +75,8 @@ class WindowsController {
                     self.activate(appWindow: .tutorial)
                 case .showTutorial:
                     self.showModal(modalWindow: .tutorial)
+                case .hideTutorial:
+                    self.hideModal()
                 case .showSystemSettings:
                     let accessibilityUrl = Strings.Settings.PasteDirectly.accessibilityUrl
                     guard let url = URL(string: accessibilityUrl) else {
