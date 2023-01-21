@@ -1,5 +1,6 @@
 enum TutorialFlag {
     case onboard
+    case pasteText
 }
 
 enum TutorialNumericValue {

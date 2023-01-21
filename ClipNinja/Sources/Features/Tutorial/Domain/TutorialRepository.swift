@@ -8,33 +8,35 @@ protocol TutorialRepository {
 
 final class TutorialRepositoryImpl: TutorialRepository {
 
-    private let tutorialResource: TutorialResource
+    private let resource: TutorialResource
 
     private(set) var currentTutorial: Tutorial?
 
-    init(tutorialResource: TutorialResource) {
-        self.tutorialResource = tutorialResource
+    init(resource: TutorialResource) {
+        self.resource = resource
     }
 
     func checkTutorials(for event: TutorialTriggeringEvent) {
         switch event {
         case .clipsAppear:
-            if !tutorialResource.contains(flag: .onboard) {
+            if !resource.contains(flag: .onboard) {
                 currentTutorial = .welcome
             }
         case .clipsMovement:
             break
         case .pasteText:
-            break
+            if !resource.contains(flag: .pasteText) {
+                currentTutorial = .pasting
+            }
         }
     }
 
     func finishCurrentTutorial() {
         switch currentTutorial {
         case .welcome:
-            tutorialResource.set(flag: .onboard)
+            resource.set(flag: .onboard)
         case .pasting:
-            break
+            resource.set(flag: .pasteText)
         case .none:
             break
         }

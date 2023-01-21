@@ -39,7 +39,7 @@ final class MenuBarController: NSObject {
 
     @objc
     func exitApp() {
-        NSApp.terminate(self)
+        NSApp.terminate(nil)
     }
 
     @objc

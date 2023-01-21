@@ -69,11 +69,11 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
 
     private func subscribe() {
         clipboards.clipsViewPort
-            .sink { value in
-                self.totalPages = value.numberOfPages
-                self.shownPage = value.selectedPage
-                self.clipPreviews = value.clips.enumerated().map { index, clip in
-                    self.previewFactory.makePreview(from: clip, index: index, selected: index == value.selectedClipIndex)
+            .sink { [weak self] value in
+                self?.totalPages = value.numberOfPages
+                self?.shownPage = value.selectedPage
+                self?.clipPreviews = value.clips.enumerated().compactMap { index, clip in
+                    self?.previewFactory.makePreview(from: clip, index: index, selected: index == value.selectedClipIndex)
                 }
             }.store(in: &subscriptions)
     }

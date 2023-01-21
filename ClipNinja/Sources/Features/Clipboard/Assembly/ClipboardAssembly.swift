@@ -34,7 +34,15 @@ struct ClipboardAssembly: Assembly {
     }
 
     func assembleSystem(container: Container) {
-        container.autoregister(ClipsRepository.self, initializer: ClipsRepositoryImpl.init)
+        container.register(ClipsRepository.self) { resolver in
+            ClipsRepositoryImpl(
+                pasteboardObserver: resolver.resolve(PasteboardObserver.self)!,
+                clipsResource: resolver.resolve(ClipsResource.self)!,
+                viewPortConfiguration: resolver.resolve(ViewPortConfiguration.self)!,
+                storageScheduler: RunLoop.main
+            )
+        }
+        .inObjectScope(.container)
         container.autoregister(ClipsResource.self, initializer: ProtectedLocalClipsResource.init)
         container.register(FileManager.self) { _ in FileManager.default }.inObjectScope(.container)
     }

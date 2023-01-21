@@ -72,7 +72,6 @@ class WindowsController {
                     self.closeClipsWindows()
                     self.activate(appWindow: .clips)
                 case .showSettings:
-                    self.closeClipsWindows()
                     self.activate(appWindow: .settings)
                 case .showAppUsage:
                     self.closeClipsWindows()

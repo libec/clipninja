@@ -20,7 +20,7 @@ public enum Strings {
             public static let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
             static let permissionDescription = "\(Strings.Generic.wip) The feature requires permissions from the system."
             static let howToAllowPermission = "\(Strings.Generic.wip) You can enable ClipNinja in system preferences > privacy > accessibility."
-            static let showSettingsButton = "\(Strings.Generic.wip) Show settings"
+            static let showSettingsButton = "OPEN SYSTEM SETTINGS"
         }
     }
 
@@ -28,6 +28,11 @@ public enum Strings {
         enum EmptyState {
 
         }
+    }
+
+    enum Tutorials {
+        static let close = "CLOSE"
+        static let showSettings = "OPEN SETTINGS"
     }
 
     public enum MenuItems {

@@ -34,6 +34,7 @@ typealias NavigationDummy = NavigationSpy
 class NavigationSpy: Navigation {
 
     var handledEvent: NavigationEvent?
+    var allHandledEvents: [NavigationEvent] = []
 
     var navigationEvent: AnyPublisher<NavigationEvent, Never> {
         fatalError()
@@ -41,5 +42,6 @@ class NavigationSpy: Navigation {
 
     func handle(navigationEvent: NavigationEvent) {
         self.handledEvent = navigationEvent
+        self.allHandledEvents.append(navigationEvent)
     }
 }
