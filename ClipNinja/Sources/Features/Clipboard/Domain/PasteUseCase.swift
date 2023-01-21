@@ -13,6 +13,8 @@ final class PasteUseCaseImpl: PasteUseCase {
     private let viewPortRepository: ViewPortRepository
     private let hideAppUseCase: HideAppUseCase
     private let pasteTextUseCase: PasteTextUseCase
+    private let checkTutorialUseCase: CheckTutorialUseCase
+    private let currentTutorialUseCase: CurrentTutorialUseCase
     private let viewPortConfiguration: ViewPortConfiguration
 
     init(
@@ -20,12 +22,16 @@ final class PasteUseCaseImpl: PasteUseCase {
         viewPortRepository: ViewPortRepository,
         hideAppUseCase: HideAppUseCase,
         pasteTextUseCase: PasteTextUseCase,
+        checkTutorialUseCase: CheckTutorialUseCase,
+        currentTutorialUseCase: CurrentTutorialUseCase,
         viewPortConfiguration: ViewPortConfiguration
     ) {
         self.clipsRepository = clipsRepository
         self.viewPortRepository = viewPortRepository
         self.hideAppUseCase = hideAppUseCase
         self.pasteTextUseCase = pasteTextUseCase
+        self.checkTutorialUseCase = checkTutorialUseCase
+        self.currentTutorialUseCase = currentTutorialUseCase
         self.viewPortConfiguration = viewPortConfiguration
     }
 
@@ -35,7 +41,10 @@ final class PasteUseCaseImpl: PasteUseCase {
         if !clip.pinned {
             clipsRepository.moveAfterPins(index: clipIndex(for: index))
         }
-        hideAppUseCase.hide()
+        checkTutorialUseCase.checkTutorials(for: .pasteText)
+        if currentTutorialUseCase.getCurrent() == nil {
+            hideAppUseCase.hide()
+        }
         pasteTextUseCase.paste(text: clip.text)
     }
 

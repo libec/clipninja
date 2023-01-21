@@ -165,9 +165,36 @@ class PasteUseCaseTests: XCTestCase {
         XCTAssertNil(clipsRepository.movedAfterPinsAtIndex)
     }
 
+    func test_it_checks_for_tutorials_and_doesnt_hide_when_tutorial_in_progress() {
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 0)
+        let clipsRepository = ClipsRepositoryStub(lastClips: [
+            Clip(text: "aewf2", pinned: true),
+            Clip(text: "aeaefwf2", pinned: true),
+            Clip(text: "wa24", pinned: false),
+        ])
+        let checkTutorialUseCase = CheckTutorialUseCaseSpy()
+        let currentTutorialUseCase = CurrentTutorialUseCaseStub(current: .pasting)
+        let hideAppUseCase = HideAppUseCaseSpy()
+        let sut = makeSut(
+            hideAppUseCase: hideAppUseCase,
+            checkTutorialUseCase: checkTutorialUseCase,
+            currentTutorialUseCase: currentTutorialUseCase,
+            clipsRepository: clipsRepository,
+            viewPortRepository: viewPortRepository
+        )
+
+        sut.paste(at: .selected)
+
+        XCTAssertNil(hideAppUseCase.hideCalled)
+        XCTAssertEqual(checkTutorialUseCase.checkedEvent, .pasteText)
+    }
+
     private func makeSut(
         hideAppUseCase: HideAppUseCase = HideAppUseCaseDummy(),
         pasteTextUseCase: PasteTextUseCase = PasteTextUseCaseDummy(),
+        checkTutorialUseCase: CheckTutorialUseCase = CheckTutorialUseCaseDummy(),
+        currentTutorialUseCase: CurrentTutorialUseCase = CurrentTutorialUseCaseStub(current: nil),
         clipsRepository: ClipsRepository,
         viewPortRepository: ViewPortRepository
     ) -> PasteUseCase {
@@ -176,7 +203,22 @@ class PasteUseCaseTests: XCTestCase {
             viewPortRepository: viewPortRepository,
             hideAppUseCase: hideAppUseCase,
             pasteTextUseCase: pasteTextUseCase,
+            checkTutorialUseCase: checkTutorialUseCase,
+            currentTutorialUseCase: currentTutorialUseCase,
             viewPortConfiguration: TestViewPortConfiguration()
         )
+    }
+}
+
+class CurrentTutorialUseCaseStub: CurrentTutorialUseCase {
+
+    let current: Tutorial?
+
+    init(current: Tutorial?) {
+        self.current = current
+    }
+
+    func getCurrent() -> Tutorial? {
+        current
     }
 }
