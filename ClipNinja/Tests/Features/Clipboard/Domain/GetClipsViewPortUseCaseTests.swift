@@ -47,7 +47,7 @@ class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
         let sut = GetClipsViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
+            clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
         )
@@ -71,7 +71,7 @@ class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
         let sut = GetClipsViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
+            clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
         )

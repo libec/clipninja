@@ -13,22 +13,22 @@ protocol GetClipsViewPortUseCase {
 
 final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
 
-    private let clipsRepositorty: ClipsRepository
+    private let clipsRepository: ClipsRepository
     private let viewPortRepository: ViewPortRepository
     private let viewPortConfiguration: ViewPortConfiguration
 
     init( 
-        clipsRepositorty: ClipsRepository,
+        clipsRepository: ClipsRepository,
         viewPortRepository: ViewPortRepository,
         viewPortConfiguration: ViewPortConfiguration
     ) {
-        self.clipsRepositorty = clipsRepositorty
+        self.clipsRepository = clipsRepository
         self.viewPortRepository = viewPortRepository
         self.viewPortConfiguration = viewPortConfiguration
     }
 
     var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> {
-        clipsRepositorty.clips.combineLatest(viewPortRepository.position)
+        clipsRepository.clips.combineLatest(viewPortRepository.position)
             .map { (clips, selectedClipIndex) in
                 let clipsPerPage = self.viewPortConfiguration.clipsPerPage
                 let clipsRemainder = clips.count % clipsPerPage

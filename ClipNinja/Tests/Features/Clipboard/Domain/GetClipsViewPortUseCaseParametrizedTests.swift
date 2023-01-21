@@ -16,7 +16,7 @@ class GetClipsViewPortUseCaseParametrizedTests: XCTestCase {
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
         let sut = GetClipsViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
+            clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
         )
@@ -43,7 +43,7 @@ class GetClipsViewPortUseCaseParametrizedTests: XCTestCase {
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: numberOfClips)
         let sut = GetClipsViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
+            clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
         )
@@ -69,7 +69,7 @@ class GetClipsViewPortUseCaseParametrizedTests: XCTestCase {
         viewPortRepository.update(position: selectedClip)
         let clipsRepository = ClipsRepositoryStub(lastClips: clips)
         let sut = GetClipsViewPortUseCaseImpl(
-            clipsRepositorty: clipsRepository,
+            clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             viewPortConfiguration: viewPortConfiguration
         )
