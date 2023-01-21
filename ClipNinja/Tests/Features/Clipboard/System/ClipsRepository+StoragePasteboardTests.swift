@@ -139,7 +139,8 @@ final class ClipsRepositoryStorageAndPasteboardTests: XCTestCase {
         self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
             clipsResource: clipsResource,
-            viewPortConfiguration: viewPortConfiguration
+            viewPortConfiguration: viewPortConfiguration,
+            storageScheduler: ImmediateScheduler.shared
         )
     }
 }

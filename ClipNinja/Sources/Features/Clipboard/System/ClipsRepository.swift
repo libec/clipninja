@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 
 protocol ClipsRepository {
     var clips: AnyPublisher<[Clip], Never> { get }
@@ -8,7 +9,7 @@ protocol ClipsRepository {
     func moveAfterPins(index: Int)
 }
 
-final class ClipsRepositoryImpl: ClipsRepository {
+final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
 
     var clips: AnyPublisher<[Clip], Never> {
         clipsSubject.eraseToAnyPublisher()
@@ -23,16 +24,19 @@ final class ClipsRepositoryImpl: ClipsRepository {
     private let pasteboardObserver: PasteboardObserver
     private let clipsResource: ClipsResource
     private let viewPortConfiguration: ViewPortConfiguration
+    private let storageScheduler: StorageScheduler
     private var subscriptions = Set<AnyCancellable>()
 
     init(
         pasteboardObserver: PasteboardObserver,
         clipsResource: ClipsResource,
-        viewPortConfiguration: ViewPortConfiguration
+        viewPortConfiguration: ViewPortConfiguration,
+        storageScheduler: StorageScheduler
     ) {
         self.pasteboardObserver = pasteboardObserver
         self.clipsResource = clipsResource
         self.viewPortConfiguration = viewPortConfiguration
+        self.storageScheduler = storageScheduler
         self.clipsSubject = .init(clipsResource.clips)
         observePasteboard()
         setupPersistency()
@@ -65,10 +69,12 @@ final class ClipsRepositoryImpl: ClipsRepository {
     }
 
     private func setupPersistency() {
-        clipsSubject.sink(receiveValue: { [unowned self] clips in
-            self.persist(clips: clips)
-        })
-        .store(in: &subscriptions)
+        clipsSubject
+            .throttle(for: 1, scheduler: storageScheduler, latest: true)
+            .sink(receiveValue: { [unowned self] clips in
+                self.persist(clips: clips)
+            })
+            .store(in: &subscriptions)
     }
 
     private func observePasteboard() {

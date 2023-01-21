@@ -25,6 +25,7 @@ final class ProtectedLocalClipsResource: ClipsResource {
     }
 
     func persist(clips: [Clip]) {
+        log(message: "Persist clips", category: .storage)
         do {
             let data = try jsonEncoder.encode(clips)
             try data.write(to: url, options: [.atomic, .completeFileProtection])
