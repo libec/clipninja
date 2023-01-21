@@ -30,6 +30,10 @@ public enum Strings {
         }
     }
 
+    enum Tutorials {
+        static let close = "CLOSE"
+    }
+
     public enum MenuItems {
         public static let clips = "Clips"
         public static let settings = "Settings"

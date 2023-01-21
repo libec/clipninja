@@ -22,13 +22,13 @@ struct EmptyClipboardView: View {
             HStack {
                 // TODO: - Localize this screen, move everything to Strings.swift
                 Text("You have empty clipboard history!")
-                    .font(.custom("Courier New", size: 25))
+                    .font(.courier(size: 25))
                     .fontWeight(.bold)
                     .foregroundColor(Colors.defaultTextColor)
             }
             HStack {
                 Text("（╯°□°）╯︵ ┻━┻ ")
-                    .font(.system(size: 35, weight: .bold))
+                    .font(.avenir(size: 35))
                     .foregroundColor(Colors.prominent)
 
             }
@@ -90,7 +90,7 @@ struct EmptyClipboardView: View {
 
     private func styledDescriptionText(_ text: String) -> some View {
         Text(text)
-            .font(.custom("Courier New", size: 20))
+            .font(.courier(size: 20))
             .fontWeight(.bold)
     }
 

@@ -9,43 +9,43 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .center, spacing: 10) {
             tutorialView
                 .font(.title)
-            Spacer()
-            Button {
-                viewModel.onEvent(.tutorial(.dismiss))
-            } label: {
-                Text("OKay")
-            }
 
+            VStack {
+                TutorialDismissButton(title: Strings.Tutorials.close) {
+                    viewModel.onEvent(.tutorial(.dismiss))
+                }
+                .padding([.bottom, .leading])
+            }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Colors.backgroundColor)
         .onAppear { viewModel.onEvent(.lifecycle(.appear)) }
     }
 
     private var tutorialView: some View {
         switch viewModel.tutorial {
         case .welcome:
-            return AnyView(WelcomeTutorial())
+            return AnyView(WelcomeTutorialView())
         case .pasting:
-            return AnyView(PasteDirectlyTutorial())
+            return AnyView(PasteDirectlyTutorialView())
         case .none:
             return AnyView(EmptyView())
         }
     }
 }
 
-class ViewModelStub: TutorialViewModel {
-    func onEvent(_ event: TutorialEvent) { }
-    var tutorial: Tutorial? = .welcome
-}
-
 struct TutorialView_Previews: PreviewProvider {
+
+    class ViewModelStub: TutorialViewModel {
+        func onEvent(_ event: TutorialEvent) { }
+        var tutorial: Tutorial? = .welcome
+    }
 
     static var previews: some View {
         TutorialView(viewModel: ViewModelStub())
-            .frame(width: 450, height: 400)
+            .frame(width: 500, height: 400)
     }
 }
