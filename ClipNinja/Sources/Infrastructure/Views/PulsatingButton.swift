@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TutorialDismissButton: View {
+struct PulsatingButton: View {
 
     private let action: () -> Void
     private let title: String

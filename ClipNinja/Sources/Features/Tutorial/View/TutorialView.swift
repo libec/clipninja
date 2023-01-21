@@ -3,6 +3,7 @@ import SwiftUI
 struct TutorialView<ViewModel: TutorialViewModel>: View {
 
     @StateObject private var viewModel: ViewModel
+    @State private var settingsButtonShown = false
 
     init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
@@ -14,8 +15,15 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
                 .font(.title)
 
             VStack {
-                TutorialDismissButton(title: Strings.Tutorials.close) {
-                    viewModel.onEvent(.tutorial(.dismiss))
+                HStack(spacing: 10) {
+                    PulsatingButton(title: Strings.Tutorials.close) {
+                        viewModel.onEvent(.tutorial(.dismiss))
+                    }
+                    if viewModel.showSettings {
+                        PulsatingButton(title: Strings.Tutorials.showSettings) {
+                            viewModel.onEvent(.tutorial(.showAppSettings))
+                        }
+                    }
                 }
                 .padding([.bottom, .leading])
             }
@@ -42,6 +50,7 @@ struct TutorialView_Previews: PreviewProvider {
     class ViewModelStub: TutorialViewModel {
         func onEvent(_ event: TutorialEvent) { }
         var tutorial: Tutorial? = .welcome
+        var showSettings: Bool = true
     }
 
     static var previews: some View {

@@ -14,7 +14,7 @@ struct PasteDirectlyView: View {
                 .font(.headline)
             Text(R.Settings.PasteDirectly.permissionDescription)
             Text(R.Settings.PasteDirectly.howToAllowPermission)
-            Button(R.Settings.PasteDirectly.showSettingsButton) {
+            PulsatingButton(title: R.Settings.PasteDirectly.showSettingsButton) {
                 showSettings()
             }
         }
