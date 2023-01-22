@@ -1,5 +1,6 @@
 import SwiftUI
 
+// TODO: - Move texts to Strings.swift
 struct WelcomeTutorialView: View {
 
     var body: some View {

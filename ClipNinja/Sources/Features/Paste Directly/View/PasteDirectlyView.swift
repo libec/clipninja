@@ -1,5 +1,6 @@
 import SwiftUI
 
+// TODO: - Move texts to Strings.swift
 struct PasteDirectlyView: View {
     private let showSettings: () -> Void
 
