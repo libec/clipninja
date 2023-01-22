@@ -40,7 +40,7 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
         case .pasting:
             return AnyView(PasteDirectlyTutorialView())
         case .none:
-            return AnyView(EmptyView())
+            return AnyView(AppUsageTutorialView())
         }
     }
 }
