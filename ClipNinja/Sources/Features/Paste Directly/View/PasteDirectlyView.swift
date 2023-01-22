@@ -1,26 +1,63 @@
 import SwiftUI
 
 struct PasteDirectlyView: View {
-    
     private let showSettings: () -> Void
 
     init(showSettings: @escaping () -> Void) {
         self.showSettings = showSettings
     }
 
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(R.Settings.PasteDirectly.settingLabel)
-                .font(.headline)
-            Text(R.Settings.PasteDirectly.permissionDescription)
-            Text(R.Settings.PasteDirectly.howToAllowPermission)
-            PulsatingButton(title: R.Settings.PasteDirectly.showSettingsButton) {
-                showSettings()
-            }
+        content
+            .background(Colors.backgroundColor)
+    }
+
+    var content: some View {
+        VStack(spacing: 30) {
+            heading
+            tutorial
         }
-        .padding()
-        .background(Colors.backgroundColor)
-        .foregroundColor(Colors.defaultTextColor)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(15)
+    }
+
+    private var heading: some View {
+        HStack {
+            TitleText("PASTE DIRECTLY")
+        }
+        .padding(.top, 15)
+    }
+
+    private var tutorial: some View {
+        VStack(spacing: 10) {
+            DescriptionText("This feature pastes the text directly to the underlying app.")
+            DescriptionText("Turning it on requires accessibility permission from the system.")
+            DescriptionText("You can grant it in:")
+
+            HStack(spacing: 10) {
+                HighlightedDescriptionText("System preferences")
+                settingsSeparator()
+                HighlightedDescriptionText("Privacy & Security")
+                settingsSeparator()
+                HighlightedDescriptionText("Accessibility")
+            }
+
+            HStack(spacing: 0) {
+                DescriptionText("Shortcut:")
+                PulsatingButton(title: "Take me there") {
+                    showSettings()
+                }
+            }
+            DescriptionText("Click the plus button, authenticate and add ClipNinja and turn the toggle ON.")
+            DescriptionText("And that's it.")
+        }
+    }
+
+    private func settingsSeparator() -> some View {
+        Image(systemName: "arrowshape.right")
+            .font(.system(size: 20, weight: .bold))
+            .foregroundColor(Colors.defaultTextColor)
     }
 }
 

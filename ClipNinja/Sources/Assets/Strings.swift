@@ -18,15 +18,6 @@ public enum Strings {
             static let featureDescription = "\(Strings.Generic.appName) pastes selected clip directly to the underlying app."
 
             public static let accessibilityUrl = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
-            static let permissionDescription = "\(Strings.Generic.wip) The feature requires permissions from the system."
-            static let howToAllowPermission = "\(Strings.Generic.wip) You can enable ClipNinja in system preferences > privacy > accessibility."
-            static let showSettingsButton = "OPEN SYSTEM SETTINGS"
-        }
-    }
-
-    enum Clipboard {
-        enum EmptyState {
-
         }
     }
 
