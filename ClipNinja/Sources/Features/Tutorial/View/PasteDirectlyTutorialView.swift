@@ -17,21 +17,19 @@ struct PasteDirectlyTutorialView: View {
     }
 
     private var heading: some View {
-        TitleText("DONE!")
+        TitleText("READY!")
             .padding(.top, 15)
     }
 
     private var tutorial: some View {
         VStack(spacing: 25) {
             HStack(spacing: 0) {
-                DescriptionText("Your ")
-                HighlightedDescriptionText("CLIP")
-                DescriptionText(" is in your pasteboard.")
+                DescriptionText("You can now paste your ")
+                HighlightedDescriptionText("CLIP.")
             }
 
             HStack(spacing: 0) {
-                HighlightedDescriptionText("PASTE DIRECTLY")
-                DescriptionText(" option is in the settings!")
+                DescriptionText("Hint: Paste directly option is in the settings.")
             }
         }
     }
