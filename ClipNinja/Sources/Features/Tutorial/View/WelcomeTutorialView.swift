@@ -33,7 +33,7 @@ struct WelcomeTutorialView: View {
             }
             HStack(spacing: 0) {
                 DescriptionText("Use ")
-                HighlightedDescriptionText("ARROWS")
+                HighlightedAlternatingText("ARROWS", alternativeTitle: "↑ ↓ ← →")
                 DescriptionText(" to move around, ")
                 HighlightedDescriptionText("ENTER")
                 DescriptionText(" to paste.")
