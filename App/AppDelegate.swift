@@ -27,6 +27,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
 
+    func applicationWillResignActive(_ notification: Notification) {
+        windowsController.resignActive()
+    }
+
     static func main() {
         log(message: "Main invoked")
         defer {

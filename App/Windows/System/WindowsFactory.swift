@@ -27,21 +27,21 @@ final class WindowsFactoryImpl: WindowsFactory {
         }
     }
 
-    func makeClipsWindow() -> NSWindow {
+    private func makeClipsWindow() -> ClipboardWindow {
         let window = ClipboardWindow(keyboardController: keyboardObserver)
         let clipsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.clipboardView.rawValue)
         window.contentView = NSHostingView(rootView: clipsView)
         return window
     }
 
-    func makeSettingsWindow() -> NSWindow {
+    private func makeSettingsWindow() -> SettingsWindow {
         let window = SettingsWindow()
         let settingsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.settingsView.rawValue)
         window.contentView = NSHostingView(rootView: settingsView)
         return window
     }
 
-    func makeTutorialWindow() -> NSWindow {
+    private func makeTutorialWindow() -> TutorialWindow {
         let window = TutorialWindow()
         let settingsView = instanceProvider.resolve(AnyView.self, name: AssemblyKeys.tutorialView.rawValue)
         window.contentView = NSHostingView(rootView: settingsView)

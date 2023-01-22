@@ -10,6 +10,7 @@ public enum LogCategory: CaseIterable {
     case storage
     case tutorial
     case viewPort
+    case windows
 
     fileprivate var logDescription: String {
         switch self {
@@ -17,6 +18,7 @@ public enum LogCategory: CaseIterable {
         case .storage: return "storage"
         case .tutorial: return "tutorial"
         case .viewPort: return "view port"
+        case .windows: return "windows"
         }
     }
 
@@ -48,7 +50,7 @@ private final class SystemLogger: Logger {
 
 private struct LoggerWrapper {
     fileprivate static let silentDebugCategories: [LogCategory] = [
-        .storage, .viewPort
+        .storage, .viewPort, .tutorial, .main
     ]
     fileprivate static let logger: Logger = SystemLogger(silentCategories: silentDebugCategories)
 }

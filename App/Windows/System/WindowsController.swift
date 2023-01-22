@@ -19,8 +19,8 @@ class WindowsController {
     private let windowFactory: WindowsFactory
     private var subscriptions = Set<AnyCancellable>()
 
-    private var activeWindow: NSWindow?
-    private var modalWindow: NSWindow?
+    private weak var activeWindow: NSWindow?
+    private weak var modalWindow: NSWindow?
 
     init(navigation: Navigation, windowFactory: WindowsFactory) {
         self.navigation = navigation
@@ -45,10 +45,10 @@ class WindowsController {
         activate(appWindow: .clips)
     }
 
-    func hideModal() {
+    private func hideModal() {
         if let modalWindow {
             activeWindow?.endSheet(modalWindow)
-            self.modalWindow = nil
+            NSApp.stopModal()
         }
     }
 
@@ -64,10 +64,10 @@ class WindowsController {
         delayedEvents.merge(with: immediateEvents)
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] event in
+                log(message: "NavigationEvent: \(event)", category: .windows)
                 switch event {
                 case .hideApp:
                     NSApp.hide(nil)
-                    self.closeClipsWindows()
                 case .showClipboard:
                     self.closeClipsWindows()
                     self.activate(appWindow: .clips)
@@ -91,7 +91,17 @@ class WindowsController {
             }.store(in: &subscriptions)
     }
 
+    func resignActive() {
+        hideModal()
+        closeClipsWindows()
+    }
+
     private func closeClipsWindows() {
-        NSApp.windows.filter { $0 is ClipboardWindow }.forEach { $0.close() }
+        NSApp.windows.forEach { window in
+            log(message: "Window: \(window)", category: .windows)
+        }
+        NSApp.windows.filter { $0 is ClipboardWindow || $0 is TutorialWindow }.forEach {
+            $0.close()
+        }
     }
 }

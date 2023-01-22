@@ -12,9 +12,9 @@ class StyledWindow: NSWindow {
             defer: true
         )
         backgroundColor = NSColor(Colors.backgroundColor)
-        isReleasedWhenClosed = false
         isMovableByWindowBackground = true
         titlebarAppearsTransparent = true
+        isReleasedWhenClosed = false
     }
 }
 
@@ -24,6 +24,7 @@ class SettingsWindow: StyledWindow {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 300))
         title = Strings.Settings.windowName
         setFrameAutosaveName("SettingsWindow")
+        hidesOnDeactivate = false
     }
 }
 
@@ -32,6 +33,7 @@ class TutorialWindow: StyledWindow {
     init() {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 500, height: 400))
         setFrameAutosaveName("TutorialWindow")
+        hidesOnDeactivate = true
     }
 }
 
