@@ -27,6 +27,7 @@ struct TutorialAssembly: Assembly {
             .inObjectScope(.container)
         container.autoregister(Tutorials.self, initializer: TutorialsFacade.init)
 
-        container.autoregister(TutorialResource.self, initializer: LocalTutorialResource.init)
+//        container.autoregister(TutorialResource.self, initializer: LocalTutorialResource.init)
+        container.autoregister(TutorialResource.self, initializer: UserDefaultsTutorialResource.init)
     }
 }
