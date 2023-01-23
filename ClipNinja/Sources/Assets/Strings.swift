@@ -29,8 +29,7 @@ public enum Strings {
     public enum MenuItems {
         public static let clips = "Clips"
         public static let settings = "Settings"
-        public static let tutorial = "Tutorial"
+        public static let controls = "Show controls"
         public static let quit = "Quit"
     }
 }
-

@@ -9,11 +9,13 @@ protocol TutorialRepository {
 final class TutorialRepositoryImpl: TutorialRepository {
 
     private let resource: TutorialResource
+    private let permissionsResource: PermissionsResource
 
     private(set) var currentTutorial: Tutorial?
 
-    init(resource: TutorialResource) {
+    init(resource: TutorialResource, permissionsResource: PermissionsResource) {
         self.resource = resource
+        self.permissionsResource = permissionsResource
     }
 
     func checkTutorials(for event: TutorialTriggeringEvent) {
@@ -25,7 +27,7 @@ final class TutorialRepositoryImpl: TutorialRepository {
         case .clipsMovement:
             break
         case .pasteText:
-            if !resource.contains(flag: .pasteText) {
+            if !permissionsResource.pastingAllowed && !resource.contains(flag: .pasteText) {
                 currentTutorial = .pasting
             }
         }
