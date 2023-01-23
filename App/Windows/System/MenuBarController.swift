@@ -15,15 +15,15 @@ final class MenuBarController: NSObject {
         clipboardsItem.target = self
         let settingsItem = NSMenuItem(title: Strings.MenuItems.settings, action: #selector(showSettings), keyEquivalent: "")
         settingsItem.target = self
-        let tutorialItem = NSMenuItem(title: Strings.MenuItems.tutorial, action: #selector(showTutorial), keyEquivalent: "")
-        tutorialItem.target = self
+        let controlsItem = NSMenuItem(title: Strings.MenuItems.controls, action: #selector(showControls), keyEquivalent: "")
+        controlsItem.target = self
         let quitItem = NSMenuItem(title: Strings.MenuItems.quit, action: #selector(exitApp), keyEquivalent: "")
         quitItem.target = self
 
         let menu = NSMenu()
         menu.addItem(clipboardsItem)
         menu.addItem(settingsItem)
-        menu.addItem(tutorialItem)
+        menu.addItem(controlsItem)
         menu.addItem(.separator())
         menu.addItem(quitItem)
 
@@ -48,7 +48,7 @@ final class MenuBarController: NSObject {
     }
 
     @objc
-    func showTutorial() {
+    func showControls() {
         navigation.handle(navigationEvent: .showTutorial)
     }
 }

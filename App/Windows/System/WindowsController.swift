@@ -78,6 +78,8 @@ class WindowsController {
                     self.closeClipsWindows()
                     self.activate(appWindow: .tutorial)
                 case .showTutorial:
+                    self.closeClipsWindows()
+                    self.activate(appWindow: .clips)
                     self.showModal(modalWindow: .tutorial)
                 case .hideTutorial:
                     self.hideModal()
