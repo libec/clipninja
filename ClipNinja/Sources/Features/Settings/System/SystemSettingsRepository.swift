@@ -1,8 +1,7 @@
 import Foundation
-import ApplicationServices
 import Combine
 
-final class SystemSettingsRepository: SettingsRepository, PermissionsResource {
+final class SystemSettingsRepository: SettingsRepository {
 
     private let userDefaults: UserDefaults
     private let launchAtLoginResource: LaunchAtLoginResource
@@ -24,10 +23,6 @@ final class SystemSettingsRepository: SettingsRepository, PermissionsResource {
         self.launchAtLoginResource = launchAtLoginResource
         self.currentSettingsSubject = CurrentValueSubject(Settings.default)
         self.currentSettingsSubject.send(makeSettings())
-    }
-
-    var pastingAllowed: Bool {
-        AXIsProcessTrusted()
     }
 
     func togglePasteDirectly() {

@@ -23,8 +23,8 @@ struct SettingsAssembly: Assembly {
         }
         container.autoregister(SettingsViewModelImpl.self, initializer: SettingsViewModelImpl.init).implements((any SettingsViewModel).self)
         container.autoregister(SettingsRepository.self, initializer: SystemSettingsRepository.init)
-            .implements(PermissionsResource.self)
             .inObjectScope(.container)
+        container.autoregister(PermissionsResource.self, initializer: SystemPermissionsResource.init)
         container.autoregister(ToggleSettingsUseCase.self, initializer: ToggleSettingsUseCaseImpl.init)
         container.autoregister(GetSettingsUseCase.self, initializer: GetSettingsUseCaseImpl.init)
     }
