@@ -72,6 +72,7 @@ class WindowsController {
                     self.closeClipsWindows()
                     self.activate(appWindow: .clips)
                 case .showSettings:
+                    self.closeSettingsWindows()
                     self.activate(appWindow: .settings)
                 case .showAppUsage:
                     self.closeClipsWindows()
@@ -96,7 +97,14 @@ class WindowsController {
         closeClipsWindows()
     }
 
+    private func closeSettingsWindows() {
+        NSApp.windows.filter { $0 is SettingsWindow }.forEach {
+            $0.close()
+        }
+    }
+
     private func closeClipsWindows() {
+        log(message: "Close clips windows", category: .windows)
         NSApp.windows.forEach { window in
             log(message: "Window: \(window)", category: .windows)
         }
