@@ -49,10 +49,9 @@ private final class SystemLogger: Logger {
 }
 
 private struct LoggerWrapper {
-    fileprivate static let silentDebugCategories: [LogCategory] = [
-        .storage, .viewPort, .tutorial, .main
+    fileprivate static let silentCategories: [LogCategory] = [
     ]
-    fileprivate static let logger: Logger = SystemLogger(silentCategories: silentDebugCategories)
+    fileprivate static let logger: Logger = SystemLogger(silentCategories: silentCategories)
 }
 
 public func log(message: String, category: LogCategory = .main) {

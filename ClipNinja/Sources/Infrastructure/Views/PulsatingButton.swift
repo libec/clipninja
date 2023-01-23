@@ -18,11 +18,10 @@ struct PulsatingButton: View {
         Button(title, action: action)
             .font(.avenir(size: 20))
             .fontWeight(.bold)
-            .buttonStyle(.borderless)
             .padding(10)
+            .buttonStyle(.borderless)
             .background(Colors.prominent)
             .foregroundColor(Colors.selectedTextColor)
-            .shadow(radius: 2)
             .cornerRadius(scale > 0.9 ? 12 : 8, antialiased: true)
             .scaleEffect(scale)
             .onAppear {

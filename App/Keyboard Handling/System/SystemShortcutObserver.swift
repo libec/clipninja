@@ -3,8 +3,7 @@ import Combine
 import ClipNinjaPackage
 
 extension KeyboardShortcuts.Name {
-    // TODO: - 
-    static let toggleClipNinja = Self("aewwsgref", default: .init(.v, modifiers: [.command, .shift]))
+    static let toggleClipNinja = Self("clipninja_shortcut", default: .init(.v, modifiers: [.command, .shift]))
 }
 
 final class SystemShortcutObserver: ShortcutObserver {

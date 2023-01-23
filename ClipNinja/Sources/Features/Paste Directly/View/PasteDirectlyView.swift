@@ -8,7 +8,6 @@ struct PasteDirectlyView: View {
         self.showSettings = showSettings
     }
 
-
     var body: some View {
         content
             .background(Colors.backgroundColor)

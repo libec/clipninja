@@ -3,7 +3,6 @@ import SwiftUI
 struct TutorialView<ViewModel: TutorialViewModel>: View {
 
     @StateObject private var viewModel: ViewModel
-    @State private var settingsButtonShown = false
 
     init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
