@@ -16,3 +16,11 @@ ClipNinja does not analyze your behavior to keep you engaged. It doesn't sway yo
 ## GIF or didn't happen
 
 ![](https://github.com/libec/clipninja/blob/develop/docs/images/clipninja.gif)
+
+## Installation guide
+
+WIP 🚧🚧
+
+## How to contribute
+
+WIP 🚧🚧
