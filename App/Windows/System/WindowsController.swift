@@ -27,6 +27,7 @@ class WindowsController {
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         activeWindow = window
+        window.centerIfShownTheFirstTime()
         NSApp.activate(ignoringOtherApps: true)
     }
 
