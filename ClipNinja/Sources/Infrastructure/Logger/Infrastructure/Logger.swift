@@ -11,6 +11,7 @@ public enum LogCategory: CaseIterable {
     case tutorial
     case viewPort
     case windows
+    case migration
 
     fileprivate var logDescription: String {
         switch self {
@@ -19,6 +20,7 @@ public enum LogCategory: CaseIterable {
         case .tutorial: return "tutorial"
         case .viewPort: return "view port"
         case .windows: return "windows"
+        case .migration: return "migration"
         }
     }
 

@@ -4,6 +4,9 @@ import Combine
 import KeyboardShortcuts
 
 class StyledWindow: NSWindow {
+
+    var defaultsWindowKey = ""
+
     init(contentRect: NSRect) {
         super.init(
             contentRect: contentRect,
@@ -16,15 +19,25 @@ class StyledWindow: NSWindow {
         titlebarAppearsTransparent = true
         isReleasedWhenClosed = false
     }
+
+    func centerIfShownTheFirstTime() {
+        let defaults = UserDefaults.standard
+        if !defaults.bool(forKey: defaultsWindowKey) {
+            center()
+            defaults.set(true, forKey: defaultsWindowKey)
+        }
+    }
 }
 
 class SettingsWindow: StyledWindow {
+
 
     init() {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 300))
         title = Strings.Settings.windowName
         setFrameAutosaveName("SettingsWindow")
         hidesOnDeactivate = false
+        defaultsWindowKey = "clipninja_settings"
     }
 }
 
@@ -34,14 +47,15 @@ class TutorialWindow: StyledWindow {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 500, height: 400))
         setFrameAutosaveName("TutorialWindow")
         hidesOnDeactivate = true
+        defaultsWindowKey = "clipninja_tutorials"
     }
 }
 
 class ClipboardWindow: StyledWindow {
 
-    let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()
-
     private let keyboardController: SystemKeyboardObserver
+
+    let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()
 
     init(keyboardController: SystemKeyboardObserver) {
         self.keyboardController = keyboardController
@@ -50,6 +64,7 @@ class ClipboardWindow: StyledWindow {
         setFrameAutosaveName("ClipboardWindow")
         collectionBehavior = [.moveToActiveSpace]
         hidesOnDeactivate = true
+        defaultsWindowKey = "clipninja_clips"
     }
 
     override func keyDown(with event: NSEvent) {

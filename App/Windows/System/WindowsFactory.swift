@@ -3,7 +3,7 @@ import ClipNinjaPackage
 import SwiftUI
 
 protocol WindowsFactory {
-    func make(appWindow: AppWindow) -> NSWindow
+    func make(appWindow: AppWindow) -> StyledWindow
 }
 
 final class WindowsFactoryImpl: WindowsFactory {
@@ -16,7 +16,7 @@ final class WindowsFactoryImpl: WindowsFactory {
         self.keyboardObserver = keyboardObserver
     }
 
-    func make(appWindow: AppWindow) -> NSWindow {
+    func make(appWindow: AppWindow) -> StyledWindow {
         switch appWindow {
         case .clips:
             return makeClipsWindow()

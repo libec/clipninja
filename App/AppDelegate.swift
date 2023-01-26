@@ -7,19 +7,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private let windowsController: WindowsController
     private let menuBarController: MenuBarController
+    private let migrationController: MigrationController
 
     override init() {
         let instanceProvider: InstanceProvider = ApplicationAssembly(systemAssemblies: [
             KeyboardHandlingAssembly(),
             LaunchAtLoginAssembly(),
+            MigrationAssembly(),
             WindowsAssembly()
         ]).resolveDependencyGraph()
         self.windowsController = instanceProvider.resolve(WindowsController.self)
         self.menuBarController = instanceProvider.resolve(MenuBarController.self)
+        self.migrationController = instanceProvider.resolve(MigrationController.self)
         super.init()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        migrationController.migrate()
         menuBarController.setupMenuBar()
         windowsController.startNavigation()
         windowsController.openFirstWindow()

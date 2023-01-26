@@ -11,7 +11,6 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             tutorialView
-                .font(.title)
 
             VStack {
                 HStack(spacing: 10) {

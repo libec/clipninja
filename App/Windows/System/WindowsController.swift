@@ -8,11 +8,6 @@ enum AppWindow {
     case tutorial
 }
 
-enum AppModals {
-    case onboarding
-    case pasteDirectly
-}
-
 class WindowsController {
 
     private let navigation: Navigation
@@ -32,13 +27,16 @@ class WindowsController {
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         activeWindow = window
+        window.centerIfShownTheFirstTime()
         NSApp.activate(ignoringOtherApps: true)
     }
 
     private func showModal(modalWindow: AppWindow) {
-        let modalWindow = self.windowFactory.make(appWindow: modalWindow)
-        self.modalWindow = modalWindow
-        activeWindow?.beginSheet(modalWindow)
+        if self.modalWindow == nil {
+            let modalWindow = self.windowFactory.make(appWindow: modalWindow)
+            self.modalWindow = modalWindow
+            activeWindow?.beginSheet(modalWindow)
+        }
     }
 
     func openFirstWindow() {
@@ -49,6 +47,7 @@ class WindowsController {
         if let modalWindow {
             activeWindow?.endSheet(modalWindow)
             NSApp.stopModal()
+            self.modalWindow = nil
         }
     }
 
@@ -65,21 +64,31 @@ class WindowsController {
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] event in
                 log(message: "NavigationEvent: \(event)", category: .windows)
+                log(message: "App windows", category: .windows)
+                NSApp.windows.forEach { window in
+                    log(message: "Window: \(window)", category: .windows)
+                }
                 switch event {
                 case .hideApp:
                     NSApp.hide(nil)
                 case .showClipboard:
+                    self.closeSettingsWindows()
                     self.closeClipsWindows()
                     self.activate(appWindow: .clips)
                 case .showSettings:
                     self.closeSettingsWindows()
+                    self.closeClipsWindows()
                     self.activate(appWindow: .settings)
                 case .showAppUsage:
-                    self.closeClipsWindows()
-                    self.activate(appWindow: .tutorial)
+                    let clipboardWindows = NSApp.windows.filter { $0 is ClipboardWindow }
+                    if let clipboardWindow = clipboardWindows.first {
+                        clipboardWindow.makeKeyAndOrderFront(nil)
+                        self.activeWindow = clipboardWindow
+                    } else {
+                        self.activate(appWindow: .clips)
+                    }
+                    self.showModal(modalWindow: .tutorial)
                 case .showTutorial:
-                    self.closeClipsWindows()
-                    self.activate(appWindow: .clips)
                     self.showModal(modalWindow: .tutorial)
                 case .hideTutorial:
                     self.hideModal()
@@ -95,8 +104,13 @@ class WindowsController {
     }
 
     func resignActive() {
-        hideModal()
         closeClipsWindows()
+    }
+
+    private func closeAppUsageWindows() {
+        NSApp.windows.filter { $0 is TutorialWindow }.forEach {
+            $0.close()
+        }
     }
 
     private func closeSettingsWindows() {
@@ -106,11 +120,8 @@ class WindowsController {
     }
 
     private func closeClipsWindows() {
-        log(message: "Close clips windows", category: .windows)
-        NSApp.windows.forEach { window in
-            log(message: "Window: \(window)", category: .windows)
-        }
-        NSApp.windows.filter { $0 is ClipboardWindow || $0 is TutorialWindow }.forEach {
+        hideModal()
+        NSApp.windows.filter { $0 is ClipboardWindow }.forEach {
             $0.close()
         }
     }
