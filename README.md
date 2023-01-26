@@ -7,7 +7,7 @@
   <img align="center" src="https://img.shields.io/badge/corporate%20bullshit-zero-green">
 </h1>
 
-ClipNinja is a minimalistic copy & paste tool for macOS. How minimalistic? It has two features - history and pasting! That minimalistic. You can also pin stuff. So, three, but that's it!
+ClipNinja is a minimalistic copy & paste tool for macOS. It has two features - history and pasting! You can also pin stuff. So, three, but that's it!
 
 It's private. No clouds, analytics, data collection, or behavior analysis to keep you engaged—none of that corporate bullshit. 
 
