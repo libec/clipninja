@@ -13,6 +13,8 @@ It's private—no clouds, analytics, data collection, none of that corporate bul
 
 Zero behavior analysis to keep you engaged. Want to paste something? CMD+SHIFT+V, paste it, disengage and focus on your thing. It's here to help, not to usurp.
 
+[![](https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&releaseDate=1615852800)](https://apps.apple.com/cz/app/clipninja/id1452097937)
+
 
 ## GIF or didn't happen
 
