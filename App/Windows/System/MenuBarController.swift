@@ -1,10 +1,14 @@
 import AppKit
 import ClipNinjaPackage
+import Combine
 
 final class MenuBarController: NSObject {
 
     private let navigation: Navigation
     private var statusItem: NSStatusItem?
+
+    private weak var controlsItem: NSMenuItem?
+    private var subscriptions = Set<AnyCancellable>()
 
     init(navigation: Navigation) {
         self.navigation = navigation
@@ -17,6 +21,7 @@ final class MenuBarController: NSObject {
         settingsItem.target = self
         let controlsItem = NSMenuItem(title: Strings.MenuItems.controls, action: #selector(showControls), keyEquivalent: "")
         controlsItem.target = self
+        self.controlsItem = controlsItem
         let quitItem = NSMenuItem(title: Strings.MenuItems.quit, action: #selector(exitApp), keyEquivalent: "")
         quitItem.target = self
 
@@ -30,6 +35,22 @@ final class MenuBarController: NSObject {
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusItem?.menu = menu
         self.statusItem?.button?.image = NSImage(named: "MenuIcon")
+        subscribeNavigation()
+    }
+
+    private func subscribeNavigation() {
+        navigation.navigationEvent
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+            switch event {
+            case .showTutorial:
+                self?.controlsItem?.target = nil
+            case .hideTutorial:
+                self?.controlsItem?.target = self
+            default:
+                break
+            }
+        }.store(in: &subscriptions)
     }
 
     @objc
@@ -49,6 +70,6 @@ final class MenuBarController: NSObject {
 
     @objc
     func showControls() {
-        navigation.handle(navigationEvent: .showTutorial)
+        navigation.handle(navigationEvent: .showAppUsage)
     }
 }
