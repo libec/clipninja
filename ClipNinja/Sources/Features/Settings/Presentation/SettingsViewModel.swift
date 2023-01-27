@@ -1,0 +1,79 @@
+import Combine
+import Foundation
+
+enum SettingsEvent: Equatable {
+    case lifecycle(LifecycleEvent)
+    case settingsEvent(Settings)
+
+    enum Settings: Equatable {
+        case togglePasteDirectly
+        case toggleLaunchAtLogin
+        case showPasteDirectlyHint
+        case showAccessibilitySettings
+    }
+}
+
+protocol SettingsViewModel: ObservableObject {
+    var launchAtLogin: Bool { get }
+    var pasteDirectly: Bool { get }
+    var showPasteDirectlyHint: Bool { get }
+
+    func onEvent(_ event: SettingsEvent)
+}
+
+final class SettingsViewModelImpl: SettingsViewModel {
+
+    @Published var pasteDirectly = false
+    @Published var launchAtLogin = false
+    @Published var showPasteDirectlyHint = false
+
+    private var subscriptions = Set<AnyCancellable>()
+
+    private let toggleSettingsUseCase: ToggleSettingsUseCase
+    private let getSettingsUseCase: GetSettingsUseCase
+    private let navigation: Navigation
+
+    init(
+        toggleSettingsUseCase: ToggleSettingsUseCase,
+        getSettingsUseCase: GetSettingsUseCase,
+        navigation: Navigation
+    ) {
+        self.toggleSettingsUseCase = toggleSettingsUseCase
+        self.getSettingsUseCase = getSettingsUseCase
+        self.navigation = navigation
+    }
+
+    func onEvent(_ event: SettingsEvent) {
+        switch event {
+        case .settingsEvent(let settingsEvent):
+            onEvent(settingsEvent)
+        case .lifecycle(.appear):
+            subscribe()
+        }
+    }
+
+    private func onEvent(_ event: SettingsEvent.Settings) {
+        switch event {
+        case .togglePasteDirectly:
+            let toggleResult = toggleSettingsUseCase.toggle(setting: .pasteDirectly)
+            if toggleResult.error() == .permissionNotGranted {
+                showPasteDirectlyHint = true
+            }
+        case .toggleLaunchAtLogin:
+            toggleSettingsUseCase.toggle(setting: .launchAtLogin)
+        case .showPasteDirectlyHint:
+            showPasteDirectlyHint.toggle()
+        case .showAccessibilitySettings:
+            navigation.handle(navigationEvent: .showSystemSettings)
+        }
+    }
+
+    private func subscribe() {
+        getSettingsUseCase.settings
+            .sink { [unowned self] newSettings in
+                self.pasteDirectly = newSettings.pasteDirectly
+                self.launchAtLogin = newSettings.launchAtLogin
+            }
+            .store(in: &subscriptions)
+    }
+}
