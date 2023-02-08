@@ -2,7 +2,7 @@
 import Combine
 
 class ClipsRepositoryStub: ClipsRepository {
-    let lastClips: [Clip]
+    var lastClips: [Clip]
     var deletedIndex: Int?
     var toggledPin: Int?
     var movedAfterPinsAtIndex: Int?
@@ -17,6 +17,7 @@ class ClipsRepositoryStub: ClipsRepository {
     }
 
     func delete(at index: Int) {
+        lastClips.remove(at: index)
         self.deletedIndex = index
     }
 
