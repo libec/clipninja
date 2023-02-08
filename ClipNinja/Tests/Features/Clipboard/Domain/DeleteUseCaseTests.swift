@@ -3,48 +3,32 @@ import XCTest
 
 class DeleteUseCaseTests: XCTestCase {
 
-    func test_it_deletes_selected_clip() throws {
-        let viewPortRepository = InMemoryViewPortRepository()
-        viewPortRepository.update(position: 3)
-        let clipsRepository = ClipsRepositoryStub(lastClips: [
-            Clip(text: "3_Aefe", pinned: false),
-            Clip(text: "3_Aeaaefe", pinned: false),
-            Clip(text: "cewasdfe", pinned: false),
-            Clip(text: "364sddae", pinned: false),
-        ])
-        let sut = DeleteUseCaseImpl(viewPortRepository: viewPortRepository, clipsRepository: clipsRepository)
-
-        sut.delete()
-
-        try XCTAssertEqual(XCTUnwrap(clipsRepository.deletedIndex), 3)
+    func test_it_keeps_view_port_when_deleting() {
+        assert(numberOfClipboards: 10, deleteClipboardIndex: 6, expectedIndex: 6)
+        assert(numberOfClipboards: 9, deleteClipboardIndex: 0, expectedIndex: 0)
+        assert(numberOfClipboards: 4, deleteClipboardIndex: 2, expectedIndex: 2)
+        assert(numberOfClipboards: 16, deleteClipboardIndex: 12, expectedIndex: 12)
     }
 
     func test_it_decrements_view_port_when_deleting_oldest_clip() {
-        let viewPortRepository = InMemoryViewPortRepository()
-        viewPortRepository.update(position: 1)
-        let clipsRepository = ClipsRepositoryStub(lastClips: [
-            Clip(text: "3_Aefe", pinned: false),
-            Clip(text: "3_Aeaaefe", pinned: false),
-        ])
-        let sut = DeleteUseCaseImpl(viewPortRepository: viewPortRepository, clipsRepository: clipsRepository)
-
-        sut.delete()
-
-        try XCTAssertEqual(XCTUnwrap(clipsRepository.deletedIndex), 1)
-        XCTAssertEqual(viewPortRepository.lastPosition, 0)
+        assert(numberOfClipboards: 2, deleteClipboardIndex: 1, expectedIndex: 0)
+        assert(numberOfClipboards: 13, deleteClipboardIndex: 12, expectedIndex: 11)
+        assert(numberOfClipboards: 91, deleteClipboardIndex: 90, expectedIndex: 89)
     }
 
     func test_it_doesnt_decrement_when_deleting_last_clip() {
+        assert(numberOfClipboards: 1, deleteClipboardIndex: 0, expectedIndex: 0)
+    }
+
+    func assert(numberOfClipboards: Int, deleteClipboardIndex: Int, expectedIndex: Int) {
         let viewPortRepository = InMemoryViewPortRepository()
-        viewPortRepository.update(position: 0)
-        let clipsRepository = ClipsRepositoryStub(lastClips: [
-            Clip(text: "3_Aefe", pinned: false),
-        ])
+        viewPortRepository.update(position: deleteClipboardIndex)
+        let clipsRepository = ClipsRepositoryStub(lastClips: Array<Clip>(repeating: Clip(text: "", pinned: false), count: numberOfClipboards))
         let sut = DeleteUseCaseImpl(viewPortRepository: viewPortRepository, clipsRepository: clipsRepository)
 
         sut.delete()
 
-        try XCTAssertEqual(XCTUnwrap(clipsRepository.deletedIndex), 0)
-        XCTAssertEqual(viewPortRepository.lastPosition, 0)
+        try XCTAssertEqual(XCTUnwrap(clipsRepository.deletedIndex), deleteClipboardIndex)
+        XCTAssertEqual(viewPortRepository.lastPosition, expectedIndex)
     }
 }

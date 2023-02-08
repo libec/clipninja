@@ -18,6 +18,7 @@ final class DeleteUseCaseImpl: DeleteUseCase {
     func delete() {
         let index = viewPortRepository.lastPosition
         clipsRepository.delete(at: index)
-        viewPortRepository.update(position: max(index - 1, 0))
+        let newIndex = max(min(clipsRepository.lastClips.count - 1, index), 0)
+        viewPortRepository.update(position:  newIndex)
     }
 }
