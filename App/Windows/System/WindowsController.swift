@@ -12,13 +12,19 @@ class WindowsController {
 
     private let navigation: Navigation
     private let windowFactory: WindowsFactory
+    private let resetViewPortUseCase: ResetViewPortUseCase
     private var subscriptions = Set<AnyCancellable>()
 
     private weak var activeWindow: NSWindow?
     private weak var modalWindow: NSWindow?
 
-    init(navigation: Navigation, windowFactory: WindowsFactory) {
+    init(
+        navigation: Navigation,
+        resetViewPortUseCase: ResetViewPortUseCase,
+        windowFactory: WindowsFactory
+    ) {
         self.navigation = navigation
+        self.resetViewPortUseCase = resetViewPortUseCase
         self.windowFactory = windowFactory
     }
 
@@ -104,6 +110,7 @@ class WindowsController {
     }
 
     func resignActive() {
+        resetViewPortUseCase.reset()
         closeClipsWindows()
     }
 

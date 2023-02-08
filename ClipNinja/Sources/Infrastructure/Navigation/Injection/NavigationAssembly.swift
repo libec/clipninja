@@ -12,5 +12,6 @@ struct NavigationAssembly: Assembly {
             .inObjectScope(.container)
         container.autoregister(ViewPortRepository.self, initializer: InMemoryViewPortRepository.init)
             .inObjectScope(.container)
+        container.autoregister(ResetViewPortUseCase.self, initializer: ResetViewPortUseCaseImpl.init)
     }
 }
