@@ -1,0 +1,14 @@
+name: Actions
+
+on: [push]
+
+jobs:
+  tests:
+    name: Run unit tests
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          xcode-version: '15.2'
+      - name: Run tests
+        run: xcodebuild test -project ClipNinja.xcodeproj -scheme ClipNinja
