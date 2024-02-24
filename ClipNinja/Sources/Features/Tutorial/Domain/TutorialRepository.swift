@@ -26,7 +26,7 @@ final class TutorialRepositoryImpl: TutorialRepository {
         case .clipsMovement:
             break
         case .pasteText:
-            if !permissionsResource.pastingAllowed && !resource.contains(flag: .pasteText) {
+            if !permissionsResource.pastingAllowed, !resource.contains(flag: .pasteText) {
                 currentTutorial = .pasting
             }
         }

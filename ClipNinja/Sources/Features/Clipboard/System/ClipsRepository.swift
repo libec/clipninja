@@ -77,7 +77,7 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         clipsSubject
             .throttle(for: 1, scheduler: storageScheduler, latest: true)
             .sink(receiveValue: { [unowned self] clips in
-                self.persist(clips: clips)
+                persist(clips: clips)
             })
             .store(in: &subscriptions)
     }
@@ -85,7 +85,7 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
     private func observePasteboard() {
         pasteboardObserver.newCopiedText.map(Clip.newClip(with:))
             .sink { [unowned self] newClip in
-                self.addNewClipFromPasteboard(newClip: newClip)
+                addNewClipFromPasteboard(newClip: newClip)
             }.store(in: &subscriptions)
     }
 
@@ -100,14 +100,14 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         let newClipIsTheSameAsLastlyPastedClip = lastPastedClip?.text == newClip.text
         let shouldSkipMovingExistingClipsToTheMostRecent = !settingsRepository.lastSettings.movePastedClipToTop
 
-        if newClipIsTheSameAsLastlyPastedClip && shouldSkipMovingExistingClipsToTheMostRecent {
+        if newClipIsTheSameAsLastlyPastedClip, shouldSkipMovingExistingClipsToTheMostRecent {
             return
         }
 
         if let clipIndex = clipsSubject.value.firstIndex(of: newClip) {
             delete(at: clipIndex)
         }
-        let pinnedClips = clipsSubject.value.filter { $0.pinned }.count
+        let pinnedClips = clipsSubject.value.filter(\.pinned).count
         clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
         clipsSubject.value = Array(clipsSubject.value.prefix(viewPortConfiguration.clipsPerPage * viewPortConfiguration.totalPages))
     }

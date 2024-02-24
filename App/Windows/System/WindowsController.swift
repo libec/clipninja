@@ -76,26 +76,26 @@ class WindowsController {
                 case .hideApp:
                     NSApp.hide(nil)
                 case .showClipboard:
-                    self.closeSettingsWindows()
-                    self.closeClipsWindows()
-                    self.activate(appWindow: .clips)
+                    closeSettingsWindows()
+                    closeClipsWindows()
+                    activate(appWindow: .clips)
                 case .showSettings:
-                    self.closeSettingsWindows()
-                    self.closeClipsWindows()
-                    self.activate(appWindow: .settings)
+                    closeSettingsWindows()
+                    closeClipsWindows()
+                    activate(appWindow: .settings)
                 case .showAppUsage:
                     let clipboardWindows = NSApp.windows.filter { $0 is ClipboardWindow }
                     if let clipboardWindow = clipboardWindows.first {
                         clipboardWindow.makeKeyAndOrderFront(nil)
-                        self.activeWindow = clipboardWindow
+                        activeWindow = clipboardWindow
                     } else {
-                        self.activate(appWindow: .clips)
+                        activate(appWindow: .clips)
                     }
-                    self.showModal(modalWindow: .tutorial)
+                    showModal(modalWindow: .tutorial)
                 case .showTutorial:
-                    self.showModal(modalWindow: .tutorial)
+                    showModal(modalWindow: .tutorial)
                 case .hideTutorial:
-                    self.hideModal()
+                    hideModal()
                 case .showSystemSettings:
                     let accessibilityUrl = Strings.Settings.PasteDirectly.accessibilityUrl
                     guard let url = URL(string: accessibilityUrl) else {

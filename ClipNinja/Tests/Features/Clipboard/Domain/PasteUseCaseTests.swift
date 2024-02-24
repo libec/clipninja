@@ -223,7 +223,7 @@ class PasteUseCaseTests: XCTestCase {
         clipsRepository: ClipsRepository,
         viewPortRepository: ViewPortRepository
     ) -> PasteUseCase {
-        return PasteUseCaseImpl(
+        PasteUseCaseImpl(
             clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             hideAppUseCase: hideAppUseCase,

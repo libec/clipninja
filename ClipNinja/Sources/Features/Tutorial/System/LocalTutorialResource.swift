@@ -14,8 +14,8 @@ final class LocalTutorialResource: TutorialResource {
 
     func contains(flag: TutorialFlag) -> Bool {
         switch flag {
-        case .onboard: return userOnboard
-        case .pasteText: return pastedText
+        case .onboard: userOnboard
+        case .pasteText: pastedText
         }
     }
 
@@ -29,7 +29,7 @@ final class LocalTutorialResource: TutorialResource {
     func value(for numericValue: TutorialNumericValue) -> Int {
         switch numericValue {
         case .clipsMovement:
-            return clipsMovement
+            clipsMovement
         }
     }
 }

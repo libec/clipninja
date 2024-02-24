@@ -18,41 +18,41 @@ final class SystemKeyboardObserver: KeyboardObserver {
     private func keyboardEvent(from shortcutsKeyPress: KeyboardShortcuts.Key) -> KeyboardEvent? {
         switch shortcutsKeyPress {
         case .downArrow:
-            return .down
+            .down
         case .upArrow:
-            return .up
+            .up
         case .rightArrow:
-            return .right
+            .right
         case .leftArrow:
-            return .left
+            .left
         case .delete:
-            return .delete
+            .delete
         case .keypadEnter, .return:
-            return .enter
+            .enter
         case .space:
-            return .space
+            .space
         case .escape:
-            return .escape
+            .escape
         case .keypad1, .one:
-            return .number(number: 1)
+            .number(number: 1)
         case .keypad2, .two:
-            return .number(number: 2)
+            .number(number: 2)
         case .keypad3, .three:
-            return .number(number: 3)
+            .number(number: 3)
         case .keypad4, .four:
-            return .number(number: 4)
+            .number(number: 4)
         case .keypad5, .five:
-            return .number(number: 5)
+            .number(number: 5)
         case .keypad6, .six:
-            return .number(number: 6)
+            .number(number: 6)
         case .keypad7, .seven:
-            return .number(number: 7)
+            .number(number: 7)
         case .keypad8, .eight:
-            return .number(number: 8)
+            .number(number: 8)
         case .keypad9, .nine:
-            return .number(number: 9)
+            .number(number: 9)
         default:
-            return nil
+            nil
         }
     }
 }

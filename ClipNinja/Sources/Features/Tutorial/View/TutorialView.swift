@@ -33,11 +33,11 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
     private var tutorialView: some View {
         switch viewModel.tutorial {
         case .welcome:
-            return AnyView(WelcomeTutorialView())
+            AnyView(WelcomeTutorialView())
         case .pasting:
-            return AnyView(PasteDirectlyTutorialView())
+            AnyView(PasteDirectlyTutorialView())
         case .none:
-            return AnyView(AppUsageTutorialView())
+            AnyView(AppUsageTutorialView())
         }
     }
 }

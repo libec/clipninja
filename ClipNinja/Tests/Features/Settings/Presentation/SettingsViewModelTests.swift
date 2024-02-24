@@ -126,7 +126,7 @@ class GetSettingsUseCaseStub: GetSettingsUseCase {
     }
 
     var settings: AnyPublisher<Settings, Never> {
-        return Just(storedSettings)
+        Just(storedSettings)
             .eraseToAnyPublisher()
     }
 }

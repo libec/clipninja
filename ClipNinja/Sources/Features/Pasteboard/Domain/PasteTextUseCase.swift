@@ -22,7 +22,7 @@ final class PasteTextUseCaseImpl: PasteTextUseCase {
 
     func paste(text: String) {
         pasteboardResource.insert(text: text)
-        if settingsRepository.lastSettings.pasteDirectly && permissionsResource.pastingAllowed {
+        if settingsRepository.lastSettings.pasteDirectly, permissionsResource.pastingAllowed {
             pasteCommand.paste()
         }
     }

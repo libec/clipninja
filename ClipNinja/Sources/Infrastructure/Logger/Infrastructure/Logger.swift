@@ -15,12 +15,12 @@ public enum LogCategory: CaseIterable {
 
     fileprivate var logDescription: String {
         switch self {
-        case .main: return "system"
-        case .storage: return "storage"
-        case .tutorial: return "tutorial"
-        case .viewPort: return "view port"
-        case .windows: return "windows"
-        case .migration: return "migration"
+        case .main: "system"
+        case .storage: "storage"
+        case .tutorial: "tutorial"
+        case .viewPort: "view port"
+        case .windows: "windows"
+        case .migration: "migration"
         }
     }
 

@@ -12,9 +12,9 @@ public enum NavigationEvent {
     public var delayedEvent: Bool {
         switch self {
         case .showTutorial:
-            return true
+            true
         case .showClipboard, .showSettings, .hideApp, .showSystemSettings, .showAppUsage, .hideTutorial:
-            return false
+            false
         }
     }
 

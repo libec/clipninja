@@ -48,7 +48,7 @@ class TutorialsSpy: Tutorials {
 
     init() {}
 
-    func getCurrent() -> Tutorial? { return nil }
+    func getCurrent() -> Tutorial? { nil }
 
     func finish() {
         finishCalled = true

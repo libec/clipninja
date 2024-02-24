@@ -28,7 +28,7 @@ class UserDefaultsTutorialResource: TutorialResource {
 private extension TutorialNumericValue {
     private var key: String {
         switch self {
-        case .clipsMovement: return "ClipsMovement"
+        case .clipsMovement: "ClipsMovement"
         }
     }
 
@@ -40,8 +40,8 @@ private extension TutorialNumericValue {
 private extension TutorialFlag {
     private var key: String {
         switch self {
-        case .pasteText: return "PasteText"
-        case .onboard: return "Onboard"
+        case .pasteText: "PasteText"
+        case .onboard: "Onboard"
         }
     }
 

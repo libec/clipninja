@@ -18,11 +18,11 @@ final class WindowsFactoryImpl: WindowsFactory {
     func make(appWindow: AppWindow) -> StyledWindow {
         switch appWindow {
         case .clips:
-            return makeClipsWindow()
+            makeClipsWindow()
         case .settings:
-            return makeSettingsWindow()
+            makeSettingsWindow()
         case .tutorial:
-            return makeTutorialWindow()
+            makeTutorialWindow()
         }
     }
 

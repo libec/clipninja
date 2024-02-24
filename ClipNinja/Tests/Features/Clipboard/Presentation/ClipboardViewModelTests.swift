@@ -125,7 +125,7 @@ class ClipboardViewModelTests: XCTestCase {
 
 class ClipboardPreviewFactoryDummy: ClipboardPreviewFactory {
     func makePreview(from _: Clip, index _: Int, selected _: Bool) -> ClipPreview {
-        return .dummy
+        .dummy
     }
 }
 
