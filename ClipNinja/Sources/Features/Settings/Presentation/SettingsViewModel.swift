@@ -8,6 +8,7 @@ enum SettingsEvent: Equatable {
     enum Settings: Equatable {
         case togglePasteDirectly
         case toggleLaunchAtLogin
+        case toggleMovePastedToTop
         case showPasteDirectlyHint
         case showAccessibilitySettings
     }
@@ -15,6 +16,7 @@ enum SettingsEvent: Equatable {
 
 protocol SettingsViewModel: ObservableObject {
     var launchAtLogin: Bool { get }
+    var movePastedClipToTop: Bool { get }
     var pasteDirectly: Bool { get }
     var showPasteDirectlyHint: Bool { get }
 
@@ -22,9 +24,9 @@ protocol SettingsViewModel: ObservableObject {
 }
 
 final class SettingsViewModelImpl: SettingsViewModel {
-
     @Published var pasteDirectly = false
     @Published var launchAtLogin = false
+    @Published var movePastedClipToTop = true
     @Published var showPasteDirectlyHint = false
 
     private var subscriptions = Set<AnyCancellable>()
@@ -61,6 +63,8 @@ final class SettingsViewModelImpl: SettingsViewModel {
             }
         case .toggleLaunchAtLogin:
             toggleSettingsUseCase.toggle(setting: .launchAtLogin)
+        case .toggleMovePastedToTop:
+            toggleSettingsUseCase.toggle(setting: .movePastedClipToTop)
         case .showPasteDirectlyHint:
             showPasteDirectlyHint.toggle()
         case .showAccessibilitySettings:
@@ -72,6 +76,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
         getSettingsUseCase.settings
             .sink { [unowned self] newSettings in
                 self.pasteDirectly = newSettings.pasteDirectly
+                self.movePastedClipToTop = newSettings.movePastedClipToTop
                 self.launchAtLogin = newSettings.launchAtLogin
             }
             .store(in: &subscriptions)

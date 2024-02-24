@@ -8,7 +8,8 @@ class SettingsViewModelTests: XCTestCase {
         let getSettingsUseCase = GetSettingsUseCaseStub(
             storedSettings: Settings(
                 pasteDirectly: true,
-                launchAtLogin: false
+                launchAtLogin: false,
+                movePastedClipToTop: false
             )
         )
         let sut = SettingsViewModelImpl(
@@ -21,6 +22,7 @@ class SettingsViewModelTests: XCTestCase {
 
         XCTAssertEqual(sut.pasteDirectly, true)
         XCTAssertEqual(sut.launchAtLogin, false)
+        XCTAssertEqual(sut.movePastedClipToTop, false)
     }
 
     func test_it_toggles_paste_directly() {
@@ -33,6 +35,18 @@ class SettingsViewModelTests: XCTestCase {
         sut.onEvent(.settingsEvent(.togglePasteDirectly))
 
         try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .pasteDirectly)
+    }
+
+    func test_it_toggles_move_pasted_clip_to_top() {
+        let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
+        let sut = SettingsViewModelImpl(
+            toggleSettingsUseCase: toggleSettingsUseCase,
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
+        )
+        sut.onEvent(.settingsEvent(.toggleMovePastedToTop))
+
+        try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .movePastedClipToTop)
     }
 
     func test_it_toggles_launch_at_login() {
@@ -100,7 +114,7 @@ class SettingsViewModelTests: XCTestCase {
 
 class GetSettingsUseCaseDummy: GetSettingsUseCase {
     var settings: AnyPublisher<Settings, Never> {
-        Just(Settings(pasteDirectly: false, launchAtLogin: false))
+        Just(Settings(pasteDirectly: false, launchAtLogin: false, movePastedClipToTop: true))
             .eraseToAnyPublisher()
     }
 }

@@ -140,13 +140,15 @@ final class ClipsRepositoryTests: XCTestCase {
     private func setupSut(
         pasteboardObserver: PasteboardObserver = PasteboardObserverDummy(),
         clipsResource: ClipsResource = ClipsResourceDummy(),
-        viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration()
+        viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration(),
+        settingsRepository: SettingsRepository = SettingsRepositoryDummy()
     ) {
         self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
             clipsResource: clipsResource,
             viewPortConfiguration: viewPortConfiguration,
-            storageScheduler: ImmediateScheduler.shared
+            storageScheduler: ImmediateScheduler.shared,
+            settingsRepository: settingsRepository
         )
     }
 }

@@ -2,11 +2,11 @@
 import Combine
 
 class PasteOrderSpy: ClipsRepository, HideAppUseCase, PasteTextUseCase {
-
     enum PasteSteps {
         case moveAfterPins
         case hideApp
         case paste
+        case setLastClip
     }
 
     var steps: [PasteSteps] = []
@@ -15,6 +15,11 @@ class PasteOrderSpy: ClipsRepository, HideAppUseCase, PasteTextUseCase {
         Just(lastClips).eraseToAnyPublisher()
     }
 
+    var lastPastedClip: Clip? = nil {
+        didSet {
+            steps.append(.setLastClip)
+        }
+    }
     let lastClips: [Clip]
 
     init(clips: [Clip]) {

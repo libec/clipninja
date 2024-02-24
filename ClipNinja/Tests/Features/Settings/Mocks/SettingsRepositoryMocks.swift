@@ -1,6 +1,7 @@
 @testable import ClipNinjaPackage
 import Combine
 
+typealias SettingsRepositoryDummy = SettingsRepositorySpy
 class SettingsRepositorySpy: SettingsRepository {
 
     var settings: AnyPublisher<Settings, Never> = Just(.default).eraseToAnyPublisher()
@@ -8,6 +9,7 @@ class SettingsRepositorySpy: SettingsRepository {
 
     var togglePasteDirectlyCalled: Bool?
     var toggleLaunchAtLoginCalled: Bool?
+    var toggleMovePastedClipToTopCalled: Bool?
 
     func togglePasteDirectly() {
         togglePasteDirectlyCalled = true
@@ -15,6 +17,10 @@ class SettingsRepositorySpy: SettingsRepository {
 
     func toggleLaunchAtLogin() {
         toggleLaunchAtLoginCalled = true
+    }
+
+    func toggleMovePastedClipToTop() {
+        toggleMovePastedClipToTopCalled = true
     }
 }
 
@@ -37,6 +43,10 @@ class SettingsRepositoryStub: SettingsRepository {
             .eraseToAnyPublisher()
     }
 
+    func toggleMovePastedClipToTop() {
+
+    }
+    
     func togglePasteDirectly() {
 
     }

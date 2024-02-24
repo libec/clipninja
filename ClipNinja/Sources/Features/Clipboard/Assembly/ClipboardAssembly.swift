@@ -39,7 +39,8 @@ struct ClipboardAssembly: Assembly {
                 pasteboardObserver: resolver.resolve(PasteboardObserver.self)!,
                 clipsResource: resolver.resolve(ClipsResource.self)!,
                 viewPortConfiguration: resolver.resolve(ViewPortConfiguration.self)!,
-                storageScheduler: RunLoop.main
+                storageScheduler: RunLoop.main,
+                settingsRepository: resolver.resolve(SettingsRepository.self)!
             )
         }
         .inObjectScope(.container)

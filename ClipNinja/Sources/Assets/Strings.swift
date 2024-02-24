@@ -9,6 +9,7 @@ public enum Strings {
 
     public enum Settings {
         static let launchAtLogin = "Launch at login"
+        static let movePastedClipToTop = "Move the pasted clip to the most recent"
         public static let openAppShortcut = "Shortcut"
         public static let windowName = Generic.appName + " Settings"
         public static let wip = Strings.Generic.wip

@@ -23,19 +23,21 @@ class PasteUseCaseTests: XCTestCase {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 2)
         let selectedClipToPaste = Clip(text: "eaf31z", pinned: false)
+        let clipsRepository = ClipsRepositorySpy(lastClips: [
+            Clip(text: "aewf2", pinned: true),
+            Clip(text: "aeaefwf2", pinned: true),
+            selectedClipToPaste,
+            Clip(text: "wa24", pinned: true),
+        ])
         let sut = makeSut(
             pasteTextUseCase: pasteTextUseCase,
-            clipsRepository: ClipsRepositoryStub(lastClips: [
-                Clip(text: "aewf2", pinned: true),
-                Clip(text: "aeaefwf2", pinned: true),
-                selectedClipToPaste,
-                Clip(text: "wa24", pinned: true),
-            ]),
+            clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository
         )
 
         sut.paste(at: .selected)
 
+        XCTAssertEqual(clipsRepository.lastPastedClip, selectedClipToPaste)
         XCTAssertEqual(selectedClipToPaste.text, pasteTextUseCase.pastedText)
     }
 
@@ -126,7 +128,7 @@ class PasteUseCaseTests: XCTestCase {
         XCTAssertNil(hideAppUseCase.hideCalled)
     }
 
-    func test_it_moves_clips_then_hides_and_then_pastes() {
+    func test_it_moves_clips_then_hides_then_stores_last_pasted_clip_and_then_pastes() {
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
         let pasteOrderSpy = PasteOrderSpy(
@@ -144,7 +146,7 @@ class PasteUseCaseTests: XCTestCase {
 
         sut.paste(at: .selected)
 
-        XCTAssertEqual(pasteOrderSpy.steps, [.moveAfterPins, .hideApp, .paste])
+        XCTAssertEqual(pasteOrderSpy.steps, [.moveAfterPins, .hideApp, .setLastClip, .paste])
     }
 
     func test_it_doesnt_move_pinned_clip() {
@@ -156,6 +158,28 @@ class PasteUseCaseTests: XCTestCase {
             Clip(text: "wa24", pinned: false),
         ])
         let sut = makeSut(
+            clipsRepository: clipsRepository,
+            viewPortRepository: viewPortRepository
+        )
+
+        sut.paste(at: .selected)
+
+        XCTAssertNil(clipsRepository.movedAfterPinsAtIndex)
+    }
+
+    func test_it_doesnt_move_unpinned_clip_when_disabled_in_settings() {
+        let settingsRepository = SettingsRepositoryStub()
+        settingsRepository.lastSettings = .fixture(movePastedClipToTop: false)
+        let viewPortRepository = InMemoryViewPortRepository()
+        viewPortRepository.update(position: 2)
+        let clipsRepository = ClipsRepositorySpy(lastClips: [
+            Clip(text: "aewf2", pinned: false),
+            Clip(text: "aeaefwf2", pinned: false),
+            Clip(text: "wa24", pinned: false),
+
+        ])
+        let sut = makeSut(
+            settingsRepository: settingsRepository,
             clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository
         )
@@ -195,6 +219,7 @@ class PasteUseCaseTests: XCTestCase {
         pasteTextUseCase: PasteTextUseCase = PasteTextUseCaseDummy(),
         checkTutorialUseCase: CheckTutorialUseCase = CheckTutorialUseCaseDummy(),
         currentTutorialUseCase: CurrentTutorialUseCase = CurrentTutorialUseCaseStub(current: nil),
+        settingsRepository: SettingsRepository = SettingsRepositoryDummy(),
         clipsRepository: ClipsRepository,
         viewPortRepository: ViewPortRepository
     ) -> PasteUseCase {
@@ -205,7 +230,8 @@ class PasteUseCaseTests: XCTestCase {
             pasteTextUseCase: pasteTextUseCase,
             checkTutorialUseCase: checkTutorialUseCase,
             currentTutorialUseCase: currentTutorialUseCase,
-            viewPortConfiguration: TestViewPortConfiguration()
+            viewPortConfiguration: TestViewPortConfiguration(),
+            settingsRepository: settingsRepository
         )
     }
 }

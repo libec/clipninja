@@ -58,6 +58,30 @@ final class ClipsRepositoryStorageAndPasteboardTests: XCTestCase {
         XCTAssertEqual(sut.lastClips, expectedClips)
     }
 
+    func test_it_doesnt_move_new_clips_to_top_when_that_setting_is_disabled() {
+        let settingsRepository = SettingsRepositoryStub(lastSettings: .fixture(movePastedClipToTop: false))
+        let clips: [Clip] = [
+            .init(text: "foo", pinned: false),
+        ]
+        let clipsResource = ClipsResourceStub(clips: clips)
+        let pasteboardObserver = PasteboardObserverStub()
+        setupSut(pasteboardObserver: pasteboardObserver, clipsResource: clipsResource, settingsRepository: settingsRepository)
+
+        pasteboardObserver.subject.send("atom,slack,bear")
+        pasteboardObserver.subject.send("import foobar")
+        pasteboardObserver.subject.send("heyclipninja")
+        sut.lastPastedClip = .newClip(with: "atom,slack,bear")
+        pasteboardObserver.subject.send("atom,slack,bear")
+
+        let expectedClips: [Clip] = [
+            .init(text: "heyclipninja", pinned: false),
+            .init(text: "import foobar", pinned: false),
+            .init(text: "atom,slack,bear", pinned: false),
+            .init(text: "foo", pinned: false),
+        ]
+        XCTAssertEqual(sut.lastClips, expectedClips)
+    }
+
     func test_it_ignores_duplicated_clips_that_are_pinned() {
         let clips: [Clip] = [
             .init(text: "foo", pinned: true),
@@ -134,13 +158,15 @@ final class ClipsRepositoryStorageAndPasteboardTests: XCTestCase {
     private func setupSut(
         pasteboardObserver: PasteboardObserver = PasteboardObserverDummy(),
         clipsResource: ClipsResource = ClipsResourceDummy(),
-        viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration()
+        viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration(),
+        settingsRepository: SettingsRepository = SettingsRepositoryDummy()
     ) {
         self.sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
             clipsResource: clipsResource,
             viewPortConfiguration: viewPortConfiguration,
-            storageScheduler: ImmediateScheduler.shared
+            storageScheduler: ImmediateScheduler.shared,
+            settingsRepository: settingsRepository
         )
     }
 }

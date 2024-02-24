@@ -16,6 +16,7 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
             recordShortcutView
             launchAtLogin
             pasteDirectly
+            movePastedToTop
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
@@ -60,6 +61,12 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
             viewModel.onEvent(.settingsEvent(.toggleLaunchAtLogin))
         })
     }
+
+    var movePastedToTop: some View {
+        Toggle(R.Settings.movePastedClipToTop, isOn: viewModel.movePastedClipToTop.binding {
+            viewModel.onEvent(.settingsEvent(.toggleMovePastedToTop))
+        })
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {
@@ -75,6 +82,7 @@ struct SettingsView_Previews: PreviewProvider {
         let pasteDirectly = false
         let launchAtLogin = false
         let showPasteDirectlyHint = false
+        let movePastedClipToTop = true
 
         func onEvent(_ event: SettingsEvent) { }
     }

@@ -7,6 +7,7 @@ final class SystemSettingsRepository: SettingsRepository {
     private let launchAtLoginResource: LaunchAtLoginResource
 
     private let pasteDirectlyKey = "SettingsPasteDirectly"
+    private let movePastedClipToTopKey = "SettingsMovePastedClipToTop"
     private var currentSettingsSubject: CurrentValueSubject<Settings, Never>
     var settings: AnyPublisher<Settings, Never> { currentSettingsSubject.eraseToAnyPublisher() }
     var lastSettings: Settings {
@@ -40,10 +41,17 @@ final class SystemSettingsRepository: SettingsRepository {
         currentSettingsSubject.send(makeSettings())
     }
 
+    func toggleMovePastedClipToTop() {
+        userDefaults.set(!lastSettings.movePastedClipToTop, forKey: movePastedClipToTopKey)
+        currentSettingsSubject.send(makeSettings())
+    }
+
     private func makeSettings() -> Settings {
-        Settings(
+        let movePastedClipToTop: Bool? = userDefaults.value(forKey: movePastedClipToTopKey) as? Bool
+        return Settings(
            pasteDirectly: userDefaults.bool(forKey: pasteDirectlyKey),
-           launchAtLogin: launchAtLoginResource.enabled
+           launchAtLogin: launchAtLoginResource.enabled,
+           movePastedClipToTop: movePastedClipToTop ?? true
        )
     }
 }

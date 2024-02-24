@@ -1,6 +1,7 @@
 enum ToggleSetting {
     case launchAtLogin
     case pasteDirectly
+    case movePastedClipToTop
 }
 
 protocol ToggleSettingsUseCase {
@@ -30,6 +31,9 @@ final class ToggleSettingsUseCaseImpl: ToggleSettingsUseCase {
         switch setting {
         case .launchAtLogin:
             settingsRepository.toggleLaunchAtLogin()
+            return .success(())
+        case .movePastedClipToTop:
+            settingsRepository.toggleMovePastedClipToTop()
             return .success(())
         case .pasteDirectly:
             if permissionsResource.pastingAllowed || settingsRepository.lastSettings.pasteDirectly {

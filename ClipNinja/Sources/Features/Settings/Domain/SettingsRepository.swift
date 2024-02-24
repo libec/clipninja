@@ -6,4 +6,5 @@ protocol SettingsRepository {
 
     func togglePasteDirectly()
     func toggleLaunchAtLogin()
+    func toggleMovePastedClipToTop()
 }

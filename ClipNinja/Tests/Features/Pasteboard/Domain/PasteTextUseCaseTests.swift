@@ -8,7 +8,7 @@ class PasteTextUseCaseTests: XCTestCase {
         let pasteCommand = PasteCommandSpy()
         let sut = PasteTextUseCaseImpl(
             pasteboardResource: pasteboardResource,
-            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false)),
+            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false, movePastedClipToTop: true)),
             permissionsResource: PermissionsResourceStub(pastingAllowed: true),
             pasteCommand: pasteCommand
         )
@@ -24,7 +24,7 @@ class PasteTextUseCaseTests: XCTestCase {
         let pasteCommand = PasteCommandSpy()
         let sut = PasteTextUseCaseImpl(
             pasteboardResource: pasteboardResource,
-            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false)),
+            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false, movePastedClipToTop: true)),
             permissionsResource: PermissionsResourceStub(pastingAllowed: false),
             pasteCommand: pasteCommand
         )
@@ -40,7 +40,7 @@ class PasteTextUseCaseTests: XCTestCase {
         let pasteCommand = PasteCommandSpy()
         let sut = PasteTextUseCaseImpl(
             pasteboardResource: pasteboardResource,
-            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: false, launchAtLogin: false)),
+            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: false, launchAtLogin: false, movePastedClipToTop: true)),
             permissionsResource: PermissionsResourceStub(pastingAllowed: true),
             pasteCommand: pasteCommand
         )

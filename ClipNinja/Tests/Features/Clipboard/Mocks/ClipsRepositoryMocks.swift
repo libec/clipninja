@@ -1,8 +1,10 @@
 @testable import ClipNinjaPackage
 import Combine
 
+typealias ClipsRepositorySpy = ClipsRepositoryStub
 class ClipsRepositoryStub: ClipsRepository {
     var lastClips: [Clip]
+    var lastPastedClip: Clip?
     var deletedIndex: Int?
     var toggledPin: Int?
     var movedAfterPinsAtIndex: Int?
