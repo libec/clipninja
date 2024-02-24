@@ -2,7 +2,6 @@
 import XCTest
 
 final class CurrentTutorialUseCaseTests: XCTestCase {
-
     func test_it_checks_with_repository_for_current_tutorial() {
         let tutorials: [Tutorial?] = Tutorial.allCases + [nil]
 

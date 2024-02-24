@@ -1,7 +1,6 @@
 import Swinject
 
 class SwinjectInstanceProvider: InstanceProvider {
-
     let resolver: Resolver
 
     init(resolver: Resolver) {

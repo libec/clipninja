@@ -1,11 +1,10 @@
+import SwiftUI
 import Swinject
 import SwinjectAutoregistration
-import SwiftUI
 
 struct ClipboardAssembly: Assembly {
+    init() {}
 
-    init() { }
-    
     func assemble(container: Container) {
         assembleViews(container: container)
         assembleDomain(container: container)
@@ -14,7 +13,7 @@ struct ClipboardAssembly: Assembly {
 
     func assembleViews(container: Container) {
         container.register(AnyView.self, name: AssemblyKeys.clipboardView.rawValue) { resolver in
-            return AnyView(
+            AnyView(
                 resolver.resolve(ClipboardView<ClipboardViewModelImpl>.self)!
             )
         }

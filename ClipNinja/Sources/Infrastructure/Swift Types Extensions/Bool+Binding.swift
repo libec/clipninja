@@ -7,6 +7,5 @@ extension Bool {
         } set: { _ in
             onChange()
         }
-
     }
 }

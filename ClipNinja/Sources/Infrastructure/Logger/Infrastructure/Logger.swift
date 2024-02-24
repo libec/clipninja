@@ -1,5 +1,5 @@
-import os
 import Foundation
+import os
 
 private protocol Logger {
     func log(message: String, category: LogCategory)
@@ -25,12 +25,11 @@ public enum LogCategory: CaseIterable {
     }
 
     fileprivate func makeLogger(subsystem: String) -> os.Logger {
-        os.Logger(subsystem: subsystem, category: logDescription )
+        os.Logger(subsystem: subsystem, category: logDescription)
     }
 }
 
 private final class SystemLogger: Logger {
-
     private let subsystem = Bundle.main.bundleIdentifier!
     private let silentCategories: [LogCategory]
 
@@ -43,14 +42,14 @@ private final class SystemLogger: Logger {
     fileprivate init(silentCategories: [LogCategory]) {
         self.silentCategories = silentCategories
     }
-    
+
     fileprivate func log(message: String, category: LogCategory) {
         if silentCategories.contains(category) { return }
         loggers[category]?.log("\(message)")
     }
 }
 
-private struct LoggerWrapper {
+private enum LoggerWrapper {
     fileprivate static let silentCategories: [LogCategory] = [
     ]
     fileprivate static let logger: Logger = SystemLogger(silentCategories: silentCategories)

@@ -1,5 +1,5 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 final class GetSettingsUseCaseTests: XCTestCase {

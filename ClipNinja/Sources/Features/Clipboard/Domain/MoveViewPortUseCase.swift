@@ -12,7 +12,6 @@ protocol MoveViewPortUseCase {
 }
 
 class MoveViewPortUseCaseImpl: MoveViewPortUseCase {
-
     private let viewPortRepository: ViewPortRepository
     private let clipsRepository: ClipsRepository
     private let viewPortConfiguration: ViewPortConfiguration

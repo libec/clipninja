@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct TutorialView<ViewModel: TutorialViewModel>: View {
-
     @StateObject private var viewModel: ViewModel
 
     init(viewModel: ViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -44,9 +43,8 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
 }
 
 struct TutorialView_Previews: PreviewProvider {
-
     class ViewModelStub: TutorialViewModel {
-        func onEvent(_ event: TutorialEvent) { }
+        func onEvent(_: TutorialEvent) {}
         var tutorial: Tutorial? = .welcome
         var showSettings: Bool = true
     }

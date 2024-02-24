@@ -1,9 +1,8 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 class ClipboardViewModelTests: XCTestCase {
-    
     func test_it_passes_events_to_domain_to_handle() throws {
         let clipboards = ClipboardsSpy()
         let factory = ClipboardPreviewFactoryDummy()
@@ -50,7 +49,7 @@ class ClipboardViewModelTests: XCTestCase {
             viewPortConfiguration: TestViewPortConfiguration(),
             checkTutorialUseCase: CheckTutorialUseCaseDummy()
         )
-        
+
         sut.onEvent(.keyboard(.number(number: 7)))
         try XCTAssertEqual(XCTUnwrap(clipboards.pastedAtIndex), .index(6))
 
@@ -125,14 +124,12 @@ class ClipboardViewModelTests: XCTestCase {
 }
 
 class ClipboardPreviewFactoryDummy: ClipboardPreviewFactory {
-
-    func makePreview(from clip: Clip, index: Int, selected: Bool) -> ClipPreview {
+    func makePreview(from _: Clip, index _: Int, selected _: Bool) -> ClipPreview {
         return .dummy
     }
 }
 
 extension ClipPreview {
-
     static var dummy: ClipPreview {
         ClipPreview(
             previewText: "foo",

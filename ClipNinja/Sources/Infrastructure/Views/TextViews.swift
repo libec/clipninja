@@ -19,7 +19,7 @@ struct DescriptionText: View {
     private let title: String
 
     init(_ text: String) {
-        self.title = text
+        title = text
     }
 
     var body: some View {

@@ -3,7 +3,6 @@ import Combine
 
 typealias SettingsRepositoryDummy = SettingsRepositorySpy
 class SettingsRepositorySpy: SettingsRepository {
-
     var settings: AnyPublisher<Settings, Never> = Just(.default).eraseToAnyPublisher()
     var lastSettings: Settings = .default
 
@@ -25,7 +24,6 @@ class SettingsRepositorySpy: SettingsRepository {
 }
 
 class SettingsRepositoryStub: SettingsRepository {
-
     var lastSettings: Settings
 
     var passthroughSubject = PassthroughSubject<Settings, Never>()
@@ -43,15 +41,9 @@ class SettingsRepositoryStub: SettingsRepository {
             .eraseToAnyPublisher()
     }
 
-    func toggleMovePastedClipToTop() {
+    func toggleMovePastedClipToTop() {}
 
-    }
-    
-    func togglePasteDirectly() {
+    func togglePasteDirectly() {}
 
-    }
-
-    func toggleLaunchAtLogin() {
-
-    }
+    func toggleLaunchAtLogin() {}
 }

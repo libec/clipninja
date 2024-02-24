@@ -3,7 +3,6 @@ protocol PinUseCase {
 }
 
 final class PinUseCaseImpl: PinUseCase {
-
     private let clipsRepository: ClipsRepository
     private let viewPortRepository: ViewPortRepository
 

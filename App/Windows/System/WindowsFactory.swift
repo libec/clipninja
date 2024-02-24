@@ -7,7 +7,6 @@ protocol WindowsFactory {
 }
 
 final class WindowsFactoryImpl: WindowsFactory {
-
     private let instanceProvider: InstanceProvider
     private let keyboardObserver: SystemKeyboardObserver
 

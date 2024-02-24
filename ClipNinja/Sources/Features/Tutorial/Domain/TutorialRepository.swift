@@ -7,7 +7,6 @@ protocol TutorialRepository {
 }
 
 final class TutorialRepositoryImpl: TutorialRepository {
-
     private let resource: TutorialResource
     private let permissionsResource: PermissionsResource
 

@@ -6,7 +6,6 @@ protocol ClipsResource {
 }
 
 final class ProtectedLocalClipsResource: ClipsResource {
-
     private let clipboardsStorageKey = "Clipboards"
 
     private let jsonDecoder: JSONDecoder

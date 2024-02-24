@@ -4,7 +4,6 @@ import Combine
 import KeyboardShortcuts
 
 class StyledWindow: NSWindow {
-
     var defaultsWindowKey = ""
 
     init(contentRect: NSRect) {
@@ -30,8 +29,6 @@ class StyledWindow: NSWindow {
 }
 
 class SettingsWindow: StyledWindow {
-
-
     init() {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 300))
         title = Strings.Settings.windowName
@@ -42,7 +39,6 @@ class SettingsWindow: StyledWindow {
 }
 
 class TutorialWindow: StyledWindow {
-
     init() {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 500, height: 400))
         setFrameAutosaveName("TutorialWindow")
@@ -52,7 +48,6 @@ class TutorialWindow: StyledWindow {
 }
 
 class ClipboardWindow: StyledWindow {
-
     private let keyboardController: SystemKeyboardObserver
 
     let keySubject = PassthroughSubject<KeyboardShortcuts.Key, Never>()

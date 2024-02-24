@@ -1,9 +1,8 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 final class CheckTutorialUseCaseTests: XCTestCase {
-
     func test_it_checks_tutorial_repository_for_events() {
         let repository = TutorialRepositorySpy()
         let navigation = NavigationDummy()
@@ -32,21 +31,21 @@ class TutorialRepositorySpy: TutorialRepository {
     var currentTutorial: Tutorial?
     var finishCurrentTutorialCalled = false
     func checkTutorials(for event: TutorialTriggeringEvent) {
-        self.checkedEvent = event
+        checkedEvent = event
     }
+
     func finishCurrentTutorial() {
         finishCurrentTutorialCalled = true
     }
 }
 
 class TutorialRepositoryStub: TutorialRepository {
-
     var currentTutorial: Tutorial?
 
     init(tutorialToReturn: Tutorial?) {
-        self.currentTutorial = tutorialToReturn
+        currentTutorial = tutorialToReturn
     }
 
-    func checkTutorials(for event: TutorialTriggeringEvent) { }
-    func finishCurrentTutorial() { }
+    func checkTutorials(for _: TutorialTriggeringEvent) {}
+    func finishCurrentTutorial() {}
 }

@@ -11,7 +11,6 @@ protocol ClipsRepository: AnyObject {
 }
 
 final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
-
     var clips: AnyPublisher<[Clip], Never> {
         clipsSubject.eraseToAnyPublisher()
     }
@@ -43,7 +42,7 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         self.viewPortConfiguration = viewPortConfiguration
         self.storageScheduler = storageScheduler
         self.settingsRepository = settingsRepository
-        self.clipsSubject = .init(clipsResource.clips)
+        clipsSubject = .init(clipsResource.clips)
         observePasteboard()
         setupPersistency()
     }
@@ -108,7 +107,7 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         if let clipIndex = clipsSubject.value.firstIndex(of: newClip) {
             delete(at: clipIndex)
         }
-        let pinnedClips = self.clipsSubject.value.filter({ $0.pinned }).count
+        let pinnedClips = clipsSubject.value.filter { $0.pinned }.count
         clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
         clipsSubject.value = Array(clipsSubject.value.prefix(viewPortConfiguration.clipsPerPage * viewPortConfiguration.totalPages))
     }

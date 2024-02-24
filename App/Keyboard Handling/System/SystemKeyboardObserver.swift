@@ -1,9 +1,8 @@
-import KeyboardShortcuts
-import Combine
 import ClipNinjaPackage
+import Combine
+import KeyboardShortcuts
 
 final class SystemKeyboardObserver: KeyboardObserver {
-
     private let keyPressSubject = PassthroughSubject<KeyboardEvent, Never>()
 
     var keyPress: AnyPublisher<KeyboardEvent, Never> {
@@ -28,7 +27,7 @@ final class SystemKeyboardObserver: KeyboardObserver {
             return .left
         case .delete:
             return .delete
-        case .keypadEnter, .`return`:
+        case .keypadEnter, .return:
             return .enter
         case .space:
             return .space

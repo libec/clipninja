@@ -13,7 +13,7 @@ public enum NavigationEvent {
         switch self {
         case .showTutorial:
             return true
-        case .showClipboard, .showSettings, .hideApp, .showSystemSettings, .showAppUsage,. hideTutorial:
+        case .showClipboard, .showSettings, .hideApp, .showSystemSettings, .showAppUsage, .hideTutorial:
             return false
         }
     }

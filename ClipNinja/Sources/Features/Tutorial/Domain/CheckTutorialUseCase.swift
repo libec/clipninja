@@ -26,7 +26,6 @@ protocol CheckTutorialUseCase {
 }
 
 final class CheckTutorialUseCaseImpl: CheckTutorialUseCase {
-
     private let tutorialRepository: TutorialRepository
     private let navigation: Navigation
 

@@ -1,7 +1,6 @@
 import AppKit
 
 final class SystemPasteboardResource: PasteboardResource {
-
     let systemPasteboard: NSPasteboard
 
     init(systemPasteboard: NSPasteboard) {

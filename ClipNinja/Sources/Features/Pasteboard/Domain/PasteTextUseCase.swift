@@ -3,7 +3,6 @@ protocol PasteTextUseCase {
 }
 
 final class PasteTextUseCaseImpl: PasteTextUseCase {
-
     let pasteboardResource: PasteboardResource
     let settingsRepository: SettingsRepository
     let permissionsResource: PermissionsResource

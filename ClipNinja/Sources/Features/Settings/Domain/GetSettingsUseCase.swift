@@ -5,7 +5,6 @@ protocol GetSettingsUseCase {
 }
 
 final class GetSettingsUseCaseImpl: GetSettingsUseCase {
-
     private let settingsRepository: SettingsRepository
 
     init(settingsRepository: SettingsRepository) {

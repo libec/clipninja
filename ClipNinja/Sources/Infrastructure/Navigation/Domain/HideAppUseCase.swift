@@ -3,7 +3,6 @@ protocol HideAppUseCase {
 }
 
 final class HideAppUseCaseImpl: HideAppUseCase {
-
     private let navigation: Navigation
     private let viewPortRepository: ViewPortRepository
 

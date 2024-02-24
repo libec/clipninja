@@ -2,7 +2,6 @@ import SwiftUI
 
 // TODO: - Move texts to Strings.swift
 struct PasteDirectlyTutorialView: View {
-
     var body: some View {
         content
             .background(Colors.backgroundColor)

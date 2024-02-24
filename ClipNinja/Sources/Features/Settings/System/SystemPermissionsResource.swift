@@ -1,8 +1,7 @@
 import ApplicationServices
 
 final class SystemPermissionsResource: PermissionsResource {
-
-    init() { }
+    init() {}
 
     var pastingAllowed: Bool {
         AXIsProcessTrusted()

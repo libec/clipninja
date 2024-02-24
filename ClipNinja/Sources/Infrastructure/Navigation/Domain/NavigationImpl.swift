@@ -1,7 +1,6 @@
 import Combine
 
 final class NavigationImpl: Navigation {
-
     private let shortcutObserver: ShortcutObserver
 
     private let navigationSubject = PassthroughSubject<NavigationEvent, Never>()
@@ -12,7 +11,7 @@ final class NavigationImpl: Navigation {
     }
 
     public var navigationEvent: AnyPublisher<NavigationEvent, Never> {
-        let shortcut: AnyPublisher<NavigationEvent, Never>  = shortcutObserver.showClipboard
+        let shortcut: AnyPublisher<NavigationEvent, Never> = shortcutObserver.showClipboard
             .map { _ in .showClipboard }
             .eraseToAnyPublisher()
 

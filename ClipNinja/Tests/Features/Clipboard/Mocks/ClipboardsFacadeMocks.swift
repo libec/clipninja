@@ -3,7 +3,6 @@ import Combine
 
 typealias ClipboardsDummy = ClipboardsSpy
 class ClipboardsSpy: Clipboards {
-
     var pinCalled = false
     var deleteCalled = false
     var pastedAtIndex: PasteIndex? = nil
@@ -31,7 +30,6 @@ class ClipboardsSpy: Clipboards {
 }
 
 class ClipboardsStub: ClipboardsSpy {
-
     let subject = PassthroughSubject<ClipboardViewPort, Never>()
 
     override var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> {

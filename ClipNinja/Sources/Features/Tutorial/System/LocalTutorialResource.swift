@@ -1,5 +1,4 @@
 final class LocalTutorialResource: TutorialResource {
-
     var userOnboard = false
     var pastedText = false
     var clipsMovement = 0

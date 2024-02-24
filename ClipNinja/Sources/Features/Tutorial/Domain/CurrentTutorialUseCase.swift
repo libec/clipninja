@@ -3,7 +3,6 @@ protocol CurrentTutorialUseCase {
 }
 
 final class CurrentTutorialUseCaseImpl: CurrentTutorialUseCase {
-
     private let repository: TutorialRepository
 
     init(repository: TutorialRepository) {

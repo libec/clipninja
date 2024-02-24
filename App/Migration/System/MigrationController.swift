@@ -1,8 +1,7 @@
-import Foundation
 import ClipNinjaPackage
+import Foundation
 
 final class MigrationController {
-
     private let legacyKey = "Clipboards"
 
     func migrate() {

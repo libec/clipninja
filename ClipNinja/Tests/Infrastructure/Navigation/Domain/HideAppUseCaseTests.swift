@@ -1,9 +1,8 @@
+@testable import ClipNinjaPackage
 import Combine
 import XCTest
-@testable import ClipNinjaPackage
 
 class HideAppUseCaseTests: XCTestCase {
-
     func test_it_uses_navigation_to_hide_the_app() throws {
         let navigation = NavigationSpy()
         let sut = HideAppUseCaseImpl(
@@ -32,7 +31,6 @@ class HideAppUseCaseTests: XCTestCase {
 
 typealias NavigationDummy = NavigationSpy
 class NavigationSpy: Navigation {
-
     var handledEvent: NavigationEvent?
     var allHandledEvents: [NavigationEvent] = []
 
@@ -41,7 +39,7 @@ class NavigationSpy: Navigation {
     }
 
     func handle(navigationEvent: NavigationEvent) {
-        self.handledEvent = navigationEvent
-        self.allHandledEvents.append(navigationEvent)
+        handledEvent = navigationEvent
+        allHandledEvents.append(navigationEvent)
     }
 }

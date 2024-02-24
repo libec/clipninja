@@ -14,7 +14,6 @@ enum ToggleSettingsError: Error {
 }
 
 final class ToggleSettingsUseCaseImpl: ToggleSettingsUseCase {
-
     private let settingsRepository: SettingsRepository
     private let permissionsResource: PermissionsResource
 

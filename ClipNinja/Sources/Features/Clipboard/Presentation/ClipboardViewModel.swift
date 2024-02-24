@@ -8,7 +8,6 @@ protocol ClipboardViewModel: ObservableObject {
 }
 
 final class ClipboardViewModelImpl: ClipboardViewModel {
-
     @Published var shownPage: Int
     @Published var totalPages: Int
     @Published var clipPreviews: [ClipPreview] = []
@@ -31,13 +30,13 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
         self.previewFactory = previewFactory
         self.hideAppUseCase = hideAppUseCase
         self.checkTutorialUseCase = checkTutorialUseCase
-        self.shownPage = viewPortConfiguration.defaultSelectedPage
-        self.totalPages = viewPortConfiguration.totalPages
+        shownPage = viewPortConfiguration.defaultSelectedPage
+        totalPages = viewPortConfiguration.totalPages
     }
 
     func onEvent(_ event: ClipboardViewModelEvent) {
         switch event {
-        case .keyboard(let keyboardEvent):
+        case let .keyboard(keyboardEvent):
             switch keyboardEvent {
             case .left:
                 clipboards.move(to: .left)
@@ -53,12 +52,12 @@ final class ClipboardViewModelImpl: ClipboardViewModel {
                 clipboards.delete()
             case .space:
                 clipboards.pin()
-            case .number(let number):
+            case let .number(number):
                 clipboards.paste(at: .index(number - 1))
             case .escape:
                 hideAppUseCase.hide()
             }
-        case .lifecycle(let lifecycleEvent):
+        case let .lifecycle(lifecycleEvent):
             switch lifecycleEvent {
             case .appear:
                 subscribe()

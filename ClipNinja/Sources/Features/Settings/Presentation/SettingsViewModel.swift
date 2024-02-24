@@ -47,7 +47,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
 
     func onEvent(_ event: SettingsEvent) {
         switch event {
-        case .settingsEvent(let settingsEvent):
+        case let .settingsEvent(settingsEvent):
             onEvent(settingsEvent)
         case .lifecycle(.appear):
             subscribe()

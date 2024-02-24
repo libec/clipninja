@@ -62,7 +62,6 @@ struct PasteDirectlyView: View {
 }
 
 struct PasteDirectlyView_Previews: PreviewProvider {
-
     static var previews: some View {
         PasteDirectlyView(showSettings: {})
             .frame(width: 400, height: 250)

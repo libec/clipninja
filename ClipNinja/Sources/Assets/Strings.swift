@@ -1,7 +1,6 @@
 public typealias R = Strings
 
 public enum Strings {
-
     public enum Generic {
         public static let wip = "🚧🚧🚧"
         public static let appName = "ClipNinja"
