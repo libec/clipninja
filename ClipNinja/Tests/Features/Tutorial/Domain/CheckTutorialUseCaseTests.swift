@@ -8,7 +8,7 @@ final class CheckTutorialUseCaseTests: XCTestCase {
         let navigation = NavigationDummy()
         let sut = CheckTutorialUseCaseImpl(tutorialRepository: repository, navigation: navigation)
 
-        TutorialTriggeringEvent.allCases.forEach { event in
+        for event in TutorialTriggeringEvent.allCases {
             sut.checkTutorials(for: event)
 
             XCTAssertEqual(repository.checkedEvent, event)

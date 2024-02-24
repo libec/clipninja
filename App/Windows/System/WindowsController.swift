@@ -69,7 +69,7 @@ class WindowsController {
             .sink { [unowned self] event in
                 log(message: "NavigationEvent: \(event)", category: .windows)
                 log(message: "App windows", category: .windows)
-                NSApp.windows.forEach { window in
+                for window in NSApp.windows {
                     log(message: "Window: \(window)", category: .windows)
                 }
                 switch event {

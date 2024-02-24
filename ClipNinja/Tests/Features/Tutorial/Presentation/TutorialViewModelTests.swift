@@ -12,7 +12,7 @@ class TutorialViewModelTests: XCTestCase {
     }
 
     func test_it_returns_current_tutorial_when_it_appears() {
-        Tutorial.allCases.forEach { tutorial in
+        for tutorial in Tutorial.allCases {
             let tutorials = TutorialsStub(current: tutorial)
             let sut = TutorialViewModelImpl(tutorials: tutorials, navigation: NavigationDummy())
 

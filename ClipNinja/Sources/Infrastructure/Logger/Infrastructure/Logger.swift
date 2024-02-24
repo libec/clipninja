@@ -33,11 +33,9 @@ private final class SystemLogger: Logger {
     private let subsystem = Bundle.main.bundleIdentifier!
     private let silentCategories: [LogCategory]
 
-    private lazy var loggers: [LogCategory: os.Logger] = {
-        LogCategory.allCases.reduce(into: [LogCategory: os.Logger]()) { allLogs, category in
-            allLogs[category] = category.makeLogger(subsystem: subsystem)
-        }
-    }()
+    private lazy var loggers: [LogCategory: os.Logger] = LogCategory.allCases.reduce(into: [LogCategory: os.Logger]()) { allLogs, category in
+        allLogs[category] = category.makeLogger(subsystem: subsystem)
+    }
 
     fileprivate init(silentCategories: [LogCategory]) {
         self.silentCategories = silentCategories
