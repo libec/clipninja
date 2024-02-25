@@ -1,12 +1,11 @@
-import ServiceManagement
 import ClipNinjaPackage
+import ServiceManagement
 
 final class LaunchAtLoginSystemResource: LaunchAtLoginResource {
-
     private let appService: SMAppService
 
     init() {
-        self.appService = SMAppService.mainApp
+        appService = SMAppService.mainApp
     }
 
     var enabled: Bool {

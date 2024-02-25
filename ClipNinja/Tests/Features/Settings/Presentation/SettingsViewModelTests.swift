@@ -1,9 +1,8 @@
 @testable import ClipNinjaPackage
-import XCTest
 import Combine
+import XCTest
 
 class SettingsViewModelTests: XCTestCase {
-
     func test_it_notifies_about_new_settings() {
         let getSettingsUseCase = GetSettingsUseCaseStub(
             storedSettings: Settings(
@@ -120,7 +119,6 @@ class GetSettingsUseCaseDummy: GetSettingsUseCase {
 }
 
 class GetSettingsUseCaseStub: GetSettingsUseCase {
-
     private let storedSettings: Settings
 
     init(storedSettings: Settings) {
@@ -128,14 +126,13 @@ class GetSettingsUseCaseStub: GetSettingsUseCase {
     }
 
     var settings: AnyPublisher<Settings, Never> {
-        return Just(storedSettings)
+        Just(storedSettings)
             .eraseToAnyPublisher()
     }
 }
 
 typealias ToggleSettingsUseCaseDummy = ToggleSettingsUseCaseSpy
 class ToggleSettingsUseCaseSpy: ToggleSettingsUseCase {
-
     var toggledSetting: ToggleSetting?
 
     func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
@@ -151,7 +148,7 @@ class ToggleSettingsUseCaseStub: ToggleSettingsUseCase {
         self.result = result
     }
 
-    func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
+    func toggle(setting _: ToggleSetting) -> Result<Void, ToggleSettingsError> {
         result
     }
 }

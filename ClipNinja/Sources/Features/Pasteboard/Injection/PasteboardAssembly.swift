@@ -3,8 +3,7 @@ import Swinject
 import SwinjectAutoregistration
 
 struct PasteboardAssembly: Assembly {
-    
-    init() { }
+    init() {}
 
     func assemble(container: Container) {
         container.autoregister(PasteCommand.self, initializer: SystemPasteCommand.init)

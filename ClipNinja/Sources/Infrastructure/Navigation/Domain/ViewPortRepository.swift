@@ -7,7 +7,6 @@ protocol ViewPortRepository {
 }
 
 final class InMemoryViewPortRepository: ViewPortRepository {
-
     private let subject = CurrentValueSubject<Int, Never>(0)
 
     var position: AnyPublisher<Int, Never> {

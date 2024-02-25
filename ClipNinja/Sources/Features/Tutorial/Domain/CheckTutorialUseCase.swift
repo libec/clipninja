@@ -5,9 +5,9 @@ enum TutorialTriggeringEvent: CaseIterable {
 
     fileprivate var eventDescription: String {
         switch self {
-        case .clipsAppear: return "Clips appeared"
-        case .clipsMovement: return "Clips movement event"
-        case .pasteText: return "Paste text"
+        case .clipsAppear: "Clips appeared"
+        case .clipsMovement: "Clips movement event"
+        case .pasteText: "Paste text"
         }
     }
 
@@ -26,7 +26,6 @@ protocol CheckTutorialUseCase {
 }
 
 final class CheckTutorialUseCaseImpl: CheckTutorialUseCase {
-
     private let tutorialRepository: TutorialRepository
     private let navigation: Navigation
 

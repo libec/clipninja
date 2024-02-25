@@ -3,7 +3,7 @@
 extension Settings {
     static func fixture(
         pasteDirectly: Bool = true,
-        launchAtLogin: Bool =  true,
+        launchAtLogin: Bool = true,
         movePastedClipToTop: Bool = true
     ) -> Settings {
         Settings(

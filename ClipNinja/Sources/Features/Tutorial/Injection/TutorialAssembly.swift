@@ -1,10 +1,9 @@
+import SwiftUI
 import Swinject
 import SwinjectAutoregistration
-import SwiftUI
 
 struct TutorialAssembly: Assembly {
-
-    init() { }
+    init() {}
 
     func assemble(container: Container) {
         container.register(AnyView.self, name: AssemblyKeys.tutorialView.rawValue) { resolver in

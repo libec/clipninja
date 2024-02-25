@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct HighlightedImage: View {
-
     let systemName: String
 
     init(systemName: String) {

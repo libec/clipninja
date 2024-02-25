@@ -1,9 +1,8 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 final class ClipsRepositoryTests: XCTestCase {
-
     var sut: ClipsRepository!
 
     override func tearDown() {
@@ -94,7 +93,7 @@ final class ClipsRepositoryTests: XCTestCase {
         sut.togglePin(at: 1)
 
         let expectedClips: [Clip] = [
-            .init(text: "foo", pinned: true)
+            .init(text: "foo", pinned: true),
         ]
         XCTAssertEqual(sut.lastClips, expectedClips)
     }
@@ -143,7 +142,7 @@ final class ClipsRepositoryTests: XCTestCase {
         viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration(),
         settingsRepository: SettingsRepository = SettingsRepositoryDummy()
     ) {
-        self.sut = ClipsRepositoryImpl(
+        sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
             clipsResource: clipsResource,
             viewPortConfiguration: viewPortConfiguration,

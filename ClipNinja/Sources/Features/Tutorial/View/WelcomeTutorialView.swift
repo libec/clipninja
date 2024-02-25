@@ -2,7 +2,6 @@ import SwiftUI
 
 // TODO: - Move texts to Strings.swift
 struct WelcomeTutorialView: View {
-
     var body: some View {
         content
             .background(Colors.backgroundColor)
@@ -48,10 +47,8 @@ struct WelcomeTutorialView: View {
 }
 
 struct WelcomeTutorialView_Previews: PreviewProvider {
-
     static var previews: some View {
         WelcomeTutorialView()
             .frame(width: 500, height: 370)
     }
 }
-

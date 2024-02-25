@@ -1,11 +1,10 @@
+import SwiftUI
 import Swinject
 import SwinjectAutoregistration
-import SwiftUI
 
 struct SettingsAssembly: Assembly {
+    init() {}
 
-    init() { }
-    
     func assemble(container: Container) {
         container.register(AnyView.self, name: AssemblyKeys.settingsView.rawValue) { resolver in
             AnyView(

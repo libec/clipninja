@@ -1,8 +1,7 @@
-import Foundation
 import Combine
+import Foundation
 
 final class SystemSettingsRepository: SettingsRepository {
-
     private let userDefaults: UserDefaults
     private let launchAtLoginResource: LaunchAtLoginResource
 
@@ -22,8 +21,8 @@ final class SystemSettingsRepository: SettingsRepository {
     ) {
         self.userDefaults = userDefaults
         self.launchAtLoginResource = launchAtLoginResource
-        self.currentSettingsSubject = CurrentValueSubject(Settings.default)
-        self.currentSettingsSubject.send(makeSettings())
+        currentSettingsSubject = CurrentValueSubject(Settings.default)
+        currentSettingsSubject.send(makeSettings())
     }
 
     func togglePasteDirectly() {
@@ -49,9 +48,9 @@ final class SystemSettingsRepository: SettingsRepository {
     private func makeSettings() -> Settings {
         let movePastedClipToTop: Bool? = userDefaults.value(forKey: movePastedClipToTopKey) as? Bool
         return Settings(
-           pasteDirectly: userDefaults.bool(forKey: pasteDirectlyKey),
-           launchAtLogin: launchAtLoginResource.enabled,
-           movePastedClipToTop: movePastedClipToTop ?? true
-       )
+            pasteDirectly: userDefaults.bool(forKey: pasteDirectlyKey),
+            launchAtLogin: launchAtLoginResource.enabled,
+            movePastedClipToTop: movePastedClipToTop ?? true
+        )
     }
 }

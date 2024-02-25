@@ -1,9 +1,8 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 final class TutorialRepositoryTests: XCTestCase {
-
     func test_returns_welcome_tutorial_for_non_onboarded_users() {
         let sut = makeSut()
 

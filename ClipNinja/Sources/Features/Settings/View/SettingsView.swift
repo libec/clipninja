@@ -1,14 +1,13 @@
 import SwiftUI
 
 struct SettingsView<ViewModel: SettingsViewModel>: View {
-
     private let recordShortcutView: AnyView
 
     @StateObject var viewModel: ViewModel
 
     init(viewModel: ViewModel, recordShortcutView: AnyView) {
         self.recordShortcutView = recordShortcutView
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -48,7 +47,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
                             )
                         }
                     })
-
             }
             Text(R.Settings.PasteDirectly.featureDescription)
                 .font(.callout)
@@ -70,7 +68,6 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
-
     static var recordShortcutView: AnyView {
         AnyView(
             Color.green
@@ -84,7 +81,7 @@ struct SettingsView_Previews: PreviewProvider {
         let showPasteDirectlyHint = false
         let movePastedClipToTop = true
 
-        func onEvent(_ event: SettingsEvent) { }
+        func onEvent(_: SettingsEvent) {}
     }
 
     private static var settingsView: some View {

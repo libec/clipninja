@@ -1,9 +1,8 @@
 import Combine
 
-protocol Clipboards: GetClipsViewPortUseCase, PinUseCase, DeleteUseCase, PasteUseCase, MoveViewPortUseCase { }
+protocol Clipboards: GetClipsViewPortUseCase, PinUseCase, DeleteUseCase, PasteUseCase, MoveViewPortUseCase {}
 
 final class ClipboardsFacade: Clipboards {
-
     private let getClipsViewPortUseCase: GetClipsViewPortUseCase
     private let moveViewPortUseCase: MoveViewPortUseCase
     private let pasteUseCase: PasteUseCase
@@ -18,7 +17,7 @@ final class ClipboardsFacade: Clipboards {
         pinUseCase: PinUseCase
     ) {
         self.moveViewPortUseCase = moveViewPortUseCase
-        self.getClipsViewPortUseCase = getViewPortUseCase
+        getClipsViewPortUseCase = getViewPortUseCase
         self.pasteUseCase = pasteUseCase
         self.deleteUseCase = deleteUseCase
         self.pinUseCase = pinUseCase

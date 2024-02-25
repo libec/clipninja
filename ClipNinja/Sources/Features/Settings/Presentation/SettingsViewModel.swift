@@ -47,7 +47,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
 
     func onEvent(_ event: SettingsEvent) {
         switch event {
-        case .settingsEvent(let settingsEvent):
+        case let .settingsEvent(settingsEvent):
             onEvent(settingsEvent)
         case .lifecycle(.appear):
             subscribe()
@@ -75,9 +75,9 @@ final class SettingsViewModelImpl: SettingsViewModel {
     private func subscribe() {
         getSettingsUseCase.settings
             .sink { [unowned self] newSettings in
-                self.pasteDirectly = newSettings.pasteDirectly
-                self.movePastedClipToTop = newSettings.movePastedClipToTop
-                self.launchAtLogin = newSettings.launchAtLogin
+                pasteDirectly = newSettings.pasteDirectly
+                movePastedClipToTop = newSettings.movePastedClipToTop
+                launchAtLogin = newSettings.launchAtLogin
             }
             .store(in: &subscriptions)
     }

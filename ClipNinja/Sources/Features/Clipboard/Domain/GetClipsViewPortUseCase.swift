@@ -12,12 +12,11 @@ protocol GetClipsViewPortUseCase {
 }
 
 final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
-
     private let clipsRepository: ClipsRepository
     private let viewPortRepository: ViewPortRepository
     private let viewPortConfiguration: ViewPortConfiguration
 
-    init( 
+    init(
         clipsRepository: ClipsRepository,
         viewPortRepository: ViewPortRepository,
         viewPortConfiguration: ViewPortConfiguration
@@ -29,7 +28,7 @@ final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
 
     var clipsViewPort: AnyPublisher<ClipboardViewPort, Never> {
         clipsRepository.clips.combineLatest(viewPortRepository.position)
-            .map { (clips, selectedClipIndex) in
+            .map { clips, selectedClipIndex in
                 let clipsPerPage = self.viewPortConfiguration.clipsPerPage
                 let clipsRemainder = clips.count % clipsPerPage
                 let numberOfPages = (clips.count / clipsPerPage) + (clipsRemainder == 0 ? 0 : 1)
@@ -37,7 +36,7 @@ final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
                 let selectedIndexRemainder = selectedClipIndex % clipsPerPage
                 let clipsLowerBound = selectedPage * clipsPerPage
                 let clipsUpperBound = min((selectedPage + 1) * clipsPerPage, clips.count)
-                let clipsInRange = clips[clipsLowerBound..<clipsUpperBound]
+                let clipsInRange = clips[clipsLowerBound ..< clipsUpperBound]
 
                 log(message: "Clips: (\(clipsLowerBound)..<\(clipsUpperBound)), selectedIndex: \(selectedIndexRemainder)", category: .viewPort)
                 log(message: "Pages: (\(selectedPage)/\(numberOfPages))", category: .viewPort)
@@ -50,6 +49,5 @@ final class GetClipsViewPortUseCaseImpl: GetClipsViewPortUseCase {
                 )
             }
             .eraseToAnyPublisher()
-
     }
 }

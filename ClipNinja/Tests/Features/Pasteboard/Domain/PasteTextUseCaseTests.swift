@@ -2,7 +2,6 @@
 import XCTest
 
 class PasteTextUseCaseTests: XCTestCase {
-
     func test_it_pastes_directly_when_enabled_in_settings_and_permitted_by_the_system() throws {
         let pasteboardResource = PasteboardResourceSpy()
         let pasteCommand = PasteCommandSpy()
@@ -53,16 +52,14 @@ class PasteTextUseCaseTests: XCTestCase {
 }
 
 class PasteboardResourceSpy: PasteboardResource {
-
     var insertedText: String?
 
     func insert(text: String) {
-        self.insertedText = text
+        insertedText = text
     }
 }
 
 class PasteCommandSpy: PasteCommand {
-
     var pasteCalled: Bool?
 
     func paste() {

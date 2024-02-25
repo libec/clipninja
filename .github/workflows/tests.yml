@@ -8,7 +8,10 @@ jobs:
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
+      - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.2'
+      - name: Lint
+        run: swiftformat . --lint
       - name: Run tests
         run: xcodebuild test -project ClipNinja.xcodeproj -scheme ClipNinja

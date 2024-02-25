@@ -1,6 +1,6 @@
-import SwiftUI
-import Combine
 import ClipNinjaPackage
+import Combine
+import SwiftUI
 
 enum AppWindow {
     case clips
@@ -9,7 +9,6 @@ enum AppWindow {
 }
 
 class WindowsController {
-
     private let navigation: Navigation
     private let windowFactory: WindowsFactory
     private let resetViewPortUseCase: ResetViewPortUseCase
@@ -39,7 +38,7 @@ class WindowsController {
 
     private func showModal(modalWindow: AppWindow) {
         if self.modalWindow == nil {
-            let modalWindow = self.windowFactory.make(appWindow: modalWindow)
+            let modalWindow = windowFactory.make(appWindow: modalWindow)
             self.modalWindow = modalWindow
             activeWindow?.beginSheet(modalWindow)
         }
@@ -58,7 +57,6 @@ class WindowsController {
     }
 
     func startNavigation() {
-
         let delayedEvents = navigation.navigationEvent
             .filter(\.delayedEvent)
             .throttle(for: 0.3, scheduler: RunLoop.main, latest: true)
@@ -71,33 +69,33 @@ class WindowsController {
             .sink { [unowned self] event in
                 log(message: "NavigationEvent: \(event)", category: .windows)
                 log(message: "App windows", category: .windows)
-                NSApp.windows.forEach { window in
+                for window in NSApp.windows {
                     log(message: "Window: \(window)", category: .windows)
                 }
                 switch event {
                 case .hideApp:
                     NSApp.hide(nil)
                 case .showClipboard:
-                    self.closeSettingsWindows()
-                    self.closeClipsWindows()
-                    self.activate(appWindow: .clips)
+                    closeSettingsWindows()
+                    closeClipsWindows()
+                    activate(appWindow: .clips)
                 case .showSettings:
-                    self.closeSettingsWindows()
-                    self.closeClipsWindows()
-                    self.activate(appWindow: .settings)
+                    closeSettingsWindows()
+                    closeClipsWindows()
+                    activate(appWindow: .settings)
                 case .showAppUsage:
                     let clipboardWindows = NSApp.windows.filter { $0 is ClipboardWindow }
                     if let clipboardWindow = clipboardWindows.first {
                         clipboardWindow.makeKeyAndOrderFront(nil)
-                        self.activeWindow = clipboardWindow
+                        activeWindow = clipboardWindow
                     } else {
-                        self.activate(appWindow: .clips)
+                        activate(appWindow: .clips)
                     }
-                    self.showModal(modalWindow: .tutorial)
+                    showModal(modalWindow: .tutorial)
                 case .showTutorial:
-                    self.showModal(modalWindow: .tutorial)
+                    showModal(modalWindow: .tutorial)
                 case .hideTutorial:
-                    self.hideModal()
+                    hideModal()
                 case .showSystemSettings:
                     let accessibilityUrl = Strings.Settings.PasteDirectly.accessibilityUrl
                     guard let url = URL(string: accessibilityUrl) else {

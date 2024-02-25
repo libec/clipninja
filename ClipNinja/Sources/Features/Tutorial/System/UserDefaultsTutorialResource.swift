@@ -1,7 +1,6 @@
 import Foundation
 
 class UserDefaultsTutorialResource: TutorialResource {
-
     private let userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults) {
@@ -26,10 +25,10 @@ class UserDefaultsTutorialResource: TutorialResource {
     }
 }
 
-fileprivate extension TutorialNumericValue {
+private extension TutorialNumericValue {
     private var key: String {
         switch self {
-        case .clipsMovement: return "ClipsMovement"
+        case .clipsMovement: "ClipsMovement"
         }
     }
 
@@ -38,11 +37,11 @@ fileprivate extension TutorialNumericValue {
     }
 }
 
-fileprivate extension TutorialFlag {
+private extension TutorialFlag {
     private var key: String {
         switch self {
-        case .pasteText: return "PasteText"
-        case .onboard: return "Onboard"
+        case .pasteText: "PasteText"
+        case .onboard: "Onboard"
         }
     }
 

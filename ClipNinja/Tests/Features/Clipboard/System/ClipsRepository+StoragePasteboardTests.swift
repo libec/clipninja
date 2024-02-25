@@ -1,5 +1,5 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 final class ClipsRepositoryStorageAndPasteboardTests: XCTestCase {
@@ -161,7 +161,7 @@ final class ClipsRepositoryStorageAndPasteboardTests: XCTestCase {
         viewPortConfiguration: ViewPortConfiguration = TestViewPortConfiguration(),
         settingsRepository: SettingsRepository = SettingsRepositoryDummy()
     ) {
-        self.sut = ClipsRepositoryImpl(
+        sut = ClipsRepositoryImpl(
             pasteboardObserver: pasteboardObserver,
             clipsResource: clipsResource,
             viewPortConfiguration: viewPortConfiguration,

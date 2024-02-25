@@ -2,7 +2,6 @@
 import XCTest
 
 class TutorialViewModelTests: XCTestCase {
-
     func test_it_calls_finish_on_dismiss() {
         let tutorials = TutorialsSpy()
         let sut = TutorialViewModelImpl(tutorials: tutorials, navigation: NavigationDummy())
@@ -13,7 +12,7 @@ class TutorialViewModelTests: XCTestCase {
     }
 
     func test_it_returns_current_tutorial_when_it_appears() {
-        Tutorial.allCases.forEach { tutorial in
+        for tutorial in Tutorial.allCases {
             let tutorials = TutorialsStub(current: tutorial)
             let sut = TutorialViewModelImpl(tutorials: tutorials, navigation: NavigationDummy())
 
@@ -45,22 +44,20 @@ class TutorialViewModelTests: XCTestCase {
 }
 
 class TutorialsSpy: Tutorials {
-
     var finishCalled = false
 
     init() {}
 
-    func getCurrent() -> Tutorial? { return nil }
+    func getCurrent() -> Tutorial? { nil }
 
     func finish() {
         finishCalled = true
     }
 
-    func checkTutorials(for event: TutorialTriggeringEvent) { }
+    func checkTutorials(for _: TutorialTriggeringEvent) {}
 }
 
 class TutorialsStub: Tutorials {
-
     let current: Tutorial
 
     init(current: Tutorial) {
@@ -68,6 +65,6 @@ class TutorialsStub: Tutorials {
     }
 
     func getCurrent() -> Tutorial? { current }
-    func finish() { }
-    func checkTutorials(for event: TutorialTriggeringEvent) { }
+    func finish() {}
+    func checkTutorials(for _: TutorialTriggeringEvent) {}
 }

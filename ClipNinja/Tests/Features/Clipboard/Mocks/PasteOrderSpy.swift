@@ -20,21 +20,18 @@ class PasteOrderSpy: ClipsRepository, HideAppUseCase, PasteTextUseCase {
             steps.append(.setLastClip)
         }
     }
+
     let lastClips: [Clip]
 
     init(clips: [Clip]) {
-        self.lastClips = clips
+        lastClips = clips
     }
 
-    func delete(at index: Int) {
+    func delete(at _: Int) {}
 
-    }
+    func togglePin(at _: Int) {}
 
-    func togglePin(at index: Int) {
-
-    }
-
-    func moveAfterPins(index: Int) {
+    func moveAfterPins(index _: Int) {
         steps.append(.moveAfterPins)
     }
 
@@ -42,7 +39,7 @@ class PasteOrderSpy: ClipsRepository, HideAppUseCase, PasteTextUseCase {
         steps.append(.hideApp)
     }
 
-    func paste(text: String) {
+    func paste(text _: String) {
         steps.append(.paste)
     }
 }

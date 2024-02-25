@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct EmptyClipboardView: View {
-
     var body: some View {
         emptyStateContent
             .background(Colors.backgroundColor)

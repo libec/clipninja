@@ -1,6 +1,6 @@
-import XCTest
 @testable import ClipNinjaPackage
 import Combine
+import XCTest
 
 class PasteUseCaseTests: XCTestCase {
     func test_it_hides_the_app_before_pasting() throws {
@@ -134,7 +134,7 @@ class PasteUseCaseTests: XCTestCase {
         let pasteOrderSpy = PasteOrderSpy(
             clips: [
                 Clip(text: "aewf2", pinned: false),
-                Clip(text: "aeaefwf2", pinned: false)
+                Clip(text: "aeaefwf2", pinned: false),
             ]
         )
         let sut = makeSut(
@@ -223,7 +223,7 @@ class PasteUseCaseTests: XCTestCase {
         clipsRepository: ClipsRepository,
         viewPortRepository: ViewPortRepository
     ) -> PasteUseCase {
-        return PasteUseCaseImpl(
+        PasteUseCaseImpl(
             clipsRepository: clipsRepository,
             viewPortRepository: viewPortRepository,
             hideAppUseCase: hideAppUseCase,
@@ -237,7 +237,6 @@ class PasteUseCaseTests: XCTestCase {
 }
 
 class CurrentTutorialUseCaseStub: CurrentTutorialUseCase {
-
     let current: Tutorial?
 
     init(current: Tutorial?) {

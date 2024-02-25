@@ -3,7 +3,6 @@ public protocol ResetViewPortUseCase {
 }
 
 final class ResetViewPortUseCaseImpl: ResetViewPortUseCase {
-
     private let viewPortRepository: ViewPortRepository
 
     init(
@@ -16,4 +15,3 @@ final class ResetViewPortUseCaseImpl: ResetViewPortUseCase {
         viewPortRepository.update(position: 0)
     }
 }
-

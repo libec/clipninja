@@ -63,7 +63,7 @@ final class PasteUseCaseImpl: PasteUseCase {
 
     private func clipIndex(for pasteIndex: PasteIndex) -> Int {
         switch pasteIndex {
-        case .index(let index):
+        case let .index(index):
             let selectedPage = viewPortRepository.lastPosition / viewPortConfiguration.clipsPerPage
             return selectedPage * viewPortConfiguration.clipsPerPage + index
         case .selected:

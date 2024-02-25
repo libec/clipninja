@@ -1,8 +1,7 @@
-import XCTest
 @testable import ClipNinjaPackage
+import XCTest
 
 class ToggleSettingsUseCaseTests: XCTestCase {
-
     func test_it_toggles_launch_at_login_setting() {
         let settingsRepository = SettingsRepositorySpy()
         let permissionsResource = PermissionsResourceDummy()

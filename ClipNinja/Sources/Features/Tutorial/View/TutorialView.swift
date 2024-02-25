@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct TutorialView<ViewModel: TutorialViewModel>: View {
-
     @StateObject private var viewModel: ViewModel
 
     init(viewModel: ViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -34,19 +33,18 @@ struct TutorialView<ViewModel: TutorialViewModel>: View {
     private var tutorialView: some View {
         switch viewModel.tutorial {
         case .welcome:
-            return AnyView(WelcomeTutorialView())
+            AnyView(WelcomeTutorialView())
         case .pasting:
-            return AnyView(PasteDirectlyTutorialView())
+            AnyView(PasteDirectlyTutorialView())
         case .none:
-            return AnyView(AppUsageTutorialView())
+            AnyView(AppUsageTutorialView())
         }
     }
 }
 
 struct TutorialView_Previews: PreviewProvider {
-
     class ViewModelStub: TutorialViewModel {
-        func onEvent(_ event: TutorialEvent) { }
+        func onEvent(_: TutorialEvent) {}
         var tutorial: Tutorial? = .welcome
         var showSettings: Bool = true
     }
