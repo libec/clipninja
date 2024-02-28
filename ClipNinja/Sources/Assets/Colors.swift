@@ -2,7 +2,6 @@ import AppKit
 import SwiftUI
 
 public enum Colors {
-
     private static let pastelBlue = Color("PastelBlue", bundle: Bundle.module)
     private static let pastelYellow = Color("PastelYellow", bundle: Bundle.module)
     private static let pastelGreen = Color("PastelGreen", bundle: Bundle.module)

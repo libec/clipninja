@@ -7,7 +7,6 @@ protocol TutorialRepository {
 }
 
 final class TutorialRepositoryImpl: TutorialRepository {
-
     private let resource: TutorialResource
     private let permissionsResource: PermissionsResource
 
@@ -27,7 +26,7 @@ final class TutorialRepositoryImpl: TutorialRepository {
         case .clipsMovement:
             break
         case .pasteText:
-            if !permissionsResource.pastingAllowed && !resource.contains(flag: .pasteText) {
+            if !permissionsResource.pastingAllowed, !resource.contains(flag: .pasteText) {
                 currentTutorial = .pasting
             }
         }

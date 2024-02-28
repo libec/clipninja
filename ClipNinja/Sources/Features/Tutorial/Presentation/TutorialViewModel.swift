@@ -17,7 +17,6 @@ enum TutorialEvent {
 }
 
 final class TutorialViewModelImpl: TutorialViewModel {
-
     private let tutorials: Tutorials
     private let navigation: Navigation
     @Published var tutorial: Tutorial?

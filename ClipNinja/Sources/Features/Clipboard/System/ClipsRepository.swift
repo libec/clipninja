@@ -1,16 +1,16 @@
 import Combine
 import Foundation
 
-protocol ClipsRepository {
+protocol ClipsRepository: AnyObject {
     var clips: AnyPublisher<[Clip], Never> { get }
     var lastClips: [Clip] { get }
+    var lastPastedClip: Clip? { get set }
     func delete(at index: Int)
     func togglePin(at index: Int)
     func moveAfterPins(index: Int)
 }
 
 final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
-
     var clips: AnyPublisher<[Clip], Never> {
         clipsSubject.eraseToAnyPublisher()
     }
@@ -19,25 +19,30 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         clipsSubject.value
     }
 
+    var lastPastedClip: Clip?
+
     private let clipsSubject: CurrentValueSubject<[Clip], Never>
 
     private let pasteboardObserver: PasteboardObserver
     private let clipsResource: ClipsResource
     private let viewPortConfiguration: ViewPortConfiguration
     private let storageScheduler: StorageScheduler
+    private let settingsRepository: SettingsRepository
     private var subscriptions = Set<AnyCancellable>()
 
     init(
         pasteboardObserver: PasteboardObserver,
         clipsResource: ClipsResource,
         viewPortConfiguration: ViewPortConfiguration,
-        storageScheduler: StorageScheduler
+        storageScheduler: StorageScheduler,
+        settingsRepository: SettingsRepository
     ) {
         self.pasteboardObserver = pasteboardObserver
         self.clipsResource = clipsResource
         self.viewPortConfiguration = viewPortConfiguration
         self.storageScheduler = storageScheduler
-        self.clipsSubject = .init(clipsResource.clips)
+        self.settingsRepository = settingsRepository
+        clipsSubject = .init(clipsResource.clips)
         observePasteboard()
         setupPersistency()
     }
@@ -72,7 +77,7 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         clipsSubject
             .throttle(for: 1, scheduler: storageScheduler, latest: true)
             .sink(receiveValue: { [unowned self] clips in
-                self.persist(clips: clips)
+                persist(clips: clips)
             })
             .store(in: &subscriptions)
     }
@@ -80,7 +85,7 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
     private func observePasteboard() {
         pasteboardObserver.newCopiedText.map(Clip.newClip(with:))
             .sink { [unowned self] newClip in
-                self.addNewClipFromPasteboard(newClip: newClip)
+                addNewClipFromPasteboard(newClip: newClip)
             }.store(in: &subscriptions)
     }
 
@@ -88,14 +93,23 @@ final class ClipsRepositoryImpl<StorageScheduler: Scheduler>: ClipsRepository {
         let isNewClipAlreadyPinned = clipsSubject.value.contains { clip in
             clip.text == newClip.text && clip.pinned
         }
-        if !isNewClipAlreadyPinned {
-            if let clipIndex = clipsSubject.value.firstIndex(of: newClip) {
-                delete(at: clipIndex)
-            }
-            let pinnedClips = self.clipsSubject.value.filter({ $0.pinned }).count
-            clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
-            clipsSubject.value = Array(clipsSubject.value.prefix(viewPortConfiguration.clipsPerPage * viewPortConfiguration.totalPages))
+        if isNewClipAlreadyPinned {
+            return
         }
+
+        let newClipIsTheSameAsLastlyPastedClip = lastPastedClip?.text == newClip.text
+        let shouldSkipMovingExistingClipsToTheMostRecent = !settingsRepository.lastSettings.movePastedClipToTop
+
+        if newClipIsTheSameAsLastlyPastedClip, shouldSkipMovingExistingClipsToTheMostRecent {
+            return
+        }
+
+        if let clipIndex = clipsSubject.value.firstIndex(of: newClip) {
+            delete(at: clipIndex)
+        }
+        let pinnedClips = clipsSubject.value.filter(\.pinned).count
+        clipsSubject.value.insert(newClip, at: max(0, pinnedClips))
+        clipsSubject.value = Array(clipsSubject.value.prefix(viewPortConfiguration.clipsPerPage * viewPortConfiguration.totalPages))
     }
 
     private func persist(clips: [Clip]) {

@@ -2,13 +2,12 @@
 import XCTest
 
 class PasteTextUseCaseTests: XCTestCase {
-
     func test_it_pastes_directly_when_enabled_in_settings_and_permitted_by_the_system() throws {
         let pasteboardResource = PasteboardResourceSpy()
         let pasteCommand = PasteCommandSpy()
         let sut = PasteTextUseCaseImpl(
             pasteboardResource: pasteboardResource,
-            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false)),
+            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false, movePastedClipToTop: true)),
             permissionsResource: PermissionsResourceStub(pastingAllowed: true),
             pasteCommand: pasteCommand
         )
@@ -24,7 +23,7 @@ class PasteTextUseCaseTests: XCTestCase {
         let pasteCommand = PasteCommandSpy()
         let sut = PasteTextUseCaseImpl(
             pasteboardResource: pasteboardResource,
-            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false)),
+            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: true, launchAtLogin: false, movePastedClipToTop: true)),
             permissionsResource: PermissionsResourceStub(pastingAllowed: false),
             pasteCommand: pasteCommand
         )
@@ -40,7 +39,7 @@ class PasteTextUseCaseTests: XCTestCase {
         let pasteCommand = PasteCommandSpy()
         let sut = PasteTextUseCaseImpl(
             pasteboardResource: pasteboardResource,
-            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: false, launchAtLogin: false)),
+            settingsRepository: SettingsRepositoryStub(lastSettings: Settings(pasteDirectly: false, launchAtLogin: false, movePastedClipToTop: true)),
             permissionsResource: PermissionsResourceStub(pastingAllowed: true),
             pasteCommand: pasteCommand
         )
@@ -53,16 +52,14 @@ class PasteTextUseCaseTests: XCTestCase {
 }
 
 class PasteboardResourceSpy: PasteboardResource {
-
     var insertedText: String?
 
     func insert(text: String) {
-        self.insertedText = text
+        insertedText = text
     }
 }
 
 class PasteCommandSpy: PasteCommand {
-
     var pasteCalled: Bool?
 
     func paste() {

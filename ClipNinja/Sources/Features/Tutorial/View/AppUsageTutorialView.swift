@@ -2,7 +2,6 @@ import SwiftUI
 
 // TODO: - Move texts to Strings.swift
 struct AppUsageTutorialView: View {
-
     var body: some View {
         tutorial
             .padding(15)
@@ -20,7 +19,6 @@ struct AppUsageTutorialView: View {
             HStack(spacing: 0) {
                 HighlightedDescriptionText("ENTER")
                 DescriptionText(" pastes selected clip.")
-
             }
             HStack(spacing: 0) {
                 HighlightedDescriptionText("BACKSPACE")

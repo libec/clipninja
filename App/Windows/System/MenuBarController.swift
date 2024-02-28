@@ -3,7 +3,6 @@ import ClipNinjaPackage
 import Combine
 
 final class MenuBarController: NSObject {
-
     private let navigation: Navigation
     private var statusItem: NSStatusItem?
 
@@ -32,9 +31,9 @@ final class MenuBarController: NSObject {
         menu.addItem(.separator())
         menu.addItem(quitItem)
 
-        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        self.statusItem?.menu = menu
-        self.statusItem?.button?.image = NSImage(named: "MenuIcon")
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem?.menu = menu
+        statusItem?.button?.image = NSImage(named: "MenuIcon")
         subscribeNavigation()
     }
 
@@ -42,15 +41,15 @@ final class MenuBarController: NSObject {
         navigation.navigationEvent
             .receive(on: DispatchQueue.main)
             .sink { [weak self] event in
-            switch event {
-            case .showTutorial:
-                self?.controlsItem?.target = nil
-            case .hideTutorial:
-                self?.controlsItem?.target = self
-            default:
-                break
-            }
-        }.store(in: &subscriptions)
+                switch event {
+                case .showTutorial:
+                    self?.controlsItem?.target = nil
+                case .hideTutorial:
+                    self?.controlsItem?.target = self
+                default:
+                    break
+                }
+            }.store(in: &subscriptions)
     }
 
     @objc

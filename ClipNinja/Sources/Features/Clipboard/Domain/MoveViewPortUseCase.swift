@@ -12,7 +12,6 @@ protocol MoveViewPortUseCase {
 }
 
 class MoveViewPortUseCaseImpl: MoveViewPortUseCase {
-
     private let viewPortRepository: ViewPortRepository
     private let clipsRepository: ClipsRepository
     private let viewPortConfiguration: ViewPortConfiguration
@@ -40,10 +39,10 @@ class MoveViewPortUseCaseImpl: MoveViewPortUseCase {
 
     private func movementAmount(for viewPortMovement: ViewPortMovement) -> Int {
         switch viewPortMovement {
-        case .up: return -1
-        case .down: return 1
-        case .left: return -viewPortConfiguration.clipsPerPage
-        case .right: return viewPortConfiguration.clipsPerPage
+        case .up: -1
+        case .down: 1
+        case .left: -viewPortConfiguration.clipsPerPage
+        case .right: viewPortConfiguration.clipsPerPage
         }
     }
 }

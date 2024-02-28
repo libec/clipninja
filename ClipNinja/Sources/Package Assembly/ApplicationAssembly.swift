@@ -1,7 +1,6 @@
 import Swinject
 
 public struct ApplicationAssembly {
-
     private var assemblies: [Assembly] {
         [
             ClipboardAssembly(),
@@ -10,7 +9,7 @@ public struct ApplicationAssembly {
             PasteboardAssembly(),
             SettingsAssembly(),
             SystemAssembly(),
-            TutorialAssembly()
+            TutorialAssembly(),
         ]
     }
 

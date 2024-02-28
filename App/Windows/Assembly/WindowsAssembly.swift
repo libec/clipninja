@@ -1,10 +1,9 @@
 import ClipNinjaPackage
+import SwiftUI
 import Swinject
 import SwinjectAutoregistration
-import SwiftUI
 
 struct WindowsAssembly: Assembly {
-
     func assemble(container: Container) {
         container.autoregister(WindowsController.self, initializer: WindowsController.init)
             .inObjectScope(.container)

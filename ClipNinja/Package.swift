@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 
 import PackageDescription
 
@@ -13,14 +13,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Swinject/Swinject.git", .upToNextMajor(from: "2.8.2")),
-        .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMajor(from: "2.8.1"))
+        .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMajor(from: "2.8.1")),
     ],
     targets: [
         .target(
             name: "ClipNinjaPackage",
             dependencies: [
                 "Swinject",
-                "SwinjectAutoregistration"
+                "SwinjectAutoregistration",
             ],
             path: "Sources"
         ),
@@ -28,6 +28,6 @@ let package = Package(
             name: "ClipNinjaPackageTests",
             dependencies: ["ClipNinjaPackage"],
             path: "Tests"
-        )
+        ),
     ]
 )

@@ -1,9 +1,8 @@
+@testable import ClipNinjaPackage
 import Combine
 import XCTest
-@testable import ClipNinjaPackage
 
 class MoveViewPortUseCaseTests: XCTestCase {
-
     private let viewPortConfiguration = TestViewPortConfiguration()
 
     func test_moves_within_bounds_are_updated() {
@@ -37,7 +36,7 @@ class MoveViewPortUseCaseTests: XCTestCase {
         sut.move(to: .left)
         sut.move(to: .right)
 
-        XCTAssertEqual(checkTutorialUseCase.allCheckedEvents, Array<TutorialTriggeringEvent>(repeating: .clipsMovement, count: 4))
+        XCTAssertEqual(checkTutorialUseCase.allCheckedEvents, [TutorialTriggeringEvent](repeating: .clipsMovement, count: 4))
     }
 
     func runTests(

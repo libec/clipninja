@@ -3,8 +3,7 @@ import Swinject
 import SwinjectAutoregistration
 
 struct SystemAssembly: Assembly {
-
-    init() { }
+    init() {}
 
     func assemble(container: Container) {
         container.register(UserDefaults.self) { _ in UserDefaults.standard }

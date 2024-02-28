@@ -1,9 +1,8 @@
+@testable import ClipNinjaPackage
 import Combine
 import XCTest
-@testable import ClipNinjaPackage
 
 class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
-
     func test_it_shows_view_port_with_calculated_total_and_shown_pages() {
         runViewPortPageCalculationTests(
             numberOfClips: viewPortConfiguration.clipsPerPage - 3,
@@ -66,7 +65,7 @@ class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
     }
 
     func test_it_uses_pinned_clips_from_repository() {
-        let pinnedClips = (0..<viewPortConfiguration.clipsPerPage).map { _ in Bool.random() }
+        let pinnedClips = (0 ..< viewPortConfiguration.clipsPerPage).map { _ in Bool.random() }
         let clipsRepository = ClipRepositoryPinnedStub(pinnedClips: pinnedClips)
         let viewPortRepository = InMemoryViewPortRepository()
         viewPortRepository.update(position: 0)
@@ -93,25 +92,25 @@ class GetClipsViewPortUseCaseTests: GetClipsViewPortUseCaseParametrizedTests {
         runClipsSliceTests(
             clips: Clip.numberStubs(amount: viewPortConfiguration.clipsPerPage - 2),
             selectedClip: 2,
-            expectedClips: Clip.numberStubs(range: 0..<(viewPortConfiguration.clipsPerPage - 1))
+            expectedClips: Clip.numberStubs(range: 0 ..< (viewPortConfiguration.clipsPerPage - 1))
         )
 
         runClipsSliceTests(
             clips: Clip.numberStubs(amount: viewPortConfiguration.clipsPerPage * 3),
             selectedClip: viewPortConfiguration.clipsPerPage * 2 + 5,
-            expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 2..<(viewPortConfiguration.clipsPerPage * 3))
+            expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 2 ..< (viewPortConfiguration.clipsPerPage * 3))
         )
 
         runClipsSliceTests(
             clips: Clip.numberStubs(amount: viewPortConfiguration.clipsPerPage * 4),
             selectedClip: viewPortConfiguration.clipsPerPage * 3,
-            expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 3..<(viewPortConfiguration.clipsPerPage * 4))
+            expectedClips: Clip.numberStubs(range: viewPortConfiguration.clipsPerPage * 3 ..< (viewPortConfiguration.clipsPerPage * 4))
         )
 
         runClipsSliceTests(
             clips: Clip.numberStubs(amount: viewPortConfiguration.clipsPerPage),
             selectedClip: viewPortConfiguration.clipsPerPage - 1,
-            expectedClips: Clip.numberStubs(range: 0..<viewPortConfiguration.clipsPerPage)
+            expectedClips: Clip.numberStubs(range: 0 ..< viewPortConfiguration.clipsPerPage)
         )
     }
 

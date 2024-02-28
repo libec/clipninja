@@ -1,8 +1,7 @@
 import Carbon
 
 final class SystemPasteCommand: PasteCommand {
-
-    init() { }
+    init() {}
 
     func paste() {
         DispatchQueue.main.async {

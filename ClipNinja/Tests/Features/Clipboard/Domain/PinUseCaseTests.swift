@@ -2,7 +2,6 @@
 import XCTest
 
 class PinUseCaseTests: XCTestCase {
-
     func test_it_uses_view_port_to_update_clips() throws {
         let clipsRepository = ClipsRepositoryAmountStub(numberOfClips: 5)
         let viewPortRepository = InMemoryViewPortRepository()

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ClipboardRow: View {
-
     @State private var pinned: Bool
     @State private var selected: Bool
     @State private var text: String
@@ -33,7 +32,7 @@ struct ClipboardRow: View {
                 }
             }.frame(width: 15)
             Text(text)
-                .font(.mono(size : 14))
+                .font(.mono(size: 14))
                 .fontWeight(.semibold)
                 .foregroundColor(selected ? Colors.selectedTextColor : Colors.defaultTextColor)
             Spacer()

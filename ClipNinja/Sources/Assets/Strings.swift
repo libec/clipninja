@@ -1,7 +1,6 @@
 public typealias R = Strings
 
 public enum Strings {
-
     public enum Generic {
         public static let wip = "🚧🚧🚧"
         public static let appName = "ClipNinja"
@@ -9,6 +8,7 @@ public enum Strings {
 
     public enum Settings {
         static let launchAtLogin = "Launch at login"
+        static let movePastedClipToTop = "Move the pasted clip to the most recent"
         public static let openAppShortcut = "Shortcut"
         public static let windowName = Generic.appName + " Settings"
         public static let wip = Strings.Generic.wip

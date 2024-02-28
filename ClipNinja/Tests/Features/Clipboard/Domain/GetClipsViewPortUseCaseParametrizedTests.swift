@@ -1,11 +1,10 @@
-import Combine
 @testable import ClipNinjaPackage
+import Combine
 import XCTest
 
 class GetClipsViewPortUseCaseParametrizedTests: XCTestCase {
-
     let viewPortConfiguration = TestViewPortConfiguration()
-    
+
     func runViewPortPageCalculationTests(
         numberOfClips: Int,
         selectedClip: Int,

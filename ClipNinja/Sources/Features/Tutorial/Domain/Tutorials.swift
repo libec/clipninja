@@ -1,7 +1,6 @@
-protocol Tutorials: CurrentTutorialUseCase, FinishCurrentTutorialUseCase, CheckTutorialUseCase { }
+protocol Tutorials: CurrentTutorialUseCase, FinishCurrentTutorialUseCase, CheckTutorialUseCase {}
 
 class TutorialsFacade: Tutorials {
-
     let currentTutorialUseCase: CurrentTutorialUseCase
     let finishCurrentTutorialUseCase: FinishCurrentTutorialUseCase
     let checkTutorialUseCase: CheckTutorialUseCase

@@ -1,10 +1,9 @@
 import ClipNinjaPackage
+import SwiftUI
 import Swinject
 import SwinjectAutoregistration
-import SwiftUI
 
 struct KeyboardHandlingAssembly: Assembly {
-
     func assemble(container: Container) {
         container.autoregister(SystemKeyboardObserver.self, initializer: SystemKeyboardObserver.init)
             .implements(KeyboardObserver.self)

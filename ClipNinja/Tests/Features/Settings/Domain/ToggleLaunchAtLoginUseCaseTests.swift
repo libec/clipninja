@@ -1,8 +1,7 @@
-import XCTest
 @testable import ClipNinjaPackage
+import XCTest
 
 class ToggleSettingsUseCaseTests: XCTestCase {
-
     func test_it_toggles_launch_at_login_setting() {
         let settingsRepository = SettingsRepositorySpy()
         let permissionsResource = PermissionsResourceDummy()
@@ -22,6 +21,16 @@ class ToggleSettingsUseCaseTests: XCTestCase {
 
         try XCTAssertTrue(XCTUnwrap(settingsRepository.togglePasteDirectlyCalled))
         XCTAssertNil(result.error())
+    }
+
+    func test_it_toggles_moving_pasted_clip_to_top() {
+        let settingsRepository = SettingsRepositorySpy()
+        let permissionsResource = PermissionsResourceDummy()
+        let sut = ToggleSettingsUseCaseImpl(settingsRepository: settingsRepository, permissionsResource: permissionsResource)
+
+        sut.toggle(setting: .movePastedClipToTop)
+
+        try XCTAssertTrue(XCTUnwrap(settingsRepository.toggleMovePastedClipToTopCalled))
     }
 
     func test_toggling_paste_directly_on_fails_when_permissions_are_not_granted() throws {

@@ -3,7 +3,6 @@ protocol FinishCurrentTutorialUseCase {
 }
 
 final class FinishCurrentTutorialUseCaseImpl: FinishCurrentTutorialUseCase {
-
     private let repository: TutorialRepository
     private let navigation: Navigation
 

@@ -2,7 +2,6 @@ import Swinject
 import SwinjectAutoregistration
 
 struct KeyboardAssembly: Assembly {
-
     private let shortcutObserver: ShortcutObserver
 
     init(shortcutObserver: ShortcutObserver) {
@@ -11,7 +10,7 @@ struct KeyboardAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(ShortcutObserver.self, factory: { _ in
-            return shortcutObserver
+            shortcutObserver
         }).inObjectScope(.container)
     }
 

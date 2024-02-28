@@ -1,14 +1,14 @@
 @testable import ClipNinjaPackage
-import XCTest
 import Combine
+import XCTest
 
 class SettingsViewModelTests: XCTestCase {
-
     func test_it_notifies_about_new_settings() {
         let getSettingsUseCase = GetSettingsUseCaseStub(
             storedSettings: Settings(
                 pasteDirectly: true,
-                launchAtLogin: false
+                launchAtLogin: false,
+                movePastedClipToTop: false
             )
         )
         let sut = SettingsViewModelImpl(
@@ -21,6 +21,7 @@ class SettingsViewModelTests: XCTestCase {
 
         XCTAssertEqual(sut.pasteDirectly, true)
         XCTAssertEqual(sut.launchAtLogin, false)
+        XCTAssertEqual(sut.movePastedClipToTop, false)
     }
 
     func test_it_toggles_paste_directly() {
@@ -33,6 +34,18 @@ class SettingsViewModelTests: XCTestCase {
         sut.onEvent(.settingsEvent(.togglePasteDirectly))
 
         try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .pasteDirectly)
+    }
+
+    func test_it_toggles_move_pasted_clip_to_top() {
+        let toggleSettingsUseCase = ToggleSettingsUseCaseSpy()
+        let sut = SettingsViewModelImpl(
+            toggleSettingsUseCase: toggleSettingsUseCase,
+            getSettingsUseCase: GetSettingsUseCaseStub(storedSettings: .default),
+            navigation: NavigationDummy()
+        )
+        sut.onEvent(.settingsEvent(.toggleMovePastedToTop))
+
+        try XCTAssertEqual(XCTUnwrap(toggleSettingsUseCase.toggledSetting), .movePastedClipToTop)
     }
 
     func test_it_toggles_launch_at_login() {
@@ -100,13 +113,12 @@ class SettingsViewModelTests: XCTestCase {
 
 class GetSettingsUseCaseDummy: GetSettingsUseCase {
     var settings: AnyPublisher<Settings, Never> {
-        Just(Settings(pasteDirectly: false, launchAtLogin: false))
+        Just(Settings(pasteDirectly: false, launchAtLogin: false, movePastedClipToTop: true))
             .eraseToAnyPublisher()
     }
 }
 
 class GetSettingsUseCaseStub: GetSettingsUseCase {
-
     private let storedSettings: Settings
 
     init(storedSettings: Settings) {
@@ -114,14 +126,13 @@ class GetSettingsUseCaseStub: GetSettingsUseCase {
     }
 
     var settings: AnyPublisher<Settings, Never> {
-        return Just(storedSettings)
+        Just(storedSettings)
             .eraseToAnyPublisher()
     }
 }
 
 typealias ToggleSettingsUseCaseDummy = ToggleSettingsUseCaseSpy
 class ToggleSettingsUseCaseSpy: ToggleSettingsUseCase {
-
     var toggledSetting: ToggleSetting?
 
     func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
@@ -137,7 +148,7 @@ class ToggleSettingsUseCaseStub: ToggleSettingsUseCase {
         self.result = result
     }
 
-    func toggle(setting: ToggleSetting) -> Result<Void, ToggleSettingsError> {
+    func toggle(setting _: ToggleSetting) -> Result<Void, ToggleSettingsError> {
         result
     }
 }

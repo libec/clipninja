@@ -1,7 +1,6 @@
 import SwiftUI
 
 extension Font {
-
     static func avenir(size: CGFloat) -> Font {
         .custom("Avenir Next", size: size)
     }
